@@ -495,27 +495,23 @@ data conv.melan;
 	** use Sara Schonfeld's impuation method;
 	** edit 20150902WED WTL;
 	postmeno=.;
-	if 		menop_age<6                                                 /*reported a menopausal age and */           
-			& (perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)    /*reported periods stopped due to nat, surg, or rad/chem and */
-			& perstop_nostop NE 1										then postmeno=1; /*did not report report periods did not stop*/  
-
-	else if menop_age=9													/*did not report menopausal age and */ 
-			& (perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)    /*reported periods stopped due to nat, surg, or rad/chem and */
-			& perstop_nostop NE 1										then postmeno=2; /*did not report report periods did not stop*/  
+	if  	(perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)    	/*reported periods stopped due to nat, surg, or rad/chem and */
+																		then postmeno=1; 
 
 	else if entry_age>=57												/*women>=57 and */                                                                       
 			& ( menop_age<6 											/*have a menopausal age or */
 			| (perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)	/*have a reason for menopause or */                              
-			| hormever=1 ) 												then postmeno=3; /*took MHT */       
+			| hormever=1 ) 												then postmeno=2; /*took MHT */       
 
 	else if entry_age<=57												/*women<=57 and */
 			& (ovarystat=1 | hyststat=1)                                /*had ovary or hyst surgery and */
-			& (menop_age<6 | perstop_nostop=0)							then postmeno=4; /*had age at last period or said periods stopped */
+			& (menop_age<6 | perstop_nostop=0)							then postmeno=3; /*had age at last period or said periods stopped */
 
 	else if entry_age<=57 												/*women<=57 and */
 			& perstop_nostop=1											/*periods did not stop and */
-			& (perstop_menop=1 & hormever=1)							then postmeno=5; /*natural menopause and took MHT */
-	else postmeno=99;
+			& (perstop_menop=1 & hormever=1)							then postmeno=4; /*natural menopause and took MHT */
+
+else postmeno=99;
 run;
 /***************************************************************************************/ 
 /*   Exclude non-postmenopausal from above postmeno variable                           */
