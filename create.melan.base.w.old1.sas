@@ -6,13 +6,10 @@
 # reproductive, hormonal, contraceptives, UVR variables
 # !!!! for baseline dataset !!!!
 #
-# new recodes include: new BMI and imputed menopause status
-# and new exclusion coding with indicator vairables
-#
 # uses the uv_public, out09jan14, exp05jun14 datasets
 #
 # Created: February 06 2015
-# Updated: v20150908THU WTL
+# Updated: v20150730THU WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
@@ -64,7 +61,6 @@ data analysis_use;
 			SEX
 			raadate /* date moved outside of Registry Ascertainment Area */
 			entry_age
-			cancer
 			cancer_dxdt
 			cancer_seergroup
 			cancer_ss_stg /* summary stage: first cancer */
@@ -201,7 +197,7 @@ libname results 'C:\REB\AARP_HRTandMelanoma\Results\baseline\mht';
 
 proc format;
 	value sexfmt 0 = 'Male' 1 = 'Female';
-	value melanfmt 0 = 'no melanoma' 1 = 'in situ' 2 = 'malignant';
+	value melanfmt 0 = 'no melanoma' 1 = 'in situ melanoma' 2 = 'malignant melanoma';
 	value melanomafmt 0 = 'no melanoma' 1 = 'melanoma';
 	value melanomainsfmt 0 = 'no melanoma' 1='melanoma in situ';
 	value melanomamalfmt 0 = 'no melanoma' 1='malignant melanoma';
@@ -213,7 +209,6 @@ proc format;
 	value educfmt -9='missing' 0='Less than high school' 1='High school graduate' 2='some college' 3='college or graduate school';
 	value educmfmt -9='missing' 1='Less than high school' 2='High school graduate' 3='Post high school' 4='Some college' 5='College or post graduate' 9='Unknown';
 	value bmifmt -9='missing' 1='< 25' 2='25 to < 30' 3='>=30';
-	value bminewfmt -9='missing or extreme' 1='18.5 to <25' 2='25 to <30' 3='30 to <60';
 	value physicfmt -9='missing' 0='Never/rarely' 1='1-3 per month' 2='1-2 per week' 3='3-4 per week' 4='5+ per week';
 	value smokingfmt -9='missing' 0='never smoked' 1='ever smoke';
 	value marriagefmt 1='married' 2='widowed' 3='divorced/separated' 5='never married' 9='unknown';
@@ -247,7 +242,6 @@ proc format;
 	value radchemmenofmt -9='missing' 0='periods did not stop' 1='radchem meno reason';
 	value ovarystatfmt -9='missing' 1='both removed' 2='both intact';
 	value mhteverfmt -9='missing' 0='never' 1='ever';
-	value postmenofmt 99='not postmeno' 1='postmeno1' 2='postmeno2' 3='postmeno3' 4='postmeno4' 5='postmeno5';
 
 	** smoking;
 	value smokeformerfmt -9='missing' 0='never smoked' 1='former smoker' 2='current smoker' 9='Unknown';
@@ -270,7 +264,6 @@ run;
 ***** Start2 here ********;
 **************************;
 ** uses the pre-created analysis_use from above checkpoint;
-ods _all_ close; ods html;
 data melan; ** name the output of the first primary analysis include to melan;
 	set conv.analysis_use;
 	****** Define melanoma - pulled from allcancer-coffee analysis ******; 
@@ -359,11 +352,11 @@ run;
 ** especially for the seer ICD-O-3 codes;
 ** melanoma code is 25010;
 ** check to see if the melanoma was coded correctly;
-/*proc freq data=conv.melan;
+proc freq data=conv.melan;
 	table cancer_siterec3*sex;
 	table cancer_siterec3*cancer_seergroup /nopercent norow nocol;
 run;
-*/
+
 **** Exclusions macro;
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\exclusions.first.primary.macro.sas';
 
@@ -406,66 +399,46 @@ data conv.melan excl_kcal;
 run; */
 
 /***************************************************************************************/ 
-/*   Exclude if non-whites, racem = 1
-**	 Edit: 20150901TUE WTL;
-/*	 excl_1_nonwhite 																   
-/*   Extract year from DOB 			                                                   
+/*   Exclude if non-whites, race_c = 0                                                 */
+/*   Extract year from DOB 			                                                 */
 /***************************************************************************************/ 
 data conv.melan;
-	title 'Ex 1. exclude non whites, excl_1_nonwhite';
-	set conv.melan;
+	set conv.melan (where = (racem=1));
 	dob_year = YEAR(F_DOB);
-	excl_1_nonwhite=0;
-	if racem NE 1 then excl_1_nonwhite=1;
-run;
-proc freq data=conv.melan;
-	tables excl_1_nonwhite 
-			excl_1_nonwhite*melanoma_c /missing;
 run;
 
 /***************************************************************************************/ 
-/*   Exclude if pre-menopausal, perstop_nostop = 1 
-/*	 Exclusions Edit: 20150901TUE WTL
-/*   excl_2_premeno
-/*   should account for menop_age = 6 as well? Yes, use OR - Lisa
+/*   Exclude if pre-menopausal, perstop_nostop=1 or had radiation or chemotherapies    */
+/*   Then exclude if missing or other gender (should have 0)                         */
 /***************************************************************************************/ 
+
 data conv.melan;
-	title 'Ex 2. exclude premenopausal women, excl_2_premeno';
-	set conv.melan;
-	excl_2_premeno=0;
-	if perstop_nostop=1 | menop_age=6 then excl_2_premeno=1;
-	where excl_1_nonwhite=0;
+	set conv.melan (where = (perstop_nostop NE 1 AND perstop_radchem NE 1 ));
 run;
-proc freq data=conv.melan;
-	tables excl_1_nonwhite*excl_2_premeno 
-			excl_2_premeno*melanoma_c /missing;
+data conv.melan;
+	set conv.melan (where = (menostat NE 8 AND menostat NE 9 )); 
 run;
 
 /***************************************************************************************/ 
-/*   Exclude unknown menopausal statuses, menostat = 9?
-/*	 Exclusions Edit: 20150828FRI WTL
-/*   Do not use, will be captured by the postmeno inclusions (Lisa) 20150831MON;
-/***************************************************************************************/ 
-/*
-data conv.melan excl_unkmenostat; 
-	set conv.melan; 
-	if menostat=9
-		then output excl_unkmenostat;
-	else output conv.melan;
-run; 
-*/
+/*   Exclude if person-years = 0                                                       */
+/***************************************************************************************/      
+data conv.melan excl_py_zero;
+   set conv.melan;
+   if personyrs <= 0 then output excl_py_zero;
+   else output conv.melan;
+run;
 
-/** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
+** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
 proc univariate data=conv.melan;
-	var F_DOB;  dob_year; dob_year;exposure_jul_78_05;
-	output 	out=siriusblack
+	var /*F_DOB;  dob_year; dob_year;*/exposure_jul_78_05;
+	output 	out=bla 
 			pctlpts= 10 20 25 30 40 50 60 70 75 80 90 
 			pctlpre=p;
-run;*/
-*proc print data=siriusblack; 
-	*title 'uvr exposure percentiles';
+run;
+proc print data=bla; 
+	title 'uvr exposure percentiles';
 	*title 'DOB exposure percentiles';
-*run; 
+run; 
 
 ** need to change the exposure percentiles after exclusions;
 ** uvr exposure;
@@ -480,57 +453,6 @@ run;*/
 ** year of birth;
 ** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
 ** 1927	   1929    1929    1930    1933    1935    1935    1937    1938    1939    1942;
-
-/******************************************************************************************/
-** creates the new imputed postmenopausal variable;
-** excl_3_npostmeno;
-** edit 20150901TUE WTL;
-/******************************************************************************************/
-data conv.melan;
-	title;
-	set conv.melan;
-	** new postmenopause status recoded;
-	** is postmenopausal: 1,2,3,4;
-	** is not postmenopausal: 99;
-	** use Sara Schonfeld's impuation method;
-	** edit 20150902WED WTL;
-	postmeno=.;
-	if  	(perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)    	/*reported periods stopped due to nat, surg, or rad/chem and */
-																		then postmeno=1; 
-
-	else if entry_age>=58												/*women>=57 and */                                                                       
-			& ( menop_age<6 											/*have a menopausal age or */
-			| (perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)	/*have a reason for menopause or */                              
-			| hormever=1 ) 												then postmeno=2; /*took MHT */       
-
-	else if entry_age<=58												/*women<=57 and */
-			& (ovarystat=1 | hyststat=1)                                /*had ovary or hyst surgery and */
-			& (menop_age<6 | perstop_nostop=0)							then postmeno=3; /*had age at last period or said periods stopped */
-
-	else if entry_age<=58 												/*women<=57 and */
-			& perstop_nostop=1											/*periods did not stop and */
-			& (perstop_menop=1 & hormever=1)							then postmeno=4; /*natural menopause and took MHT */
-
-else postmeno=99;
-run;
-/***************************************************************************************/ 
-/*   Exclude non-postmenopausal from above postmeno variable                           */
-**   edit 20150901TUE WTL;
-/***************************************************************************************/ 
-data conv.melan;
-	title 'Ex 3. exclude those not post-menopausal, excl_3_npostmeno';
-	set conv.melan;
-	excl_3_npostmeno=0;
-	if postmeno=99 then excl_3_npostmeno=1;
-	where excl_2_premeno=0;
-run;
-proc freq data=conv.melan;
-	tables excl_2_premeno*excl_3_npostmeno 
-			excl_3_npostmeno*melanoma_c /missing;
-run;
-proc freq data=conv.melan;
-	tables postmeno*melanoma_c /missing;
-run;
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
 ** for both baseline and riskfactor questionnaire variables;
@@ -543,99 +465,101 @@ data conv.melan;
 
 	** UVR TOMS quantiles;
 	UVRQ=.;
-	if      0       < exposure_jul_78_05 <= 186.918 	then UVRQ=1;
-	else if 186.918 < exposure_jul_78_05 <= 239.642 	then UVRQ=2;
-	else if 239.642 < exposure_jul_78_05 <= 253.731		then UVRQ=3;
-	else if 253.731 < exposure_jul_78_05           		then UVRQ=4;
+	if      0       < exposure_jul_78_05 <= 186.918 then UVRQ=1;
+	else if 186.918 < exposure_jul_78_05 <= 239.642 then UVRQ=2;
+	else if 239.642 < exposure_jul_78_05 <= 253.731 then UVRQ=3;
+	else if 253.731 < exposure_jul_78_05            then UVRQ=4;
 	else UVRQ=-9;
 
 	** birth cohort date of birth quintile;
 	birth_cohort=.;
-	if      1925 <= dob_year < 1929  		then birth_cohort=1;
-	else if 1929 <= dob_year < 1932  		then birth_cohort=2;
-	else if 1932 <= dob_year < 1935  		then birth_cohort=3;
-	else if 1935 <= dob_year < 1939  		then birth_cohort=4;
-	else if 1939 <= dob_year         		then birth_cohort=5;
+	if      1925 <= dob_year < 1929  	then birth_cohort=1;
+	else if 1929 <= dob_year < 1932  	then birth_cohort=2;
+	else if 1932 <= dob_year < 1935  	then birth_cohort=3;
+	else if 1935 <= dob_year < 1939  	then birth_cohort=4;
+	else if 1939 <= dob_year         	then birth_cohort=5;
 
 	** birth cohort dates by every 5 years;
 	birth_cohort2=.;
-	if		1925 <= dob_year < 1930			then birth_cohort2=1;
-	else if 1930 <= dob_year < 1935			then birth_cohort2=2;
-	else if 1935 <= dob_year < 1940			then birth_cohort2=3;
-	else if 1940 <= dob_year < 1945			then birth_cohort2=4;
-	else if 1945 <= dob_year < 1950			then birth_cohort2=5;
+	if		1925 <= dob_year < 1930		then birth_cohort2=1;
+	else if 1930 <= dob_year < 1935		then birth_cohort2=2;
+	else if 1935 <= dob_year < 1940		then birth_cohort2=3;
+	else if 1940 <= dob_year < 1945		then birth_cohort2=4;
+	else if 1945 <= dob_year < 1950		then birth_cohort2=5;
 
 	** physical exercise cat;
 	physic_c=.;
-	if      physic in (0,1)					then physic_c=0; /* rarely */
-	else if physic=2 	 					then physic_c=1; /* 1-3 per month */
-	else if physic=3 	 					then physic_c=2; /* 1-2 per week */
-	else if physic=4     					then physic_c=3; /* 3-4 per week */
-	else if physic=5     					then physic_c=4; /* 5+ per week */
-	else if physic=9	 					then physic_c=-9; /* missing */
+	if      physic in (0,1)	then physic_c=0; /* rarely */
+	else if physic=2 	 	then physic_c=1; /* 1-3 per month */
+	else if physic=3 	 	then physic_c=2; /* 1-2 per week */
+	else if physic=4     	then physic_c=3; /* 3-4 per week */
+	else if physic=5     	then physic_c=4; /* 5+ per week */
+	else if physic=9	 	then physic_c=-9; /* missing */
 
 	** physical exercise ages 15..18 cat;
 	physic_1518_c=.;
-	if      physic_1518 in (0,1)			then physic_1518_c=0; /* rarely */
-	else if physic_1518=2	 	 			then physic_1518_c=1; /* 1-3 per month */
-	else if physic_1518=3 		 			then physic_1518_c=2; /* 1-2 per week */
-	else if physic_1518=4   	  			then physic_1518_c=3; /* 3-4 per week */
-	else if physic_1518=5	     			then physic_1518_c=4; /* 5+ per week */
-	else if physic_1518=9		 			then physic_1518_c=-9; /* missing */
+	if      physic_1518 in (0,1)	then physic_1518_c=0; /* rarely */
+	else if physic_1518=2	 	 	then physic_1518_c=1; /* 1-3 per month */
+	else if physic_1518=3 		 	then physic_1518_c=2; /* 1-2 per week */
+	else if physic_1518=4   	  	then physic_1518_c=3; /* 3-4 per week */
+	else if physic_1518=5	     	then physic_1518_c=4; /* 5+ per week */
+	else if physic_1518=9		 	then physic_1518_c=-9; /* missing */
 
 	** oral contraceptive duration cat;
 	oralbc_dur_c=.;
-	if      oralbc_yrs=0					then oralbc_dur_c=0; /* none */
-	else if oralbc_yrs=1					then oralbc_dur_c=1; /* 1-4 years */
-	else if oralbc_yrs=2					then oralbc_dur_c=2; /* 5-9 years */
-	else if oralbc_yrs=3 					then oralbc_dur_c=3; /* 10+ years */
-	else if oralbc_yrs in (8,9)				then oralbc_dur_c=-9; /* missing */
+	if      oralbc_yrs=0		then oralbc_dur_c=0; /* none */
+	else if oralbc_yrs=1		then oralbc_dur_c=1; /* 1-4 years */
+	else if oralbc_yrs=2		then oralbc_dur_c=2; /* 5-9 years */
+	else if oralbc_yrs=3 		then oralbc_dur_c=3; /* 10+ years */
+	else if oralbc_yrs in (8,9)	then oralbc_dur_c=-9; /* missing */
 
 	** oral contraceptive yes/no;
 	oralbc_yn_c=.;
-	if      oralbc_yrs=0 					then oralbc_yn_c=0; /* no oc */
-	else if 0<oralbc_yrs<8					then oralbc_yn_c=1; /* yes oc */
-	else if oralbc_yrs>7					then oralbc_yn_c=-9; /* missing */
+	if      oralbc_yrs=0 	then oralbc_yn_c=0; /* no oc */
+	else if 0<oralbc_yrs<8	then oralbc_yn_c=1; /* yes oc */
+	else if oralbc_yrs>7	then oralbc_yn_c=-9; /* missing */
 
 	** age at menarche cat, for clearance;
-	if      fmenstr=1						then fmenstr_c=0; /* <=10 years old */
-	else if fmenstr=2						then fmenstr_c=1; /* 11-12 years old */
-	else if fmenstr=3						then fmenstr_c=2; /* 13-14 years old */
-	else if fmenstr=4						then fmenstr_c=3; /* 15+ years old */
-	else if fmenstr>4						then fmenstr_c=-9; /* missing */	
+	if      fmenstr=1	then fmenstr_c=0; /* <=10 years old */
+	else if fmenstr=2	then fmenstr_c=1; /* 11-12 years old */
+	else if fmenstr=3	then fmenstr_c=2; /* 13-14 years old */
+	else if fmenstr=4	then fmenstr_c=3; /* 15+ years old */
+	else if fmenstr>4	then fmenstr_c=-9; /* missing */	
 
 	** age at menarche cat;
-	if      fmenstr=1						then fmenstr=0; /* <=10 years old */
-	else if fmenstr=2						then fmenstr=1; /* 11-12 years old */
-	else if fmenstr=3						then fmenstr=2; /* 13-14 years old */
-	else if fmenstr=4						then fmenstr=3; /* 15+ years old */
-	else if fmenstr>4						then fmenstr=-9; /* missing */
+	if      fmenstr=1	then fmenstr=0; /* <=10 years old */
+	else if fmenstr=2	then fmenstr=1; /* 11-12 years old */
+	else if fmenstr=3	then fmenstr=2; /* 13-14 years old */
+	else if fmenstr=4	then fmenstr=3; /* 15+ years old */
+	else if fmenstr>4	then fmenstr=-9; /* missing */
 
 	** education cat;
 	educ_c=.;
-	if 		educm=1 						then educ_c=0; /* less highschool */
-	else if educm=2							then educ_c=1; /* highschool grad */
-	else if educm in (3,4)					then educ_c=2; /* some college */
-	else if educm=5							then educ_c=3; /* college and grad */
-	else if educm=9							then educ_c=-9; /* missing */
+	if 		educm=1 		then educ_c=0; /* less highschool */
+	else if educm=2			then educ_c=1; /* highschool grad */
+	else if educm in (3,4)	then educ_c=2; /* some college */
+	else if educm=5			then educ_c=3; /* college and grad */
+	else if educm=9			then educ_c=-9; /* missing */
 
 	** race cat;
 	race_c=.;
-	if      racem=1							then race_c=0; /* non hispanic white */
-	else if racem=2							then race_c=1; /* non hispanic black */
-	else if racem in (3,4) 					then race_c=2; /* hispanic, asian PI AIAN */
-	else if racem=9							then race_c=-9; /* missing */
+	if      racem=1			then race_c=0; /* non hispanic white */
+	else if racem=2			then race_c=1; /* non hispanic black */
+	else if racem in (3,4) 	then race_c=2; /* hispanic, asian PI AIAN */
+	else if racem=9			then race_c=-9; /* missing */
 
 	** age at first live birth cat;
 	flb_age_c=9;
-	if 		age_flb in (1,2)				then flb_age_c=1; /* < 20 years old */
-	else if age_flb in (3,4)				then flb_age_c=2; /* 20s */
-	else if age_flb in (5,6,7)				then flb_age_c=3; /* 30s+ */
-	else if age_flb in (8,9)				then flb_age_c=-9; /* missing */
-	else if age_flb in (0)					then flb_age_c=9; /* nulliparous */
+	if 		age_flb in (1,2)	then flb_age_c=1; /* < 20 years old */
+	else if age_flb in (3,4)	then flb_age_c=2; /* 20s */
+	else if age_flb in (5,6,7)	then flb_age_c=3; /* 30s */
+	else if age_flb in (8,9)	then flb_age_c=-9; /* missing */
+	else if age_flb in (0)		then flb_age_c=9; /* nulliparous */
 	else	flb_age_c=.;
 
+	
 /** recode menopause status to include hysterectomy and oophorectomy **/
+	
 	/*
 	menostat=-1;
 	if LQ2_MENO_EVER=0                                                        then menostat=0; *Reference for models;
@@ -659,24 +583,17 @@ data conv.melan;
 	if LQ2_Q36_710>=50 AND LQ2_Q36_710<80 AND menostat>=2 AND menostat<=5  then hmeno_age=3;
 	*/
 
-	/** menopause status recoded;
+	** menopause status recoded;
 	** use the perstop_surg (hyststat and ovarystat) and perstop_radchem;
 	** fixed 20150715WED WTL;
 	menostat_c=.;
-	if 		perstop_surg=1 | hyststat=1 | ovarystat=1				then menostat_c=2; * surgical/hyst menopause;
-	*else if perstop_radchem=1										then menostat_c=4; * radiation or chemotherapy;
-	else if perstop_menop=1											then menostat_c=1; * natural menopause;
-	*else if perstop_nostop=1										then menostat_c=-9; * premenopausal;
-	*else if perstop_menop=0 & perstop_surg=0 & perstop_radchem=0	then menostat_c=4; * other reason;
-	else if perstop_nostop=0 | perstop_menop=0 | perstop_surg=0		then menostat_c=.; * missing;
+	if 		perstop_surg=1 | hyststat=1 | ovarystat=1				then menostat_c=2; /* surgical/hyst menopause */
+	*else if perstop_radchem=1										then menostat_c=4; /* radiation or chemotherapy */
+	else if perstop_menop=1											then menostat_c=1; /* natural menopause */
+	*else if perstop_nostop=1										then menostat_c=-9; /* premenopausal */
+	*else if perstop_menop=0 & perstop_surg=0 & perstop_radchem=0	then menostat_c=4; /* other reason */
+	else if perstop_nostop=0 | perstop_menop=0 | perstop_surg=0		then menostat_c=.; /* missing */
 	else 	menostat_c=-9;
-	**/
-
-	** menopause reason, 20150901 edit;
-	** 1 natural, 2 surgical;
-	menostat_c=.;
-	if		perstop_surg=1 | hyststat=1 | ovarystat=1		then menostat_c=2; /* surgical */
-	else if	perstop_menop=1									then menostat_c=1; /* natural */
 
 	** natural menopause reason age, 20150702 edit; 
 	meno_age_c=.;
@@ -713,8 +630,7 @@ data conv.melan;
 	menopi_age_me = menopi_age;
 	if menopi_age_me = 9							then menopi_age_me=.; /* missing for main effect */
 
-	** ovary status, 20150901TUE edit;
-	** revise ovarystat with new menopause recoding, no need for menostat;
+	** ovary status, 20150708WED edit;
 	ovarystat_c=.;
 	if 		ovarystat=1 & menostat_c=2				then ovarystat_c=1; /* both removed */
 	else if ovarystat=2 & menostat_c=2				then ovarystat_c=2; /* both intact */
@@ -744,8 +660,8 @@ data conv.melan;
 	*** surgical/hyst meno;
 	horm_surg_c=.;
 	if      hormstat=0 & menostat_c=2		then horm_surg_c=0; /* never hormones */
-	else if hormstat=1 & menostat_c=2		then horm_surg_c=1; /* current */
-	else if hormstat=2 & menostat_c=2		then horm_surg_c=2; /* former */
+	else if hormstat=1 & menostat_c=2		then horm_surg_c=1; /* former */
+	else if hormstat=2 & menostat_c=2		then horm_surg_c=2; /* current */
 	else if menostat_c NE 2					then horm_surg_c=.;
 	else 	horm_surg_c=-9; 									/* missing */
 
@@ -787,19 +703,20 @@ data conv.melan;
 	** bmi categories;
 
 	** bmi three categories;
-	** don't use this one (like Erikka), edit 20150708WED WTL;
-	*bmi_c=-9;
-	*if      0<=bmi_cur<25					then bmi_c=1; /* <25 */
-    *else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 to <30*/
-   	*else if bmi_cur>=30 					then bmi_c=3; /* >=30*/ 
-	*else if bmi_cur=.						then bmi_c=-9;
+	** use this one (like Erikka), edit 20150708WED WTL;
+	bmi_c=-9;
+	if      0<=bmi_cur<25					then bmi_c=1; /* <25 */
+   	else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 to <30*/
+   	else if bmi_cur>=30 					then bmi_c=3; /* >=30*/ 
+	else if bmi_cur=.						then bmi_c=-9;
 
-	** bmi_c new categories;
-	** use this new one, (like Sara), edit 20150825TUE WTL;
-	if      18.5<bmi_cur<25 				then bmi_c=1; /* 18.5 up to 25 */
-   	else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 up to 30 */
-   	else if 30<=bmi_cur<60 					then bmi_c=3; /* 30 up to 60 */
-	else 										 bmi_c=-9; /* missing or extreme */
+	** bmi five categories;
+	if      18.5<=bmi_cur<25 				then bmi_fc=1; /* normal bmi */
+   	else if 25<=bmi_cur<30 					then bmi_fc=2; /* overweight bmi */
+   	else if 30<=bmi_cur<35 					then bmi_fc=3; /* obese bmi */
+	else if 35<=bmi_cur<40 					then bmi_fc=4; /* morbid obesity bmi */
+   	else if bmi_cur>=40 					then bmi_fc=5; /* highest valid bmi */
+	else 	bmi_fc=-9;
 
 	** continuous bmi;
 	bmi_cont=bmi_cur/5;
@@ -865,74 +782,14 @@ data conv.melan;
 /* for riskfactor */
 run;
 
-/***************************************************************************************/ 
-/*   Exclude if self-reported periods stopped due to radchem                           */ 
-**	 exclude: excl_4_radchem;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/ 
-data conv.melan excl_radchem;
-	title 'Ex 4. exclude women whose periods stopped due to rad/chem, excl_4_radchem';
-	set conv.melan;
-	excl_4_radchem=0;
-	if perstop_radchem=1 then excl_4_radchem=1;
-	where excl_3_npostmeno=0;
-run;
-proc freq data=conv.melan;
-	tables excl_3_npostmeno*excl_4_radchem 
-			excl_4_radchem*melanoma_c /missing;
-run;
-
-/***************************************************************************************/ 
-/*   Exclude if missing info on cause of menopause                                     */ 
-**   exclude: excl_5_unkmenop;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/ 
-data conv.melan ;
-	title 'Ex 5. exclude women with missing menopause cause, excl_5_unkmenop';
-	set conv.melan;
-	** no hysterectomy, oopherectomy, surgical or natural menopause reason;
-	** rad/chem was excluded above;
-	excl_5_unkmenop=0;
-	if ( hyststat NE 1 & ovarystat NE 1 & perstop_surg NE 1 & perstop_menop NE 1 ) then excl_5_unkmenop=1;
-	where excl_4_radchem=0;
-run;
-proc freq data=conv.melan;
-	tables excl_4_radchem*excl_5_unkmenop 
-			excl_5_unkmenop*melanoma_c /missing;
-run;
-
-/***************************************************************************************/ 
-/*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_6_pyzero;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/      
 data conv.melan;
-	title 'Ex 6. exclude women with zero or less person years, excl_6_pyzero';
-	set conv.melan;
-    excl_6_pyzero=0;
-   	if personyrs <= 0 then excl_6_pyzero=1;
-   	where excl_5_unkmenop=0;
-run;
-proc freq data=conv.melan;
-	tables excl_5_unkmenop*excl_6_pyzero 
-			excl_6_pyzero*melanoma_c /missing;
-run; 
-data conv.melan;
-	title;
-	set conv.melan;
-	where excl_6_pyzero=0;
-run;
+	set conv.melan (where = (menostat_c NE . ));
 
-data conv.melan;
-	set conv.melan;
 	** recode parity and flb_age_c to consolidate contradicting missings in each;
 	** if nulliparous or missing number of births, then age at birth should be missing;
-	*** -9 in flb_age means missing to begin with;
-	*** whereas 9 in flb_age means they were coerced to be missing due to missing parity;
-	if		parity in (1,2) & flb_age_c=9	then flb_age_c=-9; 
-	else if parity=2 & flb_age_c=9			then flb_age_c=-9;
-	if 		parity in (0,-9)					then flb_age_c=9;
+	if parity in (0,-9)						then flb_age_c=9;
 run;
+
 
 
 /* recode the variables for main effect */
@@ -1015,6 +872,9 @@ data conv.melan;
 	if colo_sig_any = . 				then colo_sig_any=-9;
 run;
 
+ods html close;
+ods html;
+
 ** add labels;
 proc datasets library=conv;
 	modify melan;
@@ -1050,11 +910,11 @@ proc datasets library=conv;
 			horm_ever_me = "Ever take replacement hormones"
 			parity = "total number of live births"
 			cancer_g_c = "cancer grade"
-			bmi_c = "body mass index, with extremes"
+			bmi_c = "bmi, three"
+			bmi_fc = "bmi, 5"
 			stage_c = "stage of first primary cancer"
 			physic_1518_c = "level of physical activity at ages 15-18 (base)"
 			marriage = "marriage status"
-			postmeno = "Postmenopausal status"
 
 			smoke_f_c = "ever smoking status"
 			smoke_former ="Smoking Status"
@@ -1091,7 +951,7 @@ proc datasets library=conv;
 			physic_c physic_c_me physicfmt. 
 			horm_nat_c_me horm_surg_c_me horm_ever_me hormstatfmt. parity_me parityfmt. 
 			horm_cur_me hormcurfmt. horm_yrs_me hormyrsfmt.
-			bmi_c_me bminewfmt. agecat_me agecatfmt.
+			bmi_c_me bmifmt. agecat_me agecatfmt.
 			smoke_former_me smokeformerfmt. 
 			rel_1d_cancer_me relativefmt. coffee_c_me coffeefmt. etoh_c_me etohfmt.
 			ovarystat_c_me ovarystatfmt. oralbc_yn_c_me oralbcynfmt.
@@ -1102,10 +962,10 @@ proc datasets library=conv;
 			birth_cohort birthcohortfmt. flb_age_c flbagefmt. fmenstr fmenstrfmt. 
 			meno_age_c menoagefmt. menostat_c menostatfmt. surg_age_c surgagefmt.
 			physic_c physic_c physicfmt. 
-			hormstat horm_ever horm_ever_me horm_nat_c horm_surg_c hormstatfmt. parity parityfmt. 
+			horm_nat_c horm_surg_c hormstatfmt. parity parityfmt. 
 			horm_cur hormcurfmt. 
 			horm_yrs_c horm_yrs_me horm_yrs_nat_c horm_yrs_surg_c horm_yrs_nat_me horm_yrs_surg_me hormyrsfmt.
-			bmi_c bminewfmt. agecat agecatfmt.
+			bmi_c bmifmt. agecat agecatfmt.
 			smoke_former smokeformerfmt. smoke_dose smokedosefmt. smoke_quit smokequitfmt.
 			rel_1d_cancer relativefmt. coffee_c coffeefmt. etoh_c etohfmt.
 			ovarystat_c ovarystatfmt. oralbc_yn_c oralbcynfmt.
@@ -1114,10 +974,11 @@ proc datasets library=conv;
 			menop_age menop_age_me menopagefmt.
 			mht_ever mht_ever_me mhteverfmt.
 			menopi_age menopi_age_me menopiagefmt.
-			postmeno postmenofmt.
 	;
 run;
 /******************************************************************************************/
+ods html close;
+ods html;
 data use;
 	set conv.melan;
 run;
