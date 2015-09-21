@@ -51,7 +51,7 @@ proc format;
 	value hormstatfmt -9='missing' 0='Never' 1='Current' 2='Former' 9='Unknown';
 	value hormeverfmt -9='missing' 0='Never' 1='Ever';
 	value hormcurfmt 9='missing' 0='No' 1='Yes Currently';
-	value hormyrsfmt -9='missing' 0='never used' 1='1. <5 years' 2='2. 5-9 years' 3='3. >=10 years' 9='Unknown';
+	value hormyrsfmt -9='missing' 0='Never used' 1='1. <5 years' 2='2. 5-9 years' 3='3. >=10 years' 9='Unknown';
 	value oralbcdurfmt -9='missing' 0='Never/<1yr' 1='1-4 years' 2='5-9 years' 3='10+ years';
 	value oralbcynfmt -9='missing' 0='Never/<1yr' 1='Ever';
 	value oralbcyrsfmt 9='Unknown' 0='Never/<1yr' 1='1-4 years' 2='5-9 years' 3='10+ years';
