@@ -13,6 +13,7 @@
 #
 # Created: February 06 2015
 # Updated: v20150908THU WTL
+# <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
