@@ -39,7 +39,7 @@ proc format;
 	value menopiagefmt 9='missing' 1='<45' 2='45-49' 3='50+' 5='still menstruating';
 	value menoagefmt -9='missing' 1='<50' 2='50-54' 3='55+' 4='periods did not stop';
 	value surgagefmt -9='missing' 1='<45' 2='45-49' 3='50+' 4='periods did not stop';
-	value flbagefmt -9='missing' 1='< 20 years old' 2='20s' 3='30s' 9='nulliparous/missing parity';
+	value flbagefmt -9='missing' 1='< 20 years old' 2='20-29' 3='30+' 9='nulliparous/missing parity';
 	value parityfmt -9='missing' 0='nulliparous' 1='1-2 live children' 2='>=3 live children';
 	value hormstatfmt -9='missing' 0='never' 1='former' 2='current';
 	value hormeverfmt -9='missing' 0='never' 1='ever';
