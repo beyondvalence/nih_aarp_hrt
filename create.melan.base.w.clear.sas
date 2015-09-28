@@ -264,14 +264,6 @@ data conv.melan;
 	else if 1935 <= dob_year < 1939  	then birth_cohort=4;
 	else if 1939 <= dob_year         	then birth_cohort=5;
 
-	** birth cohort dates by every 5 years;
-	birth_cohort2=.;
-	if		1925 <= dob_year < 1930		then birth_cohort2=1;
-	else if 1930 <= dob_year < 1935		then birth_cohort2=2;
-	else if 1935 <= dob_year < 1940		then birth_cohort2=3;
-	else if 1940 <= dob_year < 1945		then birth_cohort2=4;
-	else if 1945 <= dob_year < 1950		then birth_cohort2=5;
-
 	** physical exercise cat;
 	physic_c=.;
 	if      physic in (0,1)	then physic_c=0; /* rarely */
@@ -361,17 +353,11 @@ data conv.melan;
 	if LQ2_Q36_710>=50 AND LQ2_Q36_710<80 AND menostat>=2 AND menostat<=5  then hmeno_age=3;
 	*/
 
-	** menopause status recoded;
-	** use the perstop_surg (hyststat and ovarystat) and perstop_radchem;
-	** fixed 20150715WED WTL;
+	** menopause reason, 20150901 edit;
+	** 1 natural, 2 surgical;
 	menostat_c=.;
-	if 		perstop_surg=1 | hyststat=1 | ovarystat=1				then menostat_c=2; /* surgical/hyst menopause */
-	*else if perstop_radchem=1										then menostat_c=4; /* radiation or chemotherapy */
-	else if perstop_menop=1											then menostat_c=1; /* natural menopause */
-	*else if perstop_nostop=1										then menostat_c=-9; /* premenopausal */
-	*else if perstop_menop=0 & perstop_surg=0 & perstop_radchem=0	then menostat_c=4; /* other reason */
-	else if perstop_nostop=0 | perstop_menop=0 | perstop_surg=0		then menostat_c=.; /* missing */
-	else 	menostat_c=-9;
+	if		perstop_surg=1 | hyststat=1 | ovarystat=1		then menostat_c=2; /* surgical */
+	else if	perstop_menop=1									then menostat_c=1; /* natural */
 
 	** natural menopause reason age, 20150702 edit; 
 	meno_age_c=.;
@@ -461,6 +447,9 @@ data conv.melan;
 	else if livechild in (3,4,5) 			then parity=2; /* >=3 live children */
 	else if livechild in (8,9)				then parity=-9; /* missing */
 
+	parity_ever=parity;
+	if parity_ever in (1,2)					then parity_ever=1;
+
 	** cancer grade cat;
 	cancer_g_c=.;
 	if 	    cancer_grade=1					then cancer_g_c=0; 
@@ -472,24 +461,12 @@ data conv.melan;
 	********************************************;
 	** bmi categories;
 
-	** bmi three categories;
-	** use this one (like Erikka), edit 20150708WED WTL;
-	bmi_c=-9;
-	if      0<=bmi_cur<25					then bmi_c=1; /* <25 */
-   	else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 to <30*/
-   	else if bmi_cur>=30 					then bmi_c=3; /* >=30*/ 
-	else if bmi_cur=.						then bmi_c=-9;
-
-	** bmi five categories;
-	if      18.5<=bmi_cur<25 				then bmi_fc=1; /* normal bmi */
-   	else if 25<=bmi_cur<30 					then bmi_fc=2; /* overweight bmi */
-   	else if 30<=bmi_cur<35 					then bmi_fc=3; /* obese bmi */
-	else if 35<=bmi_cur<40 					then bmi_fc=4; /* morbid obesity bmi */
-   	else if bmi_cur>=40 					then bmi_fc=5; /* highest valid bmi */
-	else 	bmi_fc=-9;
-
-	** continuous bmi;
-	bmi_cont=bmi_cur/5;
+	** bmi_c new categories;
+	** use this new one, (like Sara), edit 20150825TUE WTL;
+	if      18.5<bmi_cur<25 				then bmi_c=1; /* 18.5 up to 25 */
+   	else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 up to 30 */
+   	else if 30<=bmi_cur<60 					then bmi_c=3; /* 30 up to 60 */
+	else 										 bmi_c=-9; /* missing or extreme */
 
 	** first primary cancer stage, edit 20150817MON WTL;
 	stage_c=.;
@@ -703,6 +680,7 @@ data conv.melan;
 	by westatid;
 	if snsd;
 	if colo_sig_any = . 				then colo_sig_any=-9;
+	any_screen=colo_sig_any;
 run;
 
 ods html close;
@@ -757,6 +735,7 @@ proc datasets library=conv;
 			coffee_c = 'Coffee drinking'
 			etoh_c = 'Total alchohol per day including food sources'
 			colo_sig_any = "Colonoscopy or Sigmoidoscopy in past 3 years?"
+			any_screen = "Colonoscopy or Sigmoidoscopy in past 3 years?"
 
 			horm_cur = 'Current Hormone Use'
 			horm_yrs_c = 'Hormone Use Duration'
@@ -808,9 +787,9 @@ proc datasets library=conv;
 			ovarystat_c ovarystat ovarystatfmt.
 			oralbc_yn_c oralbcynfmt.
 			horm_nat_ever_c horm_surg_ever_c hormeverfmt.
-			colo_sig_any colosigfmt.
+			colo_sig_any any_screen colosigfmt.
 			menop_age menop_age_me menopagefmt.
-			mht_ever mht_ever_me mhteverfmt.
+			mht_ever mht_ever_me parity_ever mhteverfmt.
 			menopi_age menopi_age_me menopiagefmt.
 			educm educmfmt.
 			livechild livechildfmt.

@@ -12,7 +12,7 @@
 # uses the uv_public, out09jan14, exp05jun14 datasets
 #
 # Created: February 06 2015
-# Updated: v20150908THU WTL
+# Updated: v20150928THU WTL
 # <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
@@ -550,22 +550,6 @@ data conv.melan;
 	else if 253.731 < exposure_jul_78_05           		then UVRQ=4;
 	else UVRQ=-9;
 
-	** birth cohort date of birth quintile;
-	birth_cohort=.;
-	if      1925 <= dob_year < 1929  		then birth_cohort=1;
-	else if 1929 <= dob_year < 1932  		then birth_cohort=2;
-	else if 1932 <= dob_year < 1935  		then birth_cohort=3;
-	else if 1935 <= dob_year < 1939  		then birth_cohort=4;
-	else if 1939 <= dob_year         		then birth_cohort=5;
-
-	** birth cohort dates by every 5 years;
-	birth_cohort2=.;
-	if		1925 <= dob_year < 1930			then birth_cohort2=1;
-	else if 1930 <= dob_year < 1935			then birth_cohort2=2;
-	else if 1935 <= dob_year < 1940			then birth_cohort2=3;
-	else if 1940 <= dob_year < 1945			then birth_cohort2=4;
-	else if 1945 <= dob_year < 1950			then birth_cohort2=5;
-
 	** physical exercise cat;
 	physic_c=.;
 	if      physic in (0,1)					then physic_c=0; /* rarely */
@@ -635,43 +619,6 @@ data conv.melan;
 	else if age_flb in (8,9)				then flb_age_c=-9; /* missing */
 	else if age_flb in (0)					then flb_age_c=9; /* nulliparous */
 	else	flb_age_c=.;
-
-/** recode menopause status to include hysterectomy and oophorectomy **/
-	/*
-	menostat=-1;
-	if LQ2_MENO_EVER=0                                                        then menostat=0; *Reference for models;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_713=1                                      then menostat=1; *Natural menopause, no hysterectomy;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and LQ2_Q38_717=1                    then menostat=2; *Hysterectomy, 2 ovaries removed;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and LQ2_Q38_717=2                    then menostat=3; *Hysterectomy, 1 ovary removed;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and LQ2_Q38_717=3                    then menostat=4; *Hysterectomy, 0 ovaries removed;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and (LQ2_38_717<0 or LQ2_Q38_717=4)  then menostat=5; *Hysterectomy, ovaries unknown;
-	if LQ2_MENO_EVER=1 and (LQ2_Q37_714=1 or LQ2_Q37_715=1 or LQ2_Q37_716=1)  then menostat=6; *Other reasons for menopause;
-
-	nmeno_age=-1;
-	if LQ2_MENO_EVER=0                                   then nmeno_age=0;
-	if LQ2_Q36_710>0   AND LQ2_Q36_710<50 AND menostat=1 then nmeno_age=1;
-	if LQ2_Q36_710>=50 AND LQ2_Q36_710<55 AND menostat=1 then nmeno_age=2;*Reference for models;
-	if LQ2_Q36_710>=55 AND LQ2_Q36_710<80 AND menostat=1 then nmeno_age=3;
-
-	hmeno_age=-1;
-	if LQ2_MENO_EVER=0                                                     then hmeno_age=0;
-	if LQ2_Q36_710>0   AND LQ2_Q36_710<45 AND menostat>=2 AND menostat<=5  then hmeno_age=1;*Reference for models;
-	if LQ2_Q36_710>=45 AND LQ2_Q36_710<50 AND menostat>=2 AND menostat<=5  then hmeno_age=2;
-	if LQ2_Q36_710>=50 AND LQ2_Q36_710<80 AND menostat>=2 AND menostat<=5  then hmeno_age=3;
-	*/
-
-	/** menopause status recoded;
-	** use the perstop_surg (hyststat and ovarystat) and perstop_radchem;
-	** fixed 20150715WED WTL;
-	menostat_c=.;
-	if 		perstop_surg=1 | hyststat=1 | ovarystat=1				then menostat_c=2; * surgical/hyst menopause;
-	*else if perstop_radchem=1										then menostat_c=4; * radiation or chemotherapy;
-	else if perstop_menop=1											then menostat_c=1; * natural menopause;
-	*else if perstop_nostop=1										then menostat_c=-9; * premenopausal;
-	*else if perstop_menop=0 & perstop_surg=0 & perstop_radchem=0	then menostat_c=4; * other reason;
-	else if perstop_nostop=0 | perstop_menop=0 | perstop_surg=0		then menostat_c=.; * missing;
-	else 	menostat_c=-9;
-	**/
 
 	** menopause reason, 20150901 edit;
 	** 1 natural, 2 surgical;
@@ -776,6 +723,9 @@ data conv.melan;
 	else if livechild in (3,4,5) 			then parity=2; /* >=3 live children */
 	else if livechild in (8,9)				then parity=-9; /* missing */
 
+	parity_ever=parity;
+	if parity_ever in (1,2)					then parity_ever=1;
+
 	** cancer grade cat;
 	cancer_g_c=.;
 	if 	    cancer_grade=1					then cancer_g_c=0; 
@@ -786,15 +736,6 @@ data conv.melan;
 
 	********************************************;
 	** bmi categories;
-
-	** bmi three categories;
-	** don't use this one (like Erikka), edit 20150708WED WTL;
-	*bmi_c=-9;
-	*if      0<=bmi_cur<25					then bmi_c=1; /* <25 */
-    *else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 to <30*/
-   	*else if bmi_cur>=30 					then bmi_c=3; /* >=30*/ 
-	*else if bmi_cur=.						then bmi_c=-9;
-
 	** bmi_c new categories;
 	** use this new one, (like Sara), edit 20150825TUE WTL;
 	if      18.5<bmi_cur<25 				then bmi_c=1; /* 18.5 up to 25 */
