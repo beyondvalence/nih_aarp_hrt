@@ -509,31 +509,19 @@ data conv.melan;
 	title;
 	set conv.melan;
 	** new postmenopause status recoded;
-	** is postmenopausal: 1,2,3,4;
+	** is postmenopausal: 1,2,;
 	** is not postmenopausal: 99;
-	** use Sara Schonfeld's imputation method;
 	** edit 20150929TUE WTL;
 	postmeno=.;
-	if  	(perstop_menop=1 | perstop_surg=1)    						/*reported periods stopped due to nat or surg and */
-																		then postmeno=1; 
+	if  	(perstop_menop=1 | perstop_surg=1)    						/* reported periods stopped due to nat or surg or */
+			| (ovarystat=1 | hyststat=1)								then postmeno=1; /* surgery */
 
-	else if entry_age>=58												/*women>=57 and */                                                                       
-			& ( menop_age<6 											/*have a menopausal age or */
-			| (perstop_menop=1 | perstop_surg=1)						/*have a reason for menopause or */                              
-			| hormever=1 ) 												then postmeno=2; /*took MHT */       
-
-	else if entry_age<=58												/*women<=57 and */
-			& (ovarystat=1 | hyststat=1)                                /*had ovary or hyst surgery and */
-			& (menop_age<6 | perstop_nostop=0)							then postmeno=3; /*had age at last period or said periods stopped */
-
-	else if entry_age<=58 												/*women<=57 and */
-			& perstop_nostop=1											/*periods did not stop and */
-			& (perstop_menop=1 & hormever=1)							then postmeno=4; /*natural menopause and took MHT */
-
-else postmeno=99;
+	else if entry_age>=60												then postmeno=2; /* 60 or older considered postmeno */  	
+ 
+	else postmeno=99;
 run;
 /***************************************************************************************/ 
-/*   Exclude non-postmenopausal from above postmeno variable                           */
+/*   Exclude non-postmenopausal from above postmeno variable                           */ 
 **   edit 20150901TUE WTL;
 /***************************************************************************************/ 
 data conv.melan;
