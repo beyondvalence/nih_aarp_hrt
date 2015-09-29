@@ -273,6 +273,7 @@ run;
 ** uses the pre-created analysis_use from above checkpoint;
 ods _all_ close; ods html;
 data melan; ** name the output of the first primary analysis include to melan;
+	title;
 	set conv.analysis_use;
 	****** Define melanoma - pulled from allcancer-coffee analysis ******; 
 	** create the melanoma case variable from the cancer ICD-O-3 and SEER coding of 25010;
@@ -510,8 +511,8 @@ data conv.melan;
 	** new postmenopause status recoded;
 	** is postmenopausal: 1,2,3,4;
 	** is not postmenopausal: 99;
-	** use Sara Schonfeld's impuation method;
-	** edit 20150902WED WTL;
+	** use Sara Schonfeld's imputation method;
+	** edit 20150929TUE WTL;
 	postmeno=.;
 	if  	(perstop_menop=1 | perstop_surg=1)    						/*reported periods stopped due to nat or surg and */
 																		then postmeno=1; 
@@ -823,8 +824,6 @@ data conv.melan;
 
 /* for riskfactor */
 run;
-
-
 
 /***************************************************************************************/ 
 /*   Exclude if missing info on cause of menopause                                     */ 
