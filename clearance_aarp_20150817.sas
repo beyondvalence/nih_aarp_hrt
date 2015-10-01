@@ -157,7 +157,7 @@ data conv.melan;
 	** new postmenopause status recoded;
 	** is postmenopausal: 1,2,3,4;
 	** is not postmenopausal: 99;
-	** use Sara Schonfeld's imputation method;
+	** use Sara Schonfeld's impuation method;
 	** edit 20150929TUE WTL;
 	postmeno=.;
 	if  	(perstop_menop=1 | perstop_surg=1)    						/*reported periods stopped due to nat or surg and */
@@ -397,6 +397,7 @@ data conv.melan;
 
 run;
 
+
 /***************************************************************************************/ 
 /*   Exclude if missing info on cause of menopause                                     */ 
 **   exclude: excl_5_unkmenop;
@@ -577,17 +578,18 @@ proc freq data=use;
 		fmenstr_c*melanoma_c / missing nocol norow nopercent;
 run;
 proc freq data=use;
-	title1 'perstop_surg: periods stop due to surgery?';
-	title2 'hystat: hyterectomy status';
-	title3 'ovarystat: ovary status';
-	title4 'perstop_menop: periods stop due to natural menopause?';
+	title1 'perstop_menop: periods stop due to natural menopause?';
+	title2 'perstop_surg: periods stop due to surgery?';
+	title3 'hystat: hyterectomy status';
+	title4 'ovarystat: ovary status';
 	tables
-		menostat_c**perstop_surg*hyststat*ovarystat*perstop_menop / missing list nopercent nocum;
+		menostat_c*perstop_menop*perstop_surg*hyststat*ovarystat / missing list nopercent nocum;
 	where melanoma_c=0;
 run;
 proc freq data=use;
 	title;
 	tables
+		menostat_c*melanoma_c
 		ovarystat_c*menostat_c
 		ovarystat_c*ovarystat
 		ovarystat_c*melanoma_c
