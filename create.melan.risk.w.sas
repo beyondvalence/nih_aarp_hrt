@@ -511,52 +511,57 @@ proc freq data=conv.melan_r;
 			excl_2_premeno*melanoma_c /missing;
 run;
 
+/***************************************************************************************/ 
+/*   Exclude if self-reported periods stopped due to radchem                           */ 
+**	 exclude: excl_3_radchem;
+**   edit: 20150929TUE WTL;
+/***************************************************************************************/ 
+data conv.melan_r excl_radchem;
+	title 'Ex 3. exclude women whose periods stopped due to rad/chem, excl_3_radchem';
+	set conv.melan_r;
+	excl_3_radchem=0;
+	if perstop_radchem=1 then excl_3_radchem=1;
+	where excl_2_premeno=0;
+run;
+proc freq data=conv.melan_r;
+	tables excl_2_premeno*excl_3_radchem 
+			excl_3_radchem*melanoma_c /missing;
+run;
+
 /******************************************************************************************/
 ** creates the new imputed postmenopausal variable;
-** excl_3_npostmeno;
+** excl_4_npostmeno;
 ** edit 20150901TUE WTL;
 /******************************************************************************************/
 data conv.melan_r;
 	title;
 	set conv.melan_r;
 	** new postmenopause status recoded;
-	** is postmenopausal: 1,2,3,4;
+	** is postmenopausal: 1,2,;
 	** is not postmenopausal: 99;
-	** use Sara Schonfeld's impuation method;
-	** edit 20150902WED WTL;
+	** edit 20150929TUE WTL;
 	postmeno=.;
-	if  	(perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)    	/*reported periods stopped due to nat, surg, or rad/chem and */
-																		then postmeno=1; 
+	if  	(perstop_menop=1 | perstop_surg=1)    						/* reported periods stopped due to nat or surg or */
+			| (ovarystat=1 | hyststat=1)								then postmeno=1; /* surgery */
 
-	else if entry_age>=58												/*women>=57 and */                                                                       
-			& ( menop_age<6 											/*have a menopausal age or */
-			| (perstop_menop=1 | perstop_surg=1 | perstop_radchem=1)	/*have a reason for menopause or */                              
-			| hormever=1 ) 												then postmeno=2; /*took MHT */       
-
-	else if entry_age<=58												/*women<=57 and */
-			& (ovarystat=1 | hyststat=1)                                /*had ovary or hyst surgery and */
-			& (menop_age<6 | perstop_nostop=0)							then postmeno=3; /*had age at last period or said periods stopped */
-
-	else if entry_age<=58 												/*women<=57 and */
-			& perstop_nostop=1											/*periods did not stop and */
-			& (perstop_menop=1 & hormever=1)							then postmeno=4; /*natural menopause and took MHT */
-
-else postmeno=99;
+	else if entry_age>=60												then postmeno=2; /* 60 or older considered postmeno */  	
+ 
+	else postmeno=99;
 run;
 /***************************************************************************************/ 
-/*   Exclude non-postmenopausal from above postmeno variable                           */
+/*   Exclude non-postmenopausal from above postmeno variable                           */ 
 **   edit 20150901TUE WTL;
 /***************************************************************************************/ 
 data conv.melan_r;
-	title 'Ex 3. exclude those not post-menopausal, excl_3_npostmeno';
+	title 'Ex 4. exclude those not post-menopausal, excl_4_npostmeno';
 	set conv.melan_r;
-	excl_3_npostmeno=0;
-	if postmeno=99 then excl_3_npostmeno=1;
-	where excl_2_premeno=0;
+	excl_4_npostmeno=0;
+	if postmeno=99 then excl_4_npostmeno=1;
+	where excl_3_radchem=0;
 run;
 proc freq data=conv.melan_r;
-	tables excl_2_premeno*excl_3_npostmeno 
-			excl_3_npostmeno*melanoma_c /missing;
+	tables excl_3_radchem*excl_4_npostmeno 
+			excl_4_npostmeno*melanoma_c /missing;
 run;
 proc freq data=conv.melan_r;
 	tables postmeno*melanoma_c /missing;
@@ -968,61 +973,25 @@ data conv.melan_r;
 run;
 
 /***************************************************************************************/ 
-/*   Exclude if self-reported periods stopped due to radchem                           */ 
-**	 exclude: excl_4_radchem;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/ 
-data conv.melan_r excl_radchem;
-	title 'Ex 4. exclude women whose periods stopped due to rad/chem, excl_4_radchem';
-	set conv.melan_r;
-	excl_4_radchem=0;
-	if perstop_radchem=1 then excl_4_radchem=1;
-	where excl_3_npostmeno=0;
-run;
-proc freq data=conv.melan_r;
-	tables excl_3_npostmeno*excl_4_radchem 
-			excl_4_radchem*melanoma_c /missing;
-run;
-
-/***************************************************************************************/ 
-/*   Exclude if missing info on cause of menopause                                     */ 
-**   exclude: excl_5_unkmenop;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/ 
-data conv.melan_r ;
-	title 'Ex 5. exclude women with missing menopause cause, excl_5_unkmenop';
-	set conv.melan_r;
-	** no hysterectomy, oopherectomy, surgical or natural menopause reason;
-	** rad/chem was excluded above;
-	excl_5_unkmenop=0;
-	if ( hyststat NE 1 & ovarystat NE 1 & perstop_surg NE 1 & perstop_menop NE 1 ) then excl_5_unkmenop=1;
-	where excl_4_radchem=0;
-run;
-proc freq data=conv.melan_r;
-	tables excl_4_radchem*excl_5_unkmenop 
-			excl_5_unkmenop*melanoma_c /missing;
-run;
-
-/***************************************************************************************/ 
 /*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_6_pyzero;
+**   exclude: excl_5_pyzero;
 **   edit: 20150901TUE WTL;
 /***************************************************************************************/      
 data conv.melan_r;
-	title 'Ex 6. exclude women with zero or less person years, excl_6_pyzero';
+	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
 	set conv.melan_r;
-    excl_6_pyzero=0;
-   	if personyrs <= 0 then excl_6_pyzero=1;
-   	where excl_5_unkmenop=0;
+    excl_5_pyzero=0;
+   	if personyrs <= 0 then excl_5_pyzero=1;
+   	where excl_4_npostmeno=0;
 run;
 proc freq data=conv.melan_r;
-	tables excl_5_unkmenop*excl_6_pyzero 
-			excl_6_pyzero*melanoma_c /missing;
+	tables excl_4_npostmeno*excl_5_pyzero 
+			excl_5_pyzero*melanoma_c /missing;
 run; 
 data conv.melan_r;
 	title;
 	set conv.melan_r;
-	where excl_6_pyzero=0;
+	where excl_5_pyzero=0;
 run;
 
 data conv.melan_r;

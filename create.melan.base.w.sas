@@ -814,44 +814,25 @@ data conv.melan;
 run;
 
 /***************************************************************************************/ 
-/*   Exclude if missing info on cause of menopause                                     */ 
-**   exclude: excl_5_unkmenop;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/ 
-data conv.melan ;
-	title 'Ex 5. exclude women with missing menopause cause, excl_5_unkmenop';
-	set conv.melan;
-	** no hysterectomy, oopherectomy, surgical or natural menopause reason;
-	** rad/chem was excluded above;
-	excl_5_unkmenop=0;
-	if ( hyststat NE 1 & ovarystat NE 1 & perstop_surg NE 1 & perstop_menop NE 1 ) then excl_5_unkmenop=1;
-	where excl_4_npostmeno=0;
-run;
-proc freq data=conv.melan;
-	tables excl_4_npostmeno*excl_5_unkmenop 
-			excl_5_unkmenop*melanoma_c /missing;
-run;
-
-/***************************************************************************************/ 
 /*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_6_pyzero;
+**   exclude: excl_5_pyzero;
 **   edit: 20150901TUE WTL;
 /***************************************************************************************/      
 data conv.melan;
-	title 'Ex 6. exclude women with zero or less person years, excl_6_pyzero';
+	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
 	set conv.melan;
-    excl_6_pyzero=0;
-   	if personyrs <= 0 then excl_6_pyzero=1;
-   	where excl_5_unkmenop=0;
+    excl_5_pyzero=0;
+   	if personyrs <= 0 then excl_5_pyzero=1;
+   	where excl_4_npostmeno=0;
 run;
 proc freq data=conv.melan;
-	tables excl_5_unkmenop*excl_6_pyzero 
-			excl_6_pyzero*melanoma_c /missing;
+	tables excl_4_npostmeno*excl_5_pyzero 
+			excl_5_pyzero*melanoma_c /missing;
 run; 
 data conv.melan;
 	title;
 	set conv.melan;
-	where excl_6_pyzero=0;
+	where excl_5_pyzero=0;
 run;
 
 data conv.melan;
@@ -963,7 +944,6 @@ proc datasets library=conv;
 			oralbc_dur_c = "birth control duration"
 			oralbc_yn_c = "birth control yes/no"
 			birth_cohort = "Year of birth, quantiles"
-			birth_cohort2= "Year of birth, 5 year segments"
 			educ_c = "education level"
 			race_c = "race split into 3"
 			attained_age = "Attained Age"
