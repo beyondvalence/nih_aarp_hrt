@@ -488,7 +488,7 @@ run;*/
 **	 exclude: excl_3_radchem;
 **   edit: 20150929TUE WTL;
 /***************************************************************************************/ 
-data conv.melan excl_radchem;
+data conv.melan;
 	title 'Ex 3. exclude women whose periods stopped due to rad/chem, excl_3_radchem';
 	set conv.melan;
 	excl_3_radchem=0;
