@@ -10,7 +10,7 @@
 # note: using new rexp dataset above
 #
 # Created: April 03 2015
-# Updated: v20150928MON WTL
+# Updated: v20151002FRI WTL
 # <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
@@ -528,35 +528,15 @@ proc freq data=conv.melan_r;
 			excl_3_radchem*melanoma_c /missing;
 run;
 
-/******************************************************************************************/
-** creates the new imputed postmenopausal variable;
-** excl_4_npostmeno;
-** edit 20150901TUE WTL;
-/******************************************************************************************/
-data conv.melan_r;
-	title;
-	set conv.melan_r;
-	** new postmenopause status recoded;
-	** is postmenopausal: 1,2,;
-	** is not postmenopausal: 99;
-	** edit 20150929TUE WTL;
-	postmeno=.;
-	if  	(perstop_menop=1 | perstop_surg=1)    						/* reported periods stopped due to nat or surg or */
-			| (ovarystat=1 | hyststat=1)								then postmeno=1; /* surgery */
-
-	else if entry_age>=60												then postmeno=2; /* 60 or older considered postmeno */  	
- 
-	else postmeno=99;
-run;
 /***************************************************************************************/ 
-/*   Exclude non-postmenopausal from above postmeno variable                           */ 
-**   edit 20150901TUE WTL;
+/*   Exclude if younger than 60 and with no menopause reason                           */ 
+**   edit 20151002FRI WTL;
 /***************************************************************************************/ 
 data conv.melan_r;
-	title 'Ex 4. exclude those not post-menopausal, excl_4_npostmeno';
+	title 'Ex 4. exclude those younger than 60 and with no menopause reason, excl_4_npostmeno';
 	set conv.melan_r;
 	excl_4_npostmeno=0;
-	if postmeno=99 then excl_4_npostmeno=1;
+	if entry_age < 60 & (perstop_menop NE 1 & perstop_surg NE 1 & ovarystat NE 1 & hyststat NE 1) then excl_4_npostmeno=1;
 	where excl_3_radchem=0;
 run;
 proc freq data=conv.melan_r;
@@ -575,8 +555,8 @@ proc univariate data=conv.melan_r;
 			pctlpre=p;
 run;
 proc print data=sauron;
-	*title 'UVR exposure percentiles';
-	title 'DOB exposure percentiles';
+	title 'UVR exposure percentiles';
+	*title 'DOB exposure percentiles';
 run; 
 	** need to change the exposure percentiles after exclusions;
 	** uvr exposure;
@@ -593,6 +573,7 @@ run;
 ** for both baseline and riskfactor questionnaire variables;
 /* cat=categorical ************************************************************************/
 data conv.melan_r;
+	title;
 	set conv.melan_r;
 
 /* for baseline */
