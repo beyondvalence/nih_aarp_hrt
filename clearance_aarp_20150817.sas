@@ -149,7 +149,7 @@ run;
 
 /***************************************************************************************/ 
 /*   Exclude if younger than 60 and with no menopause reason                           */ 
-**   edit 20151002FRI WTL;
+**   edit 20151005MON WTL;
 /***************************************************************************************/ 
 data conv.melan;
 	title 'Ex 4. exclude those younger than 60 and with no menopause reason, excl_4_npostmeno';
@@ -161,9 +161,6 @@ run;
 proc freq data=conv.melan;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
-run;
-proc freq data=conv.melan;
-	tables postmeno*melanoma_c /missing;
 run;
 
 /***************************************************************************************/ 
