@@ -41,6 +41,7 @@ libname results 'C:\REB\AARP_HRTandMelanoma\Results';
 ****0f surg_age_c					surg_age_c_me, continuous
 ****0g mht_ever						mht_ever_me (ref='Never')
 ****0h menopi_age					menopi_age_me (ref='<45')
+****0i horm_yrs_me					horm_yrs_me (ref='Never used')
 
 ****** ME riskfactor:				ME coded variable (ref= value)
 ****0a lacey_eptcurrent_ever		lacey_eptcurrent_ever_me (ref='No HT')
@@ -1983,6 +1984,75 @@ data A_All_menopi_age_me_mal ;
 	set A_TOT; 
 run;
 
+******************************************************************************;
+********************************************************************************;
+** B0i_ins
+** ME: horm_yrs_me (ref='Never used')  
+** melanoma: _ins, 
+** variables: ME;
+********************************************************************************;
+
+proc phreg data = use multipass;
+	class horm_yrs_me (ref='Never used') uvrq (ref='0 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_ins(0) = horm_yrs_me fmenstr uvrq educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any / entry = entry_age RL;
+	ods output ParameterEstimates=A_horm_yrs3 NObs=obs;
+run;
+
+data A_horm_yrs3; 
+	set A_horm_yrs3 ; 
+	where Parameter='horm_yrs_me';
+	Sortvar=1; 
+run;
+
+data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
+	set A_horm_yrs3 obs;
+run;
+data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
+	set A_TOT; 
+run;
+data A_TOT ; 
+	set A_TOT; 
+	type='_ins'; model='Total'; 
+run;
+
+data A_hyrs_me_ins ; 
+	set A_TOT; 
+run;
+
+******************************************************************************;
+********************************************************************************;
+** B0i_mal
+** ME: horm_yrs_me (ref='Never used')  
+** melanoma: _mal, 
+** variables: ME;
+********************************************************************************;
+
+proc phreg data = use multipass;
+	class horm_yrs_me (ref='Never used') uvrq (ref='0 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_mal(0) = horm_yrs_me fmenstr uvrq educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any / entry = entry_age RL;
+	ods output ParameterEstimates=A_horm_yrs4 NObs=obs;
+run;
+
+data A_horm_yrs4; 
+	set A_horm_yrs4 ; 
+	where Parameter='horm_yrs_me';
+	Sortvar=1; 
+run;
+
+data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
+	set A_horm_yrs4 obs;
+run;
+data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
+	set A_TOT; 
+run;
+data A_TOT ; 
+	set A_TOT; 
+	type='_mal'; model='Total'; 
+run;
+
+data A_hyrs_me_mal ; 
+	set A_TOT; 
+run;
 
 ******************************************************************************;
 
@@ -1991,8 +2061,8 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\modelB\base_mo
 ** put prints here;
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Baseline:';
-	title2 'Model B3';
-	title3 '20150917THU WTL';
+	title2 'Model B3v5';
+	title3 '20150923WED WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
@@ -2056,6 +2126,12 @@ proc print data=A_mht_base_ins;
 	title1 'Any MHT Ever';
 run;
 proc print data=A_mht_base_mal;
+	title1;
+run;
+proc print data=A_hyrs_me_ins;
+	title1 'Hormone Duration';
+run;
+proc print data=A_hyrs_me_mal;
 	title1;
 run;
 ods _all_ close;
