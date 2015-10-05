@@ -515,9 +515,18 @@ proc freq data=conv.melan;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
 run;
-proc freq data=conv.melan;
-	tables postmeno*melanoma_c /missing;
+
+/**
+proc univariate data=conv.melan;
+	var exposure_jul_78_05; 
+	output 	out=sauron 
+			pctlpts= 10 20 25 30 40 50 60 70 75 80 90 
+			pctlpre=p;
 run;
+proc print data=sauron;
+	title 'UVR exposure percentiles';
+run; 
+**/
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
 ** for both baseline and riskfactor questionnaire variables;

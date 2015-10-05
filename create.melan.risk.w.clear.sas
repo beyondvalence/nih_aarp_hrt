@@ -157,9 +157,6 @@ proc freq data=conv.melan_r;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
 run;
-proc freq data=conv.melan_r;
-	tables postmeno*melanoma_c /missing;
-run;
 
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;

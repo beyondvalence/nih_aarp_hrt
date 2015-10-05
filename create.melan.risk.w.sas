@@ -543,9 +543,6 @@ proc freq data=conv.melan_r;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
 run;
-proc freq data=conv.melan_r;
-	tables postmeno*melanoma_c /missing;
-run;
 
 ** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
 proc univariate data=conv.melan_r;
