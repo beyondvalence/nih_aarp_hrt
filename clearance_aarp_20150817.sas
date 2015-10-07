@@ -220,9 +220,6 @@ data conv.melan;
 	else if menop_age=4								then menop_age=3; /* 50-54 */
 	else if menop_age=5								then menop_age=4; /* 55+ */
 
-	menop_age_me = menop_age;
-	if 		menop_age_me=-9							then menop_age_me=.; /* missing for main effect */
-
 	** live child parity cat;
 	parity=.;
 	if 		livechild=0						then parity=0; /* no live children (nulliparous) */
@@ -330,15 +327,15 @@ data conv.melan;
 	physic_me = physic_c;
 	if	physic_me  in (9,-9)			then physic_me=.;
 
-	fmenstr_me = fmenstr;
+	fmenstr_me = fmenstr_c;
 	if	fmenstr_me in (9,-9)			then fmenstr_me=.;
 	menostat_me = menostat_c;
 	if	menostat_me in (9,-9) 			then menostat_me=.;
 	ovarystat_me=ovarystat_c;
 	if ovarystat_me in (9,-9)			then ovarystat_me=.;
-	menop_age_me = menop_age;
+	menop_age_me = menop_age_c;
 	if menop_age_me in (9,-9)			then menop_age_me=.;
-	parity_me=parity;
+	parity_me=parity_c;
 	if	parity_me in (9,-9)				then parity_me=.;
 	flb_age_me = flb_age_c;
 	if	flb_age_me  in (9,-9)			then flb_age_me=.;
@@ -348,10 +345,10 @@ data conv.melan;
 	oralbc_dur_me = oralbc_dur_c;
 	if	oralbc_dur_me in (9,-9)			then oralbc_dur_me=.;
 
-	mht_ever_me = mht_ever;
+	mht_ever_me = mht_ever_c;
 	if mht_ever_me in (9,-9)			then mht_ever_me=.;
-	horm_ever_me = horm_ever;
-	if horm_ever_me in (9,-9)			then horm_ever_me=.;
+	hormstat_me = hormstat_c;
+	if hormstat_me in (9,-9)			then hormstat_me=.;
 	horm_yrs_me = horm_yrs_c;
 	if	horm_yrs_me in (9,-9)			then horm_yrs_me=.;
 	horm_yrs_nat_me = horm_yrs_nat;
@@ -359,7 +356,7 @@ data conv.melan;
 	horm_yrs_surg_me = horm_yrs_surg;
 	if horm_horm_yrs_surg_me in (9,-9)	then horm_yrs_surg_me=.;
 
-	uvrq_me = uvrq;
+	uvrq_me = uvrq_c;
 	if	uvrq_me in (9,-9)				then uvrq_me=.;
 	marriage_me = marriage_c;
 	if marriage_me in (9,-9)			then marriage_me=.;
@@ -571,6 +568,7 @@ proc freq data=use;
 		physic_c*melanoma_c
 		physic_me*physic_c
 		physic_me*melanoma_c
+		fmenstr_c*fmenstr
 		fmenstr_c*melanoma_c 
 		fmenstr_me*fmenstr_c
 		fmenstr_me*melanoma_c / missing nocol norow nopercent;
@@ -596,13 +594,14 @@ proc freq data=use;
 		ovarystat_me*menostat_c
 		ovarystat_me*ovarystat_c
 		ovarystat_me*melanoma_c
-		menop_age*melanoma_c
-		menop_age_me*menop_age
+		menop_age_c*menop_age
+		menop_age_c*melanoma_c
+		menop_age_me*menop_age_c
 		menop_age_me*melanoma_c
-		parity*parity_ever
-		parity*livechild
-		parity*melanoma_c
-		parity_me*parity
+		parity_c*parity_ever
+		parity_c*livechild
+		parity_c*melanoma_c
+		parity_me*parity_c
 		parity_me*melanoma_c
 		flb_age_c*age_flb
 		flb_age_c*melanoma_c
@@ -612,59 +611,54 @@ proc freq data=use;
 		oralbc_yn_c*melanoma_c
 		oralbc_yn_me*oralbc_yn_c
 		oralbc_yn_me*melanoma_c
+		oralbc_dur_c*oralbc_yrs
 		oralbc_dur_c*melanoma_c
 		oralbc_dur_me*oralbc_dur_c
 		oralbc_dur_me*melanoma_c
-		mht_ever*hormstat
-		mht_ever*melanoma_c
+		mht_ever_c*hormstat
+		mht_ever_c*melanoma_c
 		mht_ever_me*mht_ever
 		mht_ever_me*melanoma_c
-		horm_ever*melanoma_c
-		horm_ever_me*horm_ever
-		horm_ever_me*melanoma_c
+		hormstat_c*hormstat
+		hormstat_c*melanoma_c
+		hormstat_me*hormstat_c
+		hormstat_me*melanoma_c
 		horm_yrs_c*melanoma_c
 		horm_yrs_me*horm_yrs_c
 		horm_yrs_me*melanoma_c
-		horm_yrs_nat*menostat_c
-		horm_yrs_nat*horm_yrs_c
-		horm_yrs_nat*melanoma_c
-		horm_yrs_nat_me*horm_yrs_nat
+		horm_yrs_nat_c*menostat_c
+		horm_yrs_nat_c*horm_yrs_c
+		horm_yrs_nat_c*melanoma_c
+		horm_yrs_nat_me*horm_yrs_nat_c
 		horm_yrs_nat_me*melanoma_c
-		horm_yrs_surg*menostat_c
-		horm_yrs_surg*horm_yrs
-		horm_yrs_surg*melanoma_c
-		horm_yrs_surg_me*horm_yrs_surg
+		horm_yrs_surg_c*menostat_c
+		horm_yrs_surg_c*horm_yrs
+		horm_yrs_surg_c*melanoma_c
+		horm_yrs_surg_me*horm_yrs_surg_c
 		horm_yrs_surg_me*melanoma_c
 		/ missing nocol norow nopercent;
 run;
 proc means data=use missing;
 	title 'based on current study population';
-	class uvrq;
+	class uvrq_c;
 	var exposure_jul_78_05;
 run;
 proc freq data=use;
 	title;
 	tables
-		uvrq*melanoma_c
-		uvrq_me*uvrq
+		uvrq_c*melanoma_c
+		uvrq_me*uvrq_c
 		uvrq_me*melanoma_c
 		marriage_c*marriage
 		marriage_c*melanoma_c
-		marriage_me*marriage_c
-		marriage_me*melanoma_c
-		smoke_former*melanoma_c
-		smoke_former_me*smoke_former
-		smoke_former_me*melanoma_c
+		smoke_former_c*smoke_former
+		smoke_former_c*melanoma_c
+		smoke_dose_c*smoke_dose
 		smoke_dose_c*melanoma_c
-		smoke_dose_me*smoke_dose_c
-		smoke_dose_me*melanoma_c
+		smoke_quit_c*smoke_quit
 		smoke_quit_c*melanoma_c 
-		smoke_quit_me*smoke_quit_c
-		smoke_quit_me*melanoma_c
 		coffee_c*qp12b
 		coffee_c*melanoma_c
-		coffee_me*coffee_c
-		coffee_me*melanoma_c
 		/ missing nocol norow nopercent;
 run;
 proc means data=use missing;
@@ -674,11 +668,8 @@ run;
 proc freq data=use;
 	tables
 		etoh_c*melanoma_c
-		etoh_me*etoh_c
-		etoh_me*melanoma_c
+		rel_1d_cancer_c*rel_1d_cancer
 		rel_1d_cancer_c*melanoma_c
-		rel_1d_cancer_me*rel_1d_cancer_c
-		rel_1d_cancer_me*melanoma_c
 		/ missing nocol norow nopercent;
 run;
 
