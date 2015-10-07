@@ -255,15 +255,6 @@ data conv.melan;
 	else if physic=5     	then physic_c=4; /* 5+ per week */
 	else if physic=9	 	then physic_c=-9; /* missing */
 
-	** physical exercise ages 15..18 cat;
-	physic_1518_c=.;
-	if      physic_1518 in (0,1)	then physic_1518_c=0; /* rarely */
-	else if physic_1518=2	 	 	then physic_1518_c=1; /* 1-3 per month */
-	else if physic_1518=3 		 	then physic_1518_c=2; /* 1-2 per week */
-	else if physic_1518=4   	  	then physic_1518_c=3; /* 3-4 per week */
-	else if physic_1518=5	     	then physic_1518_c=4; /* 5+ per week */
-	else if physic_1518=9		 	then physic_1518_c=-9; /* missing */
-
 	** oral contraceptive duration cat;
 	oralbc_dur_c=.;
 	if      oralbc_yrs=0		then oralbc_dur_c=0; /* none */
@@ -309,55 +300,11 @@ data conv.melan;
 	else if age_flb in (0)		then flb_age_c=9; /* nulliparous */
 	else 	flb_age_c=.;
 
-	
-/** recode menopause status to include hysterectomy and oophorectomy **/
-	
-	/*
-	menostat=-1;
-	if LQ2_MENO_EVER=0                                                        then menostat=0; *Reference for models;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_713=1                                      then menostat=1; *Natural menopause, no hysterectomy;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and LQ2_Q38_717=1                    then menostat=2; *Hysterectomy, 2 ovaries removed;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and LQ2_Q38_717=2                    then menostat=3; *Hysterectomy, 1 ovary removed;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and LQ2_Q38_717=3                    then menostat=4; *Hysterectomy, 0 ovaries removed;
-	if LQ2_MENO_EVER=1 and LQ2_Q37_712=1 and (LQ2_38_717<0 or LQ2_Q38_717=4)  then menostat=5; *Hysterectomy, ovaries unknown;
-	if LQ2_MENO_EVER=1 and (LQ2_Q37_714=1 or LQ2_Q37_715=1 or LQ2_Q37_716=1)  then menostat=6; *Other reasons for menopause;
-
-	nmeno_age=-1;
-	if LQ2_MENO_EVER=0                                   then nmeno_age=0;
-	if LQ2_Q36_710>0   AND LQ2_Q36_710<50 AND menostat=1 then nmeno_age=1;
-	if LQ2_Q36_710>=50 AND LQ2_Q36_710<55 AND menostat=1 then nmeno_age=2;*Reference for models;
-	if LQ2_Q36_710>=55 AND LQ2_Q36_710<80 AND menostat=1 then nmeno_age=3;
-
-	hmeno_age=-1;
-	if LQ2_MENO_EVER=0                                                     then hmeno_age=0;
-	if LQ2_Q36_710>0   AND LQ2_Q36_710<45 AND menostat>=2 AND menostat<=5  then hmeno_age=1;*Reference for models;
-	if LQ2_Q36_710>=45 AND LQ2_Q36_710<50 AND menostat>=2 AND menostat<=5  then hmeno_age=2;
-	if LQ2_Q36_710>=50 AND LQ2_Q36_710<80 AND menostat>=2 AND menostat<=5  then hmeno_age=3;
-	*/
-
 	** menopause reason, 20150901 edit;
 	** 1 natural, 2 surgical;
 	menostat_c=.;
 	if		perstop_surg=1 | hyststat=1 | ovarystat=1		then menostat_c=2; /* surgical */
 	else if	perstop_menop=1									then menostat_c=1; /* natural */
-
-	** natural menopause reason age, 20150702 edit; 
-	meno_age_c=.;
-	if 		menostat_c=1 & menop_age in (1,2,3)		then meno_age_c=1; /* <50 */
-	else if menostat_c=1 & menop_age=4			   	then meno_age_c=2; /* 50-54 */
-	else if menostat_c=1 & menop_age=5				then meno_age_c=3; /* 55+ */
-	else if menostat_c=1 & menop_age in (8,9)		then meno_age_c=-9; /* missing */
-	else if menostat_c NE 1							then meno_age_c=.;
-	else 	meno_age_c=-9;
-
-	** surgery reason age, 20150721TUE WTL edit;
-	surg_age_c=.;
-	if 		menostat_c=2 & menop_age in (1,2)		then surg_age_c=1; /* <45 */
-	else if menostat_c=2 & menop_age=3				then surg_age_c=2; /* 45-49 */
-	else if menostat_c=2 & menop_age in (4,5)		then surg_age_c=3; /* 50+ */
-	else if menostat_c=2 & menop_age in (8,9)		then surg_age_c=-9; /* missing */
-	else if menostat_c NE 2							then surg_age_c=.;
-	else	surg_age_c=-9;
 
 	** menopausal age recoded;
 	** edit 20150727MON WTL;
