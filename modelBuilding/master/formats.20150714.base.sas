@@ -33,7 +33,7 @@ proc format;
 	value physicfmt -9='Missing' 0='Never' 1='Rarely' 2='1-3 per month' 3='1-2 per week' 4='3-4 per week' 5='5+ per week' 9='Unknown';
 	value smokingfmt -9='Missing' 0='Never smoked' 1='Ever smoke';
 	value marriagefmt 1='Married' 2='Widowed' 3='Divorced' 4='Separated' 5='Never married' 9='Unknown';
-	value marriagecfmt 1='Married' 2='Widowed' 3='Divorced/separated' 5='Never married' 9='Unknown';
+	value marriagecfmt 1='Married' 2='Widowed' 3='Divorced/separated' 5='Never married' -9='Missing';
 
 	** fmenstr, menopause status recoded 20150721WTL;
 	value fmenstrcfmt -9='Missing' 0='10>=' 1='11-12' 2='13-14' 3='15+';
@@ -85,6 +85,18 @@ proc format;
 							3='Currently smoking, <=20 cigs/day' 4='Currently smoking, >20 cigs/day'
 							9='Unknown';
 	value coffeefmt -9='Missing' 0='None' 1='<=1 cup/day' 2='2-3 cups/day' 3='>=4 cups/day';
+	value $qp12bfmt '0'='None' 
+					'1'='Less than 1 cup per month' 
+					'2'='1-3 cups per month'
+					'3'='1-2 cups per week'
+					'4'='3-4 cups per week'
+					'5'='5-6 cups per week'
+					'6'='1 cup per day'
+					'7'='2-3 cups per day'
+					'8'='4-5 cups per day'
+					'9'='6+ cups per day'
+					'E'='Error'
+					'M'='Missing';
 	value etohfmt -9='Missing' 0='None' 1='<=1' 2='>1 and <=3' 3='>3';
 	value colosigfmt 1 = 'Yes' 0 = 'No' -9='Missing';
 	value l_sameyear 1 = 'Yes' 0 = 'No' -9='Missing';
