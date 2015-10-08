@@ -237,26 +237,6 @@ data conv.melan_r;
 	else if age_flb in (5,6,7)	then flb_age_c=3; /* 30s */
 	else if age_flb in (0,8,9)	then flb_age_c=-9; /* missing */
 
-*******************************************************************************************;
-/** recode menopause status to include hysterectomy and oophorectomy **/
-*******************************************************************************************;
-	/** menopause status recoded;
-	** use the perstop_surgery (hyststat and ovarystat) and perstop_radchem;
-
-	menostat_c=.;
-	if 		perstop_nostop=1								then menostat_c=0; * premenopausal ;
-	else if perstop_menop=1									then menostat_c=1; * natural menopause ;
-	else if perstop_surg=1 & (hyststat=1 & ovarystat=1)		then menostat_c=2; * hysterectomy, removed 2 ovaries ;
-	else if perstop_surg=1 & (hyststat=1 & ovarystat=3) 	then menostat_c=3; * hysterectomy, surgery to ovaries ;
-	else if perstop_surg=1 & (hyststat=1 & ovarystat=2) 	then menostat_c=4; * hysterectomy, ovaries intact ;
-	else if perstop_surg=1 & (hyststat=1 & ovarystat=9) 	then menostat_c=5; * hysterectomy, ovaries unknown ;
-	else if perstop_radchem=1								then menostat_c=6; * radiation or chemotherapy ;
-	else if perstop_menop=0 & perstop_surg=0 & perstop_radchem=0
-															then menostat_c=7; * other reason ;
-	else if perstop_nostop=9 | perstop_menop=9				then menostat_c=-9; * missing ;
-	else 	menostat_c=-9;
-	*/
-
 	** menopause reason, 20150901 edit;
 	** 1 natural, 2 surgical;
 	menostat_c=.;
