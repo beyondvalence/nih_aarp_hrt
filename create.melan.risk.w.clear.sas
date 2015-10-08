@@ -345,8 +345,14 @@ data conv.melan_r;
 	else if lacey_ht_type = 9 & menostat_c=1		then ht_nat_c=-9; /* unknown */
 	else if menostat_c NE 1							then ht_nat_c=.;
 
+	ht_nat_me = ht_nat_c;
+	if ht_nat_me in (9, -9)				then ht_nat_me=.;
+
 	ht_nat_ever_c=ht_nat_c;
-	if htnat_ever_c in (1,2,3)					then ht_nat_ever_c=1; /* ever HT */
+	if htnat_ever_c in (1,2,3)						then ht_nat_ever_c=1; /* ever HT */
+
+	ht_nat_ever_me = ht_nat_ever_c;
+	if ht_nat_ever_me in (9,-9)			then ht_nat_ever_me=.;
 
 	ht_surg_c=-9;
 	if 		lacey_ht_type = 0 & menostat_c=2			then ht_surg_c=0; /* no ht */
@@ -356,8 +362,14 @@ data conv.melan_r;
 	else if lacey_ht_type = 9 & menostat_c=2			then ht_surg_c=-9; /* unknown */
 	else if menostat_c NE 2								then ht_surg_c=.;
 
+	ht_surg_me = ht_surg_c;
+	if ht_surg_me in (9, -9)			then ht_surg_me=.;
+
 	ht_surg_ever_c=ht_surg_c;
 	if ht_surg_ever_c in (1,2,3)						then ht_surg_ever_c=1; /* ever HT */
+
+	ht_surg_ever_me=ht_surg_ever_c;
+	if ht_surg_ever_me in (9,-9)		then ht_surg_ever_me=.;
 
 	*******************************************************************************************;
 	*************** HRT variables *************************************************************;
@@ -481,77 +493,52 @@ ods html;
 data conv.melan_r;
 	set conv.melan_r;
 
-	agecat_me = agecat;
-	if	agecat_me in (9,-9)				then agecat_me=.;
-	attained_age_me = attained_age;
-	if	attained_age_me in (9,-9)		then attained_age_me=.;
-	birth_cohort_me = birth_cohort;
-	if	birth_cohort_me in (9,-9)		then birth_cohort_me=.;
-	race_c_me = race_c;
-	if	race_c_me in (9,-9)				then race_c_me=.;
-	educ_c_me = educ_c;
-	if	educ_c_me in (9,-9)				then educ_c_me=.;
-	bmi_c_me = bmi_c;
-	if	bmi_c_me in (9,-9)				then bmi_c_me=.;
-	physic_c_me = physic_c;
-	if	physic_c_me  in (9,-9)			then physic_c_me=.;
+	educ_me = educ_c;
+	if	educ_me in (9,-9)				then educ_me=.;
+	bmi_me = bmi_c;
+	if	bmi_me in (9,-9)				then bmi_me=.;
+	physic_me = physic_c;
+	if	physic_me  in (9,-9)			then physic_me=.;
 
-	fmenstr_me = fmenstr;
+	fmenstr_me = fmenstr_c;
 	if	fmenstr_me in (9,-9)			then fmenstr_me=.;
-	menostat_c_me = menostat_c;
-	if	menostat_c_me in (9,-9) 		then menostat_c_me=.;
-	meno_age_c_me = meno_age_c;
-	if	meno_age_c_me in (9,-9)			then meno_age_c_me=.;
-	surg_age_c_me = surg_age_c;
-	if	surg_age_c_me in (9,-9)			then surg_age_c_me=.;
-	parity_me=parity;
+	menostat_me = menostat_c;
+	if	menostat_me in (9,-9) 			then menostat_me=.;
+	menop_age_me = menop_age_c;
+	if	menop_age_me in (9,-9)			then meno_age_me=.;
+	parity_me=parity_c;
 	if	parity_me in (9,-9)				then parity_me=.;
-	flb_age_c_me = flb_age_c;
-	if	flb_age_c_me  in (9,-9)			then flb_age_c_me=.;
-	oralbc_dur_c_me = oralbc_dur_c;
-	if	oralbc_dur_c_me in (9,-9)		then oralbc_dur_c_me=.;
-	oralbc_yn_c_me = oralbc_yn_c;
-	if oralbc_yn_c_me in (9,-9)			then oralbc_yn_c_me=.;
-	horm_nat_c_me = horm_nat_c;
-	if	horm_nat_c_me  in (9,-9)		then horm_nat_c_me=.;
+	flb_age_me = flb_age_c;
+	if	flb_age_me  in (9,-9)			then flb_age_me=.;
+	oralbc_dur_me = oralbc_dur_c;
+	if	oralbc_dur_me in (9,-9)			then oralbc_dur_me=.;
+	oralbc_yn_me = oralbc_yn_c;
+	if oralbc_yn_me in (9,-9)			then oralbc_yn_me=.;
+	mht_ever_me = mht_ever_c;
+	if mht_ever_me in (9,-9)			then mht_ever_me=.;
+	hormstat_me = hormstat_c;
+	if hormstat_me in (9,-9)			then hormstat_me=.;
+	horm_nat_me = horm_nat_c;
+	if	horm_nat_me  in (9,-9)			then horm_nat_me=.;
 	horm_nat_ever_me = horm_nat_ever_c;
 	if horm_nat_ever_me in (9,-9)		then horm_nat_ever_me=.;
-	horm_surg_c_me = horm_surg_c;
-	if	horm_surg_c_me in (9,-9)		then horm_surg_c_me=.;
+	horm_surg_me = horm_surg_c;
+	if	horm_surg_me in (9,-9)			then horm_surg_me=.;
 	horm_surg_ever_me = horm_surg_ever_c;
 	if horm_surg_ever_me in (9,-9)	then horm_surg_ever_me=.;
 
-	uvrq_me = uvrq;
+	uvrq_me = uvrq_c;
 	if	uvrq_me in (9,-9)				then uvrq_me=.;
-	smoke_former_me = smoke_former;
-	if	smoke_former_me  in (9,-9)		then smoke_former_me=.;
-	coffee_c_me = coffee_c;
-	if	coffee_c_me in (9,-9) 			then coffee_c_me=.;
-	etoh_c_me = etoh_c;
-	if	etoh_c_me in (9,-9)				then etoh_c_me=.;
-	rel_1d_cancer_me = rel_1d_cancer;
-	if	rel_1d_cancer_me in (9,-9)		then rel_1d_cancer_me=.;
 
-	horm_cur_me = horm_cur;
-	if	horm_cur_me in (9,-9)			then horm_cur_me=.;
-	horm_yrs_me = horm_yrs;
+	horm_yrs_me = horm_yrs_c;
 	if	horm_yrs_me in (9,-9)			then horm_yrs_me=.;
 	horm_yrs_nat_me = horm_yrs_nat_c;
 	if horm_yrs_nat_me in (9,-9)		then horm_yrs_nat_me=.;
 	horm_yrs_surg_me = horm_yrs_surg_c;
 	if horm_yrs_surg_me in (9,-9)		then horm_yrs_surg_me=.;
 
-	ht_type_nat_me = ht_type_nat;
-	if ht_type_nat_me in (9, -9)		then ht_type_nat_me=.;
-	ht_type_nat_ever_me = ht_type_nat_ever;
-	if ht_type_nat_ever_me in (9,-9)	then ht_type_nat_ever_me=.;
-	ht_type_surg_me = ht_type_surg;
-	if ht_type_surg_me in (9, -9)		then ht_type_surg_me=.;
-	ht_type_surg_ever_me=ht_type_surg_ever;
-	if ht_type_surg_ever_me in (9,-9)	then ht_type_surg_ever_me=.;
-
-	ovarystat_c_me = ovarystat_c;
-	if ovarystat_c_me in (9,-9)			then ovarystat_c_me=.;
+	ovarystat_me = ovarystat_c;
+	if ovarystat_me in (9,-9)			then ovarystat_me=.;
 run;
 
 ** add labels;
@@ -566,47 +553,37 @@ proc datasets library=conv;
 			melanoma_mal = "malignant Melanoma"
 
 			/* for baseline */
-			birth_cohort = "Year of birth quantiles"
-			uvrq = "TOMS AVGLO-UVR measures in quartiles"
+			uvrq_c = "TOMS AVGLO-UVR measures in quartiles"
 			oralbc_dur_c = "birth control duration"
 			oralbc_yn_c = "birth control yes/no"
-			fmenstr = "menarche age"
+			fmenstr_c = "menarche age"
 			educ_c = "education level"
-			race_c = "race split into 3"
-			attained_age = "Attained Age"
 			flb_age_c = "Age at first live birth among parous women"
-			fmenstr = "Age at menarche"
 			menostat_c = "menopause status"
-			meno_age_c ="age at natural menopause"
-			menostat_c ="menopause status"
+			menop_age_c ="age at natural menopause"
 			physic_c = "level of physical activity"	
 			horm_nat_c = "hormone usage, natural menopause"
 			horm_surg_c = "hormone usage, surgical menopause"
-			parity = "total number of live births"
-			cancer_g_c = "cancer grade"
+			parity_c = "total number of live births"
 			bmi_c = "bmi, rough"
-			stage_c = "stage of first primary cancer"
-			physic_1518_c = "level of physical activity at ages 15-18 (base)"
 
-			smoke_former ="Smoking Status"
-			smoke_quit = 'Quit smoking status'
-			smoke_dose = 'Smoking dose'
-			smoke_quit_dose = 'Smoking status and dose combined'
-			rel_1d_cancer = 'Family History of Cancer'
+			smoke_former_c ="Smoking Status"
+			smoke_quit_c = 'Quit smoking status'
+			smoke_dose_c = 'Smoking dose'
+			rel_1d_cancer_c = 'Family History of Cancer'
 			coffee_c = 'Coffee drinking'
 			etoh_c = 'Total alchohol per day including food sources'
 			colo_sig_any = "Colonoscopy or Sigmoidoscopy in past 3 years?"
 			any_screen = "Colonoscopy or Sigmoidoscopy in past 3 years?"
 
 			horm_cur = 'Current Hormone Use'
-			horm_yrs = 'Hormone Use Duration'
+			horm_yrs_c = 'Hormone Use Duration'
 			horm_yrs_nat_c = 'Hormone Use Duration, only nat meno'
 			horm_yrs_surg_c = 'Hormone Use Duration, only surg meno'
-			mht_ever = " Menopausal Hormone Therapy, ever"
+			mht_ever_c = " Menopausal Hormone Therapy, ever"
 
 
 			/* for riskfactor */
-			rf_physic_1518_c = "level of physical activity at ages 15-18 (rf)"
 			rf_physic_c = "Times engaged in moderate-vigorous physical activity"
 			rf_1d_cancer = "Family History of Cancer"
 			rf_Q15A = "Sigmoidoscopy in past three years?"
@@ -616,35 +593,21 @@ proc datasets library=conv;
 			rf_Q15E = "No colorectal procedure in past three years?"
 
 				/* for the MHT variables */
-			lacey_afterrfq = "ET therapy started before or after RFQ?"
-			lacey_eptcurdur = "Estrogen/progestin therapy duration combined with current/former use (1st definition)"
-			lacey_eptcurdur2 = "Estrogen/progestin therapy duration combined with current/former use (2nd definition)"
-			lacey_eptcurrent = "Current/former EPT user"
-			lacey_eptdose = "Estrogen/progestin therapy dose"
-			lacey_eptdur = "Estrogen/progestin therapy duration (1st definition)"
-			lacey_eptreg = "EPT regimen"
-			lacey_eptregdose = "Dose of EPT by regimen (1st definition)"
-			lacey_eptregyrs = "Duration of EPT use by regimen (1st definition)"
-			lacey_epttype = "Estrogen/progestin therapy type"
-			lacey_est_vs_prg = "Estrogen vs progestin duration"
-			lacey_et_ept_et = "Estrogen therapy followed by estrogen/progestin therapy followed by more estrogen therapy?"
+			l_eptcurrent_c = "Current/former EPT user"
+			l_eptdose_c = "Estrogen/progestin therapy dose"
+			l_eptdur_c = "Estrogen/progestin therapy duration (1st definition)"
 
-			lacey_etcurdur = "Estrogen therapy duration combined with current/former use"
-			lacey_etcurrent = "Current/former estrogen therapy user"
-			lacey_etdose = "Estrogen therapy dose"
-			lacey_etdur = "Estrogen therapy only duration (1st definition)"
-			lacey_etfreq = "Estrogen therapy frequency"
-			lacey_ettype = "Estrogen therapy type"
+			l_etcurrent_c = "Current/former estrogen therapy user"
+			l_etdose_c = "Estrogen therapy dose"
+			l_etdur_c = "Estrogen therapy only duration (1st definition)"
+			l_etfreq_c = "Estrogen therapy frequency"
 
-			lacey_fl_dosereg = "EPT dose/reg flag"
-			lacey_ht_formulation = "Hormone therapy formulation"
-			lacey_ht_type = "Hormone therapy type"
 			lacey_sameduration = "EPT-only users - same reported dates EP?"
 			lacey_samestart44 = "Classifies estrogen and progestin therapy in terms of when each was started relative to the other"
 			lacey_sameyears = "EPT-only users - same reported duration EP?"
 
-			ht_type_nat="lacey Hormone therapy type, natural meno"
-			ht_type_surg="lacey Hormone therapy type, surgical meno"
+			ht_nat_c="lacey Hormone therapy type, natural meno"
+			ht_surg_c="lacey Hormone therapy type, surgical meno"
 			
 	;
 	** set variable value labels;
@@ -653,68 +616,72 @@ proc datasets library=conv;
 			melanoma_c melanfmt. melanoma_agg melanomafmt. 
 			melanoma_ins melanomainsfmt. melanoma_mal melanomamalfmt.
 
-			/* for baseline*/
-			uvrq_me uvrqfmt. oralbc_dur_c_me oralbcdurfmt. educ_c_me educfmt. race_c_me racefmt. 
-			hormever hormeverfmt. attained_age_me attainedagefmt. marriage marriagefmt.
-			birth_cohort_me birthcohortfmt. flb_age_c_me flbagefmt. fmenstr_me fmenstrfmt. 
-			meno_age_c_me menoagefmt. menostat_c_me menostatfmt. surg_age_c_me surgagefmt.
-			physic_c physic_1518_c physic_c_me physicfmt. 
-			horm_nat_c_me horm_surg_c_me horm_ever_me hormstatfmt. parity_me parityfmt. 
-			horm_cur_me hormcurfmt. 
-			horm_yrs_c horm_yrs_me horm_yrs_nat_c horm_yrs_surg_c horm_yrs_nat_me horm_yrs_surg_me hormyrsfmt.
-			bmi_fc bmi_c_me bmifmt. agecat_me agecatfmt.
-			smoke_former_me smokeformerfmt. smoke_dose smokedosefmt.
-			rel_1d_cancer_me relativefmt. coffee_c_me coffeefmt. etoh_c_me etohfmt.
-			ovarystat_c_me ovarystatfmt. oralbc_yn_c_me oralbcynfmt.
-			horm_nat_ever_me horm_surg_ever_me hormeverfmt.
+			educ_me educfmt.
+			bmi_me bmifmt. 
+			physic_me physiccfmt. 
+			fmenstr_me fmenstrcfmt.
+			menostat_me menostatfmt.
+			ovarystat_me ovarystatfmt.
+			menop_age_me menopagefmt.
+			parity_me parityfmt. 
+			flb_age_me flbagefmt.  
+			oralbc_yn_me oralbcynfmt.
+			oralbc_dur_me oralbcdurfmt. 
+			mht_ever_me mhteverfmt.
+			hormstat_me  hormstatfmt.
+			horm_yrs_me hormyrsfmt.
+			horm_yrs_nat_me horm_yrs_surg_me hormyrsfmt.
+			uvrq_me uvrqfmt.			
 
-			uvrq uvrqfmt. oralbc_dur_c oralbcdurfmt. educ_c educfmt. race_c racefmt. 
-			hormever hormeverfmt. attained_age attainedagefmt. marriage marriagefmt.
-			birth_cohort birthcohortfmt. flb_age_c flbagefmt. fmenstr fmenstrfmt. 
-			meno_age_c menoagefmt. menostat_c menostatfmt. surg_age_c surgagefmt.
-			physic_c physic_1518_c physic_c physicfmt. 
-			horm_nat_c horm_surg_c horm_ever hormstatfmt. parity parityfmt. 
-			horm_cur hormcurfmt.
-			bmi_fc bmi_c bmifmt. agecat agecatfmt.
-			smoke_former smokeformerfmt. smoke_quit smokequitfmt.
-			rel_1d_cancer relativefmt. coffee_c coffeefmt. etoh_c etohfmt.
-			ovarystat_c ovarystatfmt. oralbc_yn_c oralbcynfmt.
-			horm_nat_ever_c horm_surg_ever_c hormeverfmt.
-			mht_ever mht_ever_me mhteverfmt.
-			menop_age menop_age_me menopagefmt.
-			menopi_age menopi_age_me menopiagefmt.
-			rf_1d_cancer relativefmt.
+			/* baseline regular variables*/
+			educ_c educfmt. educm educmfmt.
+			bmi_c bmifmt.
+			physic physicfmt. physic_c physiccfmt.
+			fmenstr  fmenstrfmt. fmenstr_c fmenstrcfmt.
+			perstop_menop perstopmenopfmt. perstop_surg perstopsurgfmt. hyststat hyststatfmt.
+			menostat_c menostatfmt.
+			ovarystat_c ovarystat ovarystatfmt.
+			menop_age_c menopagefmt. menop_age agemenofmt.
+			parity_c parityfmt.
+			livechild livechildfmt.
+			flb_age_c flbagefmt. 
+			age_flb ageflbfmt.
+			oralbc_yn_c oralbcynfmt.
+			oralbc_dur_c oralbc_yrs oralbcdurfmt. 
+			mht_ever_c  parity_ever mhteverfmt.
+			hormstat_c hormstat hormstatfmt. 
+			horm_yrs_c horm_yrs_me horm_yrs_nat_c horm_yrs_surg_c  horm_yrs hormyrsfmt.
+			uvrq_c uvrqfmt.
+			marriage  marriagefmt. marriage_c marriagecfmt.
+			smoke_former_c smoke_former smokeformerfmt.
+			smoke_quit smoke_quit_c smokequitfmt.
+			smoke_dose smoke_dose_c smokedosefmt. 
+			coffee_c coffeefmt. qp12b $qp12bfmt. etoh_c etohfmt.
+			rel_1d_cancer rel_1d_cancer_c relativefmt. 
 
-			/* for riskfactor */
-			rf_physic_c rfphysicfmt. 
+			/* for MHT & riskfactors */
 			rf_phys_modvig_curr rfphysfmt.
-			rf_hormtype rfhormtype.
+			rf_physic_c rfphysicfmt.
 
-			/* for MHT */
-			lacey_eptcurrent lacey_eptcurrent_me l_eptcurrent. 
+			ht_nat_c ht_nat_me l_httype.
+			ht_nat_ever_c ht_nat_ever_me l_httypevr.
+			ht_surg_c ht_surg_me l_httype.
+			ht_surg_ever_c ht_surg_ever_me l_httypevr.
 
-			lacey_afterrfq l_afterrfq. lacey_eptcurdur l_eptcurdur. 
-			lacey_eptcurdur2 l_eptcurdurr. 
-			
-			lacey_eptdose lacey_eptdose_me lacey_eptdose_c l_eptdose. 
-			lacey_eptdur lacey_eptdur_me lacey_eptdur_c l_eptdur.
-			lacey_eptregdose l_eptregdose. lacey_eptregyrs l_eptregyrs. lacey_eptreg l_eptreg.
-			lacey_epttype l_epttype. lacey_est_vs_prg l_estvsprg. lacey_et_ept_et l_et_ept_et.
+			l_eptcurrent_ever_c l_eptcurrent_ever_me l_eptcurrentvr.
+			l_eptcurrent_c l_eptcurrent_me l_eptcurrent. 
 
-			lacey_etcurdur l_eptcurdur. lacey_etcurrent lacey_etcurrent_me l_eptcurrent. 
-			lacey_etdose lacey_etdose_me lacey_etdose_c l_etdose. 
-			lacey_etdur lacey_etdur_me lacey_etdur_c l_etdur. 
-			lacey_etfreq lacey_etfreq_me lacey_etfreq_c l_etfreq. lacey_ettype l_ettype.
+			l_eptdose_c l_eptdose_me l_eptdose.
+			l_eptdur_c l_eptdur_me l_eptdur.
 
-			lacey_fl_dosereg l_fldosereg. lacey_ht_formulation l_htformulation. 
-			lacey_ht_type ht_type_nat ht_type_surg ht_type_nat_me ht_type_surg_me l_httype.
-			lacey_sameduration l_sameduration. lacey_samestart44 l_samestart. 
-			lacey_sameyears colo_sig_any any_screen l_sameyear.
-			lacey_eptcurrent_ever_me lacey_eptcurrent_ever l_eptcurrentvr.
-			lacey_etcurrent_ever_me lacey_etcurrent_ever l_etcurrentvr.
-			ht_type_nat_ever ht_type_surg_ever ht_type_nat_ever_me ht_type_surg_ever_me l_httypevr.
+			l_etcurrent_ever_c l_etcurrent_ever_me l_etcurrentvr.
+			l_etcurrent_c l_etcurrent_me l_eptcurrent. 
 
-			rf_est_cur rf_prg_cur rf_est_cur.
+			l_etdose_c l_etdose_me l_etdose.
+			l_etdur_c l_etdur_me l_etdur. 
+			l_etfreq_c l_etfreq_me l_etfreq.
+
+			colo_sig_any colosigfmt.
 	;
 run;
 /******************************************************************************************/
