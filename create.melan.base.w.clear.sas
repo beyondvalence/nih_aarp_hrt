@@ -379,6 +379,9 @@ data conv.melan;
 	** relatives with cancer;
 	rel_1d_cancer_c=rel_1d_cancer;
 	if rel_1d_cancer_c=9					then rel_1d_cancer_c=-9;
+
+	** total;
+	total=1;
 run;
 
 /***************************************************************************************/ 
