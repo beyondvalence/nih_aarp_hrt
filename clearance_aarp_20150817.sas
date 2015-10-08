@@ -1,16 +1,5 @@
-/*****************************************************************************;
-#             NIH-AARP UVR- Reproductive Factors- Melanoma Study             *;
-******************************************************************************;
-#
-# NIH-AARP Diet and Health Study clearance form:
-# !!!! do not run, clearance form code only !!!!
-# includes code for new variables and code to generate tables and listings
-#
-# uses the conv.melan, conv.melan_r datasets
-#
-# Created: August 17 2015 WTL
-# Updated: v20151001THU WTL
-# <under git version control>
+/******************************************************************************
+# NIH-AARP Diet and Health Study clearance form
 ******************************************************************************/
 
 ** import the UVR with file extension v9x from the anchovy folder;
