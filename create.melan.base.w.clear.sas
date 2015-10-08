@@ -315,7 +315,8 @@ data conv.melan;
 
 	** MHT ever variable;
 	mht_ever_c=hormstat;
-	if		mht_ever=2						then mht_ever_c=1;
+	if		mht_ever_c=2						then mht_ever_c=1;
+	else if mht_ever_c=9						then mht_ever_c=-9;
 
 	** hormone former or current user;
 	hormstat_c=.;
@@ -343,11 +344,12 @@ data conv.melan;
 	else if 186.918 < exposure_jul_78_05 <= 239.642 then uvrq_c=2;
 	else if 239.642 < exposure_jul_78_05 <= 253.731 then uvrq_c=3;
 	else if 253.731 < exposure_jul_78_05            then uvrq_c=4;
-	else uvrq=-9;
+	else uvrq_c=-9;
 
 	** marriage;
 	marriage_c = marriage;
-	if marriage in (3,4)					then marriage_c=3; /* divorced and separated together */
+	if 		marriage in (3,4)					then marriage_c=3; /* divorced and separated together */
+	else if marriage=9							then marriage_c=-9; /* */
 
 	** smoking missings recode;
 	smoke_former_c=smoke_former;
@@ -449,9 +451,9 @@ data conv.melan;
 	if hormstat_me in (9,-9)			then hormstat_me=.;
 	horm_yrs_me = horm_yrs_c;
 	if	horm_yrs_me in (9,-9)			then horm_yrs_me=.;
-	horm_yrs_nat_me = horm_yrs_nat;
+	horm_yrs_nat_me = horm_yrs_nat_c;
 	if horm_yrs_nat_me in (9,-9)		then horm_yrs_nat_me=.;
-	horm_yrs_surg_me = horm_yrs_surg;
+	horm_yrs_surg_me = horm_yrs_surg_c;
 	if horm_horm_yrs_surg_me in (9,-9)	then horm_yrs_surg_me=.;
 
 	uvrq_me = uvrq_c;
@@ -567,14 +569,14 @@ proc datasets library=conv;
 			oralbc_yn_c oralbcynfmt.
 			oralbc_dur_c oralbc_yrs oralbcdurfmt. 
 			mht_ever_c  parity_ever mhteverfmt.
-			hormstat_c hormeverfmt. hormstat hormstatfmt. 
+			hormstat_c hormstat hormstatfmt. 
 			horm_yrs_c horm_yrs_me horm_yrs_nat_c horm_yrs_surg_c  horm_yrs hormyrsfmt.
 			uvrq_c uvrqfmt.
 			marriage  marriagefmt. marriage_c marriagecfmt.
 			smoke_former_c smoke_former smokeformerfmt.
 			smoke_quit smoke_quit_c smokequitfmt.
 			smoke_dose smoke_dose_c smokedosefmt. 
-			coffee_c coffeefmt. etoh_c etohfmt.
+			coffee_c coffeefmt. qp12b $qp12bfmt. etoh_c etohfmt.
 			rel_1d_cancer rel_1d_cancer_c relativefmt. 
 	;
 run;
