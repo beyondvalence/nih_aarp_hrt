@@ -426,7 +426,8 @@ run;
 ***** Start2 here ********;
 **************************;
 
-/* for riskfactor */
+/* for riskfactor detailed MHT variables */
+/* data step same as baseline, except added variables belonging only in riskfactor */
 
 	** (rf) physical exercise how often participate mod-vig activites in past 10 years;
 	** use this one;
@@ -438,114 +439,120 @@ run;
 	else if rf_phys_modvig_curr=5			then rf_physic_c=4; /* >7 hr/week */
 	else if rf_phys_modvig_curr=9			then rf_physic_c=-9; /* missing */
 	else rf_physic_c=-9;
-	
-	rf_physic_me = rf_physic_c;
-	if rf_physic_me in (9,-9)				then rf_physic_me=.;
 
 	** lacey hormone type by natural menopause and surgery;
 	** edited 20150708WED WTL;
-	ht_type_nat=9;
-	if 		lacey_ht_type = 0 & menostat_c=1		then ht_type_nat=0; /* no ht */
-	else if	lacey_ht_type = 1 &	menostat_c=1		then ht_type_nat=1; /* et */
-	else if	lacey_ht_type = 2 &	menostat_c=1		then ht_type_nat=2; /* ept */
-	else if	lacey_ht_type = 3 & menostat_c=1		then ht_type_nat=3; /* unk type */
-	else if lacey_ht_type = 9 & menostat_c=1		then ht_type_nat=9; /* unknown */
-	else if menostat_c NE 1							then ht_type_nat=.;
+	ht_nat_c=-9;
+	if 		lacey_ht_type = 0 & menostat_c=1		then ht_nat_c=0; /* no ht */
+	else if	lacey_ht_type = 1 &	menostat_c=1		then ht_nat_c=1; /* et */
+	else if	lacey_ht_type = 2 &	menostat_c=1		then ht_nat_c=2; /* ept */
+	else if	lacey_ht_type = 3 & menostat_c=1		then ht_nat_c=3; /* unk type */
+	else if lacey_ht_type = 9 & menostat_c=1		then ht_nat_c=-9; /* unknown */
+	else if menostat_c NE 1							then ht_nat_c=.;
 
-	ht_type_nat_me = ht_type_nat;
-	if ht_type_nat_me in (9,-9)						then ht_type_nat_me=.;
+	ht_nat_me = ht_nat_c;
+	if ht_nat_me in (9, -9)				then ht_nat_me=.;
 
-	ht_type_nat_ever=ht_type_nat;
-	if ht_type_nat_ever in (1,2,3)					then ht_type_nat_ever=1; /* ever HT */
-	ht_nat_ever_me = ht_type_nat_ever;
-	if ht_nat_ever_me in (9,-9)						then ht_nat_ever_me=.;
+	ht_nat_ever_c=ht_nat_c;
+	if htnat_ever_c in (1,2,3)						then ht_nat_ever_c=1; /* ever HT */
+	ht_nat_ever_me = ht_nat_ever_c;
+	if ht_nat_ever_me in (9,-9)			then ht_nat_ever_me=.;
 
-	ht_type_surg=9;
-	if 		lacey_ht_type = 0 & menostat_c=2			then ht_type_surg=0; /* no ht */
-	else if	lacey_ht_type = 1 &	menostat_c=2			then ht_type_surg=1; /* et */
-	else if	lacey_ht_type = 2 &	menostat_c=2			then ht_type_surg=2; /* ept */
-	else if	lacey_ht_type = 3 & menostat_c=2			then ht_type_surg=3; /* unk type */
-	else if lacey_ht_type = 9 & menostat_c=2			then ht_type_surg=9; /* unknown */
-	else if menostat_c NE 2								then ht_type_surg=.;
+	ht_surg_c=-9;
+	if 		lacey_ht_type = 0 & menostat_c=2			then ht_surg_c=0; /* no ht */
+	else if	lacey_ht_type = 1 &	menostat_c=2			then ht_surg_c=1; /* et */
+	else if	lacey_ht_type = 2 &	menostat_c=2			then ht_surg_c=2; /* ept */
+	else if	lacey_ht_type = 3 & menostat_c=2			then ht_surg_c=3; /* unk type */
+	else if lacey_ht_type = 9 & menostat_c=2			then ht_surg_c=-9; /* unknown */
+	else if menostat_c NE 2								then ht_surg_c=.;
 
-	ht_type_surg_me = ht_type_surg;
-	if ht_type_surg_me in (9,-9)						then ht_type_surg_me=.;
+	ht_surg_me = ht_surg_c;
+	if ht_surg_me in (9, -9)			then ht_surg_me=.;
 
-	ht_type_surg_ever=ht_type_surg;
-	if ht_type_surg_ever in (1,2,3)						then ht_type_surg_ever=1; /* ever HT */
-	ht_surg_ever_me = ht_type_surg_ever;
-	if ht_surg_ever_me in (9,-9)						then ht_surg_ever_me=.;
+	ht_surg_ever_c=ht_surg_c;
+	if ht_surg_ever_c in (1,2,3)						then ht_surg_ever_c=1; /* ever HT */
+
+	ht_surg_ever_me=ht_surg_ever_c;
+	if ht_surg_ever_me in (9,-9)		then ht_surg_ever_me=.;
 
 	*******************************************************************************************;
 	*************** HRT variables *************************************************************;
 	*******************************************************************************************;
 	** use Jim Lacey's coding of the variables *********;
 	** recode for main effects *************************;
-	** updated 20150708WED WTL **;
+	** updated 20151008THU WTL **;
 	****************************************************;
 	** EPT current ***************;
-	lacey_eptcurrent_ever = lacey_eptcurrent;
-	if lacey_eptcurrent_ever in (1,2)		then lacey_eptcurrent_ever=1; /* ever EPT */
-	lacey_eptcurrent_ever_me = lacey_eptcurrent_ever;
-	if lacey_eptcurrent_ever_me=4			then lacey_eptcurrent_ever_me=.;
-	lacey_eptcurrent_me = lacey_eptcurrent;
-	if lacey_eptcurrent=4					then lacey_eptcurrent_me=.;
+	l_eptcurrent_ever_c = lacey_eptcurrent;
+	if l_eptcurrent_ever_c in (1,2)		then l_eptcurrent_ever_c=1; /* ever EPT */
+	else if l_eptcurrent_ever_c=4		then l_eptcurrent_ever_c=-9;
+	l_eptcurrent_ever_me = l_eptcurrent_ever_c;
+	if l_eptcurrent_ever_me=-9			then l_eptcurrent_ever_me=.;
+	l_eptcurrent_c = lacey_eptcurrent;
+	if l_eptcurrent_c=4					then l_eptcurrent_c=-9;
+	l_eptcurrent_me = l_eptcurrent_c;
+	if l_eptcurrent_me = -9				then l_eptcurrent_me=.;
 
 	** EPT dose ***************;
-	lacey_eptdose_c=.;
-	if lacey_eptcurrent in (1,2) & lacey_eptdose in (1,2,3,4) then lacey_eptdose_c=lacey_eptdose;
-	else lacey_eptdose_c=-9;
-	lacey_eptdose_me = lacey_eptdose_c;
-	if lacey_eptdose_c=-9						then lacey_eptdose_me=.;
+	l_eptdose_c=.;
+	if lacey_eptcurrent in (1,2) & lacey_eptdose in (1,2,3,4) then l_eptdose_c=lacey_eptdose;
+	else l_eptdose_c=-9;
+	l_eptdose_me = l_eptdose_c;
+	if l_eptdose_me=-9						then l_eptdose_me=.;
 
 	** EPT duration ***************;
-	lacey_eptdur_c = .;
-	if lacey_eptcurrent in (1,2) & lacey_eptdur in (1,2,3) then lacey_eptdur_c=lacey_eptdur;
-	else lacey_eptdur_c=-9;
-	lacey_eptdur_me = lacey_eptdur_c;
-	if lacey_eptdur_c=-9						then lacey_eptdur_me=.;
+	l_eptdur_c = .;
+	if lacey_eptcurrent in (1,2) & lacey_eptdur in (1,2,3) then l_eptdur_c=lacey_eptdur;
+	else l_eptdur_c=-9;
+	l_eptdur_me = l_eptdur_c;
+	if l_eptdur_me=-9						then l_eptdur_me=.;
 	
 	** ET current ***************;
-	lacey_etcurrent_ever = lacey_etcurrent;
-	if lacey_etcurrent_ever in (1,2)		then lacey_etcurrent_ever=1; /* ever ET */
-	lacey_etcurrent_ever_me = lacey_etcurrent_ever;
-	if lacey_etcurrent_ever_me=4			then lacey_etcurrent_ever_me=.;
-	lacey_etcurrent_me = lacey_etcurrent;
-	if lacey_etcurrent=4					then lacey_etcurrent_me=.;
+	l_etcurrent_ever_c = lacey_etcurrent;
+	if l_etcurrent_ever_c in (1,2)		then l_etcurrent_ever_c=1; /* ever ET */
+	else if l_etcurrent_ever_c = 4		then l_etcurrent_ever_c=-9;
+	l_etcurrent_ever_me = l_etcurrent_ever_c;
+	if l_etcurrent_ever_me=-9			then l_etcurrent_ever_me=.;
+	l_etcurrent_c = lacey_etcurrent;
+	if l_etcurrent_c=4					then l_etcurrent_c=-9;
+	l_etcurrent_me = l_etcurrent_c;
+	if l_etcurrent_me=-9				then l_etcurrent_me=.;
 
 	** ET dose ***************;
-	lacey_etdose_c=.;
-	if lacey_etcurrent in (1,2) & lacey_etdose in (1,2,3) then lacey_etdose_c=lacey_etdose;
-	else lacey_etdose_c=-9;
-	lacey_etdose_me = lacey_etdose_c;
-	if lacey_etdose_c=-9						then lacey_etdose_me=.;
+	l_etdose_c=.;
+	if lacey_etcurrent in (1,2) & lacey_etdose in (1,2) then l_etdose_c=lacey_etdose;
+	else l_etdose_c=-9;
+	l_etdose_me = l_etdose_c;
+	if l_etdose_me=-9						then l_etdose_me=.;
 
 	** ET duration ***************;
-	lacey_etdur_c=.;
-	if lacey_etcurrent in (1,2) & lacey_etdur in (1,2) then lacey_etdur_c=lacey_etdur;
-	else lacey_etdur_c=-9;
-	lacey_etdur_me = lacey_etdur_c;
-	if lacey_etdur_c=-9						then lacey_etdur_me=.;
+	l_etdur_c=.;
+	if lacey_etcurrent in (1,2) & lacey_etdur in (1,2) then l_etdur_c=lacey_etdur;
+	else l_etdur_c=-9;
+	l_etdur_me = l_etdur_c;
+	if l_etdur_me=-9						then l_etdur_me=.;
 
 	** ET freq ***************;
-	lacey_etfreq_c=.;
-	if lacey_etcurrent in (1,2) & lacey_etfreq in (1,2,3) then lacey_etfreq_c=lacey_etfreq;
-	else lacey_etfreq_c=-9;
-	lacey_etfreq_me = lacey_etfreq_c;
-	if lacey_etfreq_c=-9						then lacey_etfreq_me=.;
+	l_etfreq_c=.;
+	if lacey_etcurrent in (1,2) & lacey_etfreq in (1,2) then l_etfreq_c=lacey_etfreq;
+	else l_etfreq_c=-9;
+	l_etfreq_me = l_etfreq_c;
+	if l_etfreq_me=-9						then l_etfreq_me=.;
+
 	** finished HRT variables;
+	*******************************************************************************************;
 
 	/* colonoscopy and sigmoidoscopy rf_Q15* */
 	colo_sig_any=-9;
+	if rf_Q15A=1 		then colo_sig_any=1;
+	if rf_Q15B=1		then colo_sig_any=1;
+	if rf_Q15C=1		then colo_sig_any=1;
+	if rf_Q15D=1		then colo_sig_any=1;
 	if rf_Q15E=1		then colo_sig_any=0;
-	else if rf_Q15E=0	then colo_sig_any=1;
-
-	colo_sig_me=colo_sig_any;
-	if colo_sig_me in (9,-9)	then colo_sig_me=.;
 
 run;
-** below, generates tables;
 
+/** baseline tables **/
 ods _all_ close; ods html;
 proc freq data=use;
 	title;
@@ -617,7 +624,7 @@ proc freq data=use;
 		oralbc_dur_me*melanoma_c
 		mht_ever_c*hormstat
 		mht_ever_c*melanoma_c
-		mht_ever_me*mht_ever
+		mht_ever_me*mht_ever_c
 		mht_ever_me*melanoma_c
 		hormstat_c*hormstat
 		hormstat_c*melanoma_c
@@ -673,73 +680,79 @@ proc freq data=use;
 		/ missing nocol norow nopercent;
 run;
 
+/* riskfactor tables */
+
 ods _all_ close; ods html;
 proc freq data=use_r;
 	title;
 	tables	
 		rf_physic_c*rf_phys_modvig_curr
 		rf_physic_c*melanoma_c
-		rf_physic_me*rf_physic_c
-		rf_physic_me*melanoma_c
 
-		ht_type_nat*menostat_c
-		ht_type_nat*lacey_ht_type
-		ht_type_nat*melanoma_c
-		ht_type_nat_me*ht_type_nat
-		ht_type_nat_me*melanoma_c
+		ht_nat_c*menostat_c
+		ht_nat_c*lacey_ht_type
+		ht_nat_c*melanoma_c
+		ht_nat_me*ht_nat_c
+		ht_nat_me*melanoma_c
 
-		ht_type_nat_ever*ht_type_nat
-		ht_type_nat_ever*melanoma_c
-		ht_nat_ever_me*ht_type_nat_ever
+		ht_nat_ever_c*ht_nat_c
+		ht_nat_ever_c*melanoma_c
+		ht_nat_ever_me*ht_nat_ever_c
 		ht_nat_ever_me*melanoma_c
 
-		ht_type_surg*menostat_c
-		ht_type_surg*lacey_ht_type 
-		ht_type_surg*melanoma_c 
-		ht_type_surg_me*ht_type_surg
-		ht_type_surg_me*melanoma_c
+		ht_surg_c*menostat_c
+		ht_surg_c*lacey_ht_type 
+		ht_surg_c*melanoma_c 
+		ht_surg_me*ht_surg_c
+		ht_surg_me*melanoma_c
 
-		ht_type_surg_ever*ht_type_surg
-		ht_type_surg_ever*melanoma_c
-		ht_surg_ever_me*ht_type_surg_ever
+		ht_surg_ever_c*ht_surg_c
+		ht_surg_ever_c*melanoma_c
+		ht_surg_ever_me*ht_surg_ever_c
 		ht_surg_ever_me*melanoma_c
 
-		lacey_eptcurrent_ever*lacey_eptcurrent
-		lacey_eptcurrent_ever*melanoma_c
-		lacey_eptcurrent_ever_me*lacey_eptcurrent_ever
-		lacey_eptcurrent_ever_me*melanoma_c
-		lacey_eptcurrent_me*lacey_eptcurrent
-		lacey_eptcurrent_me*melanoma_c
+		l_eptcurrent_ever_c*lacey_eptcurrent
+		l_eptcurrent_ever_c*melanoma_c
+		l_eptcurrent_ever_me*l_eptcurrent_ever_c
+		l_eptcurrent_ever_me*melanoma_c
+		l_eptcurrent_c*lacey_eptcurrent
+		l_eptcurrent_c*melanoma_c
+		l_eptcurrent_me*l_eptcurrent_c
+		l_eptcurrent_me*melanoma_c
 
-		lacey_eptdose_c*lacey_eptdose
-		lacey_eptdose_c*melanoma_c
-		lacey_eptdose_me*lacey_eptdose_c
-		lacey_eptdose_me*melanoma_c
+		l_eptdose_c*lacey_eptdose
+		l_eptdose_c*melanoma_c
+		l_eptdose_me*l_eptdose_c
+		l_eptdose_me*melanoma_c
 
-		lacey_eptdur_c*lacey_eptdur
-		lacey_eptdur_c*melanoma_c
-		lacey_eptdur_me*lacey_eptdur_c
-		lacey_eptdur_me*melanoma_c
+		l_eptdur_c*lacey_eptdur
+		l_eptdur_c*melanoma_c
+		l_eptdur_me*l_eptdur_c
+		l_eptdur_me*melanoma_c
 
-		lacey_etcurrent_ever*lacey_etcurrent
-		lacey_etcurrent_ever*melanoma_c
-		lacey_etcurrent_ever_me*lacey_etcurrent_ever
-		lacey_etcurrent_ever_me*melanoma_c
+		l_etcurrent_ever_c*lacey_etcurrent
+		l_etcurrent_ever_c*melanoma_c
+		l_etcurrent_ever_me*l_etcurrent_ever_c
+		l_etcurrent_ever_me*melanoma_c
+		l_etcurrent_c*lacey_etcurrent
+		l_etcurrent_c*melanoma_c
+		l_etcurrent_me*l_etcurrent_c
+		l_etcurrent_me*melanoma_c
 
-		lacey_etdose_c*lacey_etdose
-		lacey_etdose_c*melanoma_c
-		lacey_etdose_me*lacey_etdose_c
-		lacey_etdose_me*melanoma_c
+		l_etdose_c*lacey_etdose
+		l_etdose_c*melanoma_c
+		l_etdose_me*l_etdose_c
+		l_etdose_me*melanoma_c
 
-		lacey_etdur_c*lacey_etdur
-		lacey_etdur_c*melanoma_c
-		lacey_etdur_me*lacey_etdur_c
-		lacey_etdur_me*melanoma_c
+		l_etdur_c*lacey_etdur
+		l_etdur_c*melanoma_c
+		l_etdur_me*l_etdur_c
+		l_etdur_me*melanoma_c
 
-		lacey_etfreq_c*lacey_etfreq 
-		lacey_etfreq_c*melanoma_c 
-		lacey_etfreq_me*lacey_etfreq_c
-		lacey_etfreq_me*melanoma_c
+		l_etfreq_c*lacey_etfreq 
+		l_etfreq_c*melanoma_c 
+		l_etfreq_me*l_etfreq_c
+		l_etfreq_me*melanoma_c
 
 		/ missing nocol norow nopercent;
 run;
@@ -753,8 +766,6 @@ proc freq data=use_r;
 	tables
 		colo_sig_any*rf_Q15E
 		colo_sig_any*melanoma_c
-		colo_sig_me*colo_sig_any
-		colo_sig_me*melanoma_c
 
 		/ missing nocol norow nopercent;
 run;
