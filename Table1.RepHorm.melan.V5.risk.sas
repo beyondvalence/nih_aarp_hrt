@@ -7,7 +7,7 @@
 # for v6, riskfactor to FUP
 # 
 # Created: April 1 2015
-# Updated: v20150825TUE WTL
+# Updated: v20151009FRI WTL
 # removed rf_physic
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
@@ -34,143 +34,52 @@ proc means data=use_r n sum mean stddev;
 	var entry_age personyrs;
 	where melanoma_c=2;
 run; 
-proc freq data = use_r;
-	tables 
-		melanoma_c parity flb_age_c menostat_c meno_reason
-	/missing ;
-run;
-
-proc freq data = use_r;
-	title;
-	tables 
-		/*menostat_c*(meno_age_c surg_age_c)*/
-		menostat_c*ht_type_surg
-	/missing ;
-run;
-
-proc freq data = use_r;
-	tables 
-		oralbc_yn_c*melanoma_agg
-		hormever*melanoma_agg
-		oralbc_yn_c*melanoma_c
-		hormever*melanoma_c
-	/missing ;
-run;
-
-proc freq data=use_r;
-	tables
-		melanoma_c*melanoma_agg
-		melanoma_c*cancer_behv
-		melanoma_agg*cancer_behv
-		melanoma_ins*melanoma_c
-		melanoma_mal*melanoma_c
-	/missing ;
-run;
-** double check to see if any non-melanoma_c were counted as melanoma_agg cases with behav='2';
-*** fixed with or parenthesis;
-proc print data=use_r (obs=30);
-	title 'print cases';
-	where melanoma_c=0 and cancer_behv='2';
-	var westatid melanoma_c melanoma_agg cancer_behv cancer_seergroup cancer_siterec3;
-run;
-
-ods _all_ close; 
-ods html;
-*******************************************************************************;
-*******************************************************************************;
-
-****************************;
-** Confounder -> outcome  **;
-****************************;
-
-*************; 
-** Table 1 **;
-*************;
-/* variables:
-melanoma_agg
-melanoma_ins
-melanoma_mal
-personyrs
-attained_age
-birth_cohort
-
-agecat
-race_c
-educ_c
-bmi_fc
-physic_c
-
-fmenstr
-menostat_c
-meno_age_c
-hyst_age_c
-
-parity
-flb_age_c
-
-oralbc_dur_c
-horm_nat_c
-horm_hyst_c
-uvrq
-
-smoke_former
-
-coffee_c
-etoh_c
-rel_1d_cancer
-
-* *hormone vars, split into Est, Pro, and E&P
-*/
-*******************************************************************************;
-*******************************************************************************;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v14.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v15.xls' style=minimal;
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
-	title3 '20150825TUE WTL';
-	title4 'v14';
+	title3 '20151009FRI WTL';
+	title4 'v15';
 	class melanoma_c 
-		agecat attained_age birth_cohort
 		educ_c bmi_c physic_c  
-		fmenstr menostat_c ovarystat_c 
-		menopi_age mht_ever horm_ever
-		parity flb_age_c oralbc_yn_c oralbc_dur_c 
+		fmenstr_c menostat_c ovarystat_c 
+		menop_age_c parity_c flb_age_c 
+		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
 		horm_yrs_nat_c horm_yrs_surg_c 
-		uvrq marriage
-		smoke_former smoke_dose smoke_quit
-		coffee_c etoh_c rel_1d_cancer
+		uvrq_c marriage_c
+		smoke_former_c smoke_dose_c smoke_quit_c
+		coffee_c etoh_c rel_1d_cancer_c
 		/* Lacey EPT below */
-		ht_type_nat_ever ht_type_nat 
-		ht_type_surg_ever ht_type_surg 
-		lacey_eptcurrent_ever lacey_eptcurrent 
-		lacey_eptdose lacey_eptdur
+		ht_nat_ever_c ht_nat_c
+		ht_surg_ever_c ht_surg_c
+		l_eptcurrent_ever_c l_eptcurrent_c
+		l_eptdose_c l_eptdur_c
 		/* Lacey ET below */
-		lacey_etcurrent_ever lacey_etcurrent 
-		lacey_etdose lacey_etdur lacey_etfreq
+		l_etcurrent_ever_c l_etcurrent_c
+		l_etdose_c l_etdur_c l_etfreq_c
 		/* hospital utilization */
 		colo_sig_any
 	; 
 	table
-		agecat attained_age birth_cohort
 		educ_c bmi_c physic_c  
-		fmenstr menostat_c ovarystat_c 
-		menopi_age mht_ever horm_ever
-		parity flb_age_c oralbc_yn_c oralbc_dur_c 
+		fmenstr_c menostat_c ovarystat_c 
+		menop_age_c parity_c flb_age_c 
+		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
 		horm_yrs_nat_c horm_yrs_surg_c 
-		uvrq marriage
-		smoke_former smoke_dose smoke_quit
-		coffee_c etoh_c rel_1d_cancer
+		uvrq_c marriage_c
+		smoke_former_c smoke_dose_c smoke_quit_c
+		coffee_c etoh_c rel_1d_cancer_c
 		/* Lacey EPT below */
-		ht_type_nat_ever ht_type_nat 
-		ht_type_surg_ever ht_type_surg 
-		lacey_eptcurrent_ever lacey_eptcurrent 
-		lacey_eptdose lacey_eptdur
+		ht_nat_ever_c ht_nat_c
+		ht_surg_ever_c ht_surg_c
+		l_eptcurrent_ever_c l_eptcurrent_c
+		l_eptdose_c l_eptdur_c
 		/* Lacey ET below */
-		lacey_etcurrent_ever lacey_etcurrent 
-		lacey_etdose lacey_etdur lacey_etfreq
+		l_etcurrent_ever_c l_etcurrent_c
+		l_etdose_c l_etdur_c l_etfreq_c
 		/* hospital utilization */
 		colo_sig_any
 		,

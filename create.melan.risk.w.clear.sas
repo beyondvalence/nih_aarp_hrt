@@ -247,7 +247,7 @@ data conv.melan_r;
 	** oral contraceptive duration cat;
 	oralbc_dur_c=.;
 	if      oralbc_yrs=0		then oralbc_dur_c=0; /* none */
-	else if oralbc_yrs=1		then oralbc_dur_c=1; /* 1-4 years */
+	else if oralbc_yrs=1		then oralbc_dur_c=1; /* 1-4 years */ 
 	else if oralbc_yrs=2		then oralbc_dur_c=2; /* 5-9 years */
 	else if oralbc_yrs=3 		then oralbc_dur_c=3; /* 10+ years */
 	else if oralbc_yrs in (8,9)	then oralbc_dur_c=-9; /* missing */
@@ -349,7 +349,7 @@ data conv.melan_r;
 	if ht_nat_me in (9, -9)				then ht_nat_me=.;
 
 	ht_nat_ever_c=ht_nat_c;
-	if htnat_ever_c in (1,2,3)						then ht_nat_ever_c=1; /* ever HT */
+	if ht_nat_ever_c in (1,2,3)						then ht_nat_ever_c=1; /* ever HT */
 
 	ht_nat_ever_me = ht_nat_ever_c;
 	if ht_nat_ever_me in (9,-9)			then ht_nat_ever_me=.;
@@ -380,57 +380,57 @@ data conv.melan_r;
 	****************************************************;
 	** EPT current ***************;
 	l_eptcurrent_ever_c = lacey_eptcurrent;
-	if l_eptcurrent_ever_c in (1,2)		then l_eptcurrent_ever_c=1; /* ever EPT */
-	else if l_eptcurrent_ever_c=4		then l_eptcurrent_ever_c=-9;
+	if l_eptcurrent_ever_c in (1,2,3)		then l_eptcurrent_ever_c=1; /* ever EPT */
+	else if l_eptcurrent_ever_c = 4			then l_eptcurrent_ever_c=-9;
 	l_eptcurrent_ever_me = l_eptcurrent_ever_c;
-	if l_eptcurrent_ever_me=-9			then l_eptcurrent_ever_me=.;
+	if l_eptcurrent_ever_me=-9				then l_eptcurrent_ever_me=.;
 	l_eptcurrent_c = lacey_eptcurrent;
-	if l_eptcurrent_c=4					then l_eptcurrent_c=-9;
+	if l_eptcurrent_c=4						then l_eptcurrent_c=-9;
 	l_eptcurrent_me = l_eptcurrent_c;
-	if l_eptcurrent_me = -9				then l_eptcurrent_me=.;
+	if l_eptcurrent_me = -9					then l_eptcurrent_me=.;
 
 	** EPT dose ***************;
 	l_eptdose_c=.;
-	if lacey_eptcurrent in (1,2) & lacey_eptdose in (1,2,3,4) then l_eptdose_c=lacey_eptdose;
+	if l_eptcurrent_ever_c=1 & lacey_eptdose in (1,2,3,4) then l_eptdose_c=lacey_eptdose;
 	else l_eptdose_c=-9;
 	l_eptdose_me = l_eptdose_c;
 	if l_eptdose_me=-9						then l_eptdose_me=.;
 
 	** EPT duration ***************;
 	l_eptdur_c = .;
-	if lacey_eptcurrent in (1,2) & lacey_eptdur in (1,2,3) then l_eptdur_c=lacey_eptdur;
+	if l_eptcurrent_ever_c=1 & lacey_eptdur in (1,2,3) then l_eptdur_c=lacey_eptdur;
 	else l_eptdur_c=-9;
 	l_eptdur_me = l_eptdur_c;
 	if l_eptdur_me=-9						then l_eptdur_me=.;
 	
 	** ET current ***************;
 	l_etcurrent_ever_c = lacey_etcurrent;
-	if l_etcurrent_ever_c in (1,2)		then l_etcurrent_ever_c=1; /* ever ET */
-	else if l_etcurrent_ever_c = 4		then l_etcurrent_ever_c=-9;
+	if l_etcurrent_ever_c in (1,2,3)		then l_etcurrent_ever_c=1; /* ever ET */
+	else if l_etcurrent_ever_c=4			then l_etcurrent_ever_c=-9;
 	l_etcurrent_ever_me = l_etcurrent_ever_c;
-	if l_etcurrent_ever_me=-9			then l_etcurrent_ever_me=.;
+	if l_etcurrent_ever_me=-9				then l_etcurrent_ever_me=.;
 	l_etcurrent_c = lacey_etcurrent;
-	if l_etcurrent_c=4					then l_etcurrent_c=-9;
+	if l_etcurrent_c=4						then l_etcurrent_c=-9;
 	l_etcurrent_me = l_etcurrent_c;
-	if l_etcurrent_me=-9				then l_etcurrent_me=.;
+	if l_etcurrent_me=-9					then l_etcurrent_me=.;
 
 	** ET dose ***************;
 	l_etdose_c=.;
-	if lacey_etcurrent in (1,2) & lacey_etdose in (1,2) then l_etdose_c=lacey_etdose;
+	if l_etcurrent_ever_c=1 & lacey_etdose in (1,2) then l_etdose_c=lacey_etdose;
 	else l_etdose_c=-9;
 	l_etdose_me = l_etdose_c;
 	if l_etdose_me=-9						then l_etdose_me=.;
 
 	** ET duration ***************;
 	l_etdur_c=.;
-	if lacey_etcurrent in (1,2) & lacey_etdur in (1,2) then l_etdur_c=lacey_etdur;
+	if l_etcurrent_ever_c=1 & lacey_etdur in (1,2) then l_etdur_c=lacey_etdur;
 	else l_etdur_c=-9;
 	l_etdur_me = l_etdur_c;
 	if l_etdur_me=-9						then l_etdur_me=.;
 
 	** ET freq ***************;
 	l_etfreq_c=.;
-	if lacey_etcurrent in (1,2) & lacey_etfreq in (1,2) then l_etfreq_c=lacey_etfreq;
+	if l_etcurrent_ever_c=1 & lacey_etfreq in (1,2) then l_etfreq_c=lacey_etfreq;
 	else l_etfreq_c=-9;
 	l_etfreq_me = l_etfreq_c;
 	if l_etfreq_me=-9						then l_etfreq_me=.;
@@ -480,9 +480,9 @@ data conv.melan_r;
 	** if nulliparous or missing number of births, then age at birth should be missing;
 	*** -9 in flb_age means missing to begin with;
 	*** whereas 9 in flb_age means they were coerced to be missing due to missing parity;
-	if		parity in (1,2) & flb_age_c=9	then flb_age_c=-9; 
-	else if parity=2 & flb_age_c=9			then flb_age_c=-9;
-	if 		parity in (0,-9)					then flb_age_c=9;
+	if		parity_c in (1,2) & flb_age_c=9		then flb_age_c=-9; 
+	else if parity_c=2 & flb_age_c=9			then flb_age_c=-9;
+	if 		parity_c in (0,-9)					then flb_age_c=9;
 run;
 
 ods html close;
@@ -492,13 +492,6 @@ ods html;
 /* such that missings (9, -9) are coded as missing (.), so they are not counted */
 data conv.melan_r;
 	set conv.melan_r;
-
-	educ_me = educ_c;
-	if	educ_me in (9,-9)				then educ_me=.;
-	bmi_me = bmi_c;
-	if	bmi_me in (9,-9)				then bmi_me=.;
-	physic_me = physic_c;
-	if	physic_me  in (9,-9)			then physic_me=.;
 
 	fmenstr_me = fmenstr_c;
 	if	fmenstr_me in (9,-9)			then fmenstr_me=.;
@@ -616,9 +609,6 @@ proc datasets library=conv;
 			melanoma_c melanfmt. melanoma_agg melanomafmt. 
 			melanoma_ins melanomainsfmt. melanoma_mal melanomamalfmt.
 
-			educ_me educfmt.
-			bmi_me bmifmt. 
-			physic_me physiccfmt. 
 			fmenstr_me fmenstrcfmt.
 			menostat_me menostatfmt.
 			ovarystat_me ovarystatfmt.
@@ -662,26 +652,31 @@ proc datasets library=conv;
 			/* for MHT & riskfactors */
 			rf_phys_modvig_curr rfphysfmt.
 			rf_physic_c rfphysicfmt.
-
+			lacey_ht_type l_httype.
 			ht_nat_c ht_nat_me l_httype.
 			ht_nat_ever_c ht_nat_ever_me l_httypevr.
 			ht_surg_c ht_surg_me l_httype.
 			ht_surg_ever_c ht_surg_ever_me l_httypevr.
 
 			l_eptcurrent_ever_c l_eptcurrent_ever_me l_eptcurrentvr.
-			l_eptcurrent_c l_eptcurrent_me l_eptcurrent. 
+			l_eptcurrent_c l_eptcurrent_me lacey_eptcurrent l_eptcurrent. 
 
-			l_eptdose_c l_eptdose_me l_eptdose.
-			l_eptdur_c l_eptdur_me l_eptdur.
+			l_eptdose_c l_eptdose_me lacey_eptdose l_eptdose.
+			l_eptdur_c l_eptdur_me lacey_eptdur l_eptdur.
 
-			l_etcurrent_ever_c l_etcurrent_ever_me l_etcurrentvr.
-			l_etcurrent_c l_etcurrent_me l_eptcurrent. 
+			l_etcurrent_ever_c l_etcurrent_ever_me  l_etcurrentvr.
+			l_etcurrent_c l_etcurrent_me lacey_etcurrent l_eptcurrent. 
 
-			l_etdose_c l_etdose_me l_etdose.
-			l_etdur_c l_etdur_me l_etdur. 
-			l_etfreq_c l_etfreq_me l_etfreq.
+			l_etdose_c l_etdose_me lacey_etdose l_etdose.
+			l_etdur_c l_etdur_me lacey_etdur l_etdur. 
+			l_etfreq_c l_etfreq_me lacey_etfreq l_etfreq.
 
-			colo_sig_any colosigfmt.
+			colo_sig_any colosigfmt. 
+			rf_Q15A $rfq15afmt.
+			rf_Q15B $rfq15bfmt.
+			rf_Q15C $rfq15cfmt.
+			rf_Q15D $rfq15dfmt. 
+			rf_Q15E $rfq15efmt.
 	;
 run;
 /******************************************************************************************/

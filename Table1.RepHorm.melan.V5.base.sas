@@ -30,119 +30,37 @@ ods html;
 proc means data=use n sum mean stddev;
 	title 'baseline frequencies';
 	var entry_age personyrs;
-	*where melanoma_c=2;
+	where melanoma_c=2;
 run; 
-proc freq data = use;
-	tables 
-		/*menostat_c*(meno_age_c surg_age_c)*/
-		menostat_c*horm_surg_c
-	/missing ;
-run;
-
-proc freq data = use;
-	tables 
-		oralbc_yn_c*melanoma_agg
-		hormever*melanoma_agg
-		oralbc_yn_c*melanoma_c
-		hormever*melanoma_c
-	/missing ;
-run;
-
-proc freq data=use;
-	tables
-		melanoma_c*melanoma_agg
-		melanoma_c*cancer_behv
-		melanoma_agg*cancer_behv
-		melanoma_ins*melanoma_c
-		melanoma_mal*melanoma_c
-	/missing ;
-run;
-
-proc tabulate data=use missing;
-	title;
-	class melanoma_c parity;
-	tables
-		parity, (melanoma_c)*(N colpctn);
-run;
-** double check to see if any non-melanoma_c were counted as melanoma_agg cases with behav='2';
-*** fixed with or parenthesis;
-proc print data=use (obs=30);
-	title 'print cases';
-	where melanoma_c=0 and cancer_behv='2';
-	var westatid melanoma_c melanoma_agg cancer_behv cancer_seergroup cancer_siterec3;
-run;
-
-ods _all_ close; 
-ods html;
-****************************;
-** Confounder -> outcome  **;
-****************************;
-
-****************************; 
-** Table 1: Baseline *******;
-****************************;
-/* variables:
-melanoma_agg
-melanom_c
-melanoma_ins
-melanoma_mal
-personyrs
-attained_age
-birth_cohort
-
-agecat
-race_c
-educ_c
-bmi_c
-physic_c
-
-fmenstr
-menostat_c
-meno_age_c
-surg_age_c
-
-parity
-flb_age_c
-oralbc_dur_c
-
-uvrq
-
-smoke_former
-
-coffee_c
-etoh_c
-rel_1d_cancer
-marriage
-*/
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v14.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v15.xls' style=minimal;
 proc tabulate data=use missing;
 	title1 'AARP-Baseline, Table 1';
 	title2 'melanoma in situ and malignant';
-	title3 '20150916WED WTL v14';
+	title3 '20151009FRI WTL v15';
 	class melanoma_c
 		educ_c bmi_c physic_c  
-		fmenstr menostat_c ovarystat_c 
-		menop_age menopi_age parity flb_age_c 
+		fmenstr_C menostat_c ovarystat_c 
+		menop_age_C parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
-		mht_ever horm_ever
+		mht_ever_c hormstat_c
 		horm_yrs_nat_c horm_yrs_surg_c 
-		uvrq marriage
-		smoke_former smoke_quit smoke_dose 
-		coffee_c etoh_c rel_1d_cancer
+		uvrq_c marriage_c
+		smoke_former_c smoke_quit_c smoke_dose_c
+		coffee_c etoh_c rel_1d_cancer_c
 	; 
 	table
 		educ_c bmi_c physic_c  
-		fmenstr menostat_c ovarystat_c 
-		menop_age menopi_age parity flb_age_c 
+		fmenstr_C menostat_c ovarystat_c 
+		menop_age_C parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
-		mht_ever horm_ever
+		mht_ever_c hormstat_c
 		horm_yrs_nat_c horm_yrs_surg_c 
-		uvrq marriage
-		smoke_former smoke_quit smoke_dose 
-		coffee_c etoh_c rel_1d_cancer
+		uvrq_c marriage_c
+		smoke_former_c smoke_quit_c smoke_dose_c
+		coffee_c etoh_c rel_1d_cancer_c
 		,
 		(melanoma_c)* (N colpctn='Percent') /nocellmerge
 	;  *;

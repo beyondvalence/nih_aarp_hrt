@@ -309,13 +309,6 @@ data conv.melan;
 	if 		parity in (0,-9)				then flb_age_c=9;
 
 	** main effects;
-	educ_me = educ_c;
-	if	educ_me in (9,-9)				then educ_me=.;
-	bmi_me = bmi_c;
-	if	bmi_me in (9,-9)				then bmi_me=.;
-	physic_me = physic_c;
-	if	physic_me  in (9,-9)			then physic_me=.;
-
 	fmenstr_me = fmenstr_c;
 	if	fmenstr_me in (9,-9)			then fmenstr_me=.;
 	menostat_me = menostat_c;
@@ -343,22 +336,10 @@ data conv.melan;
 	horm_yrs_nat_me = horm_yrs_nat;
 	if horm_yrs_nat_me in (9,-9)		then horm_yrs_nat_me=.;
 	horm_yrs_surg_me = horm_yrs_surg;
-	if horm_horm_yrs_surg_me in (9,-9)	then horm_yrs_surg_me=.;
+	if horm_yrs_surg_me in (9,-9)		then horm_yrs_surg_me=.;
 
 	uvrq_me = uvrq_c;
 	if	uvrq_me in (9,-9)				then uvrq_me=.;
-	marriage_me = marriage_c;
-	if marriage_me in (9,-9)			then marriage_me=.;
-	smoke_former_me = smoke_former;
-	if	smoke_former_me  in (9,-9)		then smoke_former_me=.;
-	smoke_quit_me = smoke_quit;
-	if smoke_quit_me in (9,-9)			then smoke_quit_me=.;
-	smoke_dose_me = smoke_dose;
-	if smoke_dose_me in (9,-9)			then smoke_dose_me=.;
-	coffee_me = coffee_c;
-	if	coffee_me in (9,-9) 			then coffee_me=.;
-	etoh_me = etoh_c;
-	if	etoh_me in (9,-9)				then etoh_me=.;
 	rel_1d_cancer_me = rel_1d_cancer;
 	if	rel_1d_cancer_me in (9,-9)		then rel_1d_cancer_me=.;
 
@@ -443,7 +424,8 @@ run;
 	if ht_nat_me in (9, -9)				then ht_nat_me=.;
 
 	ht_nat_ever_c=ht_nat_c;
-	if htnat_ever_c in (1,2,3)						then ht_nat_ever_c=1; /* ever HT */
+	if ht_nat_ever_c in (1,2,3)						then ht_nat_ever_c=1; /* ever HT */
+
 	ht_nat_ever_me = ht_nat_ever_c;
 	if ht_nat_ever_me in (9,-9)			then ht_nat_ever_me=.;
 
@@ -473,14 +455,14 @@ run;
 	****************************************************;
 	** EPT current ***************;
 	l_eptcurrent_ever_c = lacey_eptcurrent;
-	if l_eptcurrent_ever_c in (1,2)		then l_eptcurrent_ever_c=1; /* ever EPT */
-	else if l_eptcurrent_ever_c=4		then l_eptcurrent_ever_c=-9;
+	if l_eptcurrent_ever_c in (1,2)			then l_eptcurrent_ever_c=1; /* ever EPT */
+	else if l_eptcurrent_ever_c in (3,4)	then l_eptcurrent_ever_c=-9;
 	l_eptcurrent_ever_me = l_eptcurrent_ever_c;
-	if l_eptcurrent_ever_me=-9			then l_eptcurrent_ever_me=.;
+	if l_eptcurrent_ever_me=-9				then l_eptcurrent_ever_me=.;
 	l_eptcurrent_c = lacey_eptcurrent;
-	if l_eptcurrent_c=4					then l_eptcurrent_c=-9;
+	if l_eptcurrent_c=4						then l_eptcurrent_c=-9;
 	l_eptcurrent_me = l_eptcurrent_c;
-	if l_eptcurrent_me = -9				then l_eptcurrent_me=.;
+	if l_eptcurrent_me = -9					then l_eptcurrent_me=.;
 
 	** EPT dose ***************;
 	l_eptdose_c=.;
@@ -498,14 +480,14 @@ run;
 	
 	** ET current ***************;
 	l_etcurrent_ever_c = lacey_etcurrent;
-	if l_etcurrent_ever_c in (1,2)		then l_etcurrent_ever_c=1; /* ever ET */
-	else if l_etcurrent_ever_c = 4		then l_etcurrent_ever_c=-9;
+	if l_etcurrent_ever_c in (1,2)			then l_etcurrent_ever_c=1; /* ever ET */
+	else if l_etcurrent_ever_c in (3,4)		then l_etcurrent_ever_c=-9;
 	l_etcurrent_ever_me = l_etcurrent_ever_c;
-	if l_etcurrent_ever_me=-9			then l_etcurrent_ever_me=.;
+	if l_etcurrent_ever_me=-9				then l_etcurrent_ever_me=.;
 	l_etcurrent_c = lacey_etcurrent;
-	if l_etcurrent_c=4					then l_etcurrent_c=-9;
+	if l_etcurrent_c=4						then l_etcurrent_c=-9;
 	l_etcurrent_me = l_etcurrent_c;
-	if l_etcurrent_me=-9				then l_etcurrent_me=.;
+	if l_etcurrent_me=-9					then l_etcurrent_me=.;
 
 	** ET dose ***************;
 	l_etdose_c=.;
@@ -548,8 +530,7 @@ proc freq data=use;
 	tables	
 		educ_c*educm 
 		educ_c*melanoma_c 
-		educ_me*educ_c
-		educ_me*melanoma_c / missing nocol norow nopercent;
+		/ missing nocol norow nopercent;
 run;
 proc means data=use missing;
 	class bmi_c;
@@ -558,12 +539,8 @@ run;
 proc freq data=use;
 	tables
 		bmi_c*melanoma_c
-		bmi_me*bmi_c
-		bmi_me*melanoma_c
 		physic_c*physic
 		physic_c*melanoma_c
-		physic_me*physic_c
-		physic_me*melanoma_c
 		fmenstr_c*fmenstr
 		fmenstr_c*melanoma_c 
 		fmenstr_me*fmenstr_c
@@ -575,7 +552,8 @@ proc freq data=use;
 	title3 'hystat: hyterectomy status';
 	title4 'ovarystat: ovary status';
 	tables
-		menostat_c*perstop_menop*perstop_surg*hyststat*ovarystat / missing list nopercent nocum;
+		menostat_c*perstop_menop*perstop_surg*hyststat*ovarystat 
+		/ missing list nopercent nocum;
 	where melanoma_c=0;
 run;
 proc freq data=use;
@@ -748,7 +726,8 @@ run;
 proc freq data=use_r;
 	title1 "Q15E: No colorectal procedure in past three years?";
 	tables
-		colo_sig_any*rf_Q15E*rf_Q15A*rf_Q15B*rf_Q15C*rf_Q15D / missing nocol norow nopercent list;
+		colo_sig_any*rf_Q15E*rf_Q15A*rf_Q15B*rf_Q15C*rf_Q15D 
+		/ missing nocol norow nopercent list;
 run;
 proc freq data=use_r;
 	title;
