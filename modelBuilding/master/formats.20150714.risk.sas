@@ -44,7 +44,7 @@ proc format;
 	value menopiagefmt 9='Missing' 1='<45' 2='45-49' 3='50+' 5='Still menstruating';
 	value menoagefmt -9='Missing' 1='<50' 2='50-54' 3='55+' 4='Periods did not stop';
 	value surgagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 4='Periods did not stop';
-	value flbagefmt -9='Missing' 1='< 20 years old' 2='20-29' 3='30+' 9='Nulliparous/missing parity';
+	value flbagefmt -9='Missing' 1='< 20 years old' 2='20-29' 3='30+' 9='Nulliparous/Missing parity';
 	value ageflbfmt 9='Unknown' 0='Never gave birth' 1='<16' 2='16-19' 3='20-24' 4='25-29' 5='30-34' 6='35-39' 7='>=40';
 	value parityfmt -9='Missing' 0='Nulliparous' 1='1-2 live children' 2='>=3 live children';
 	value livechildfmt 9='Unknown' 0='Never had a child' 1='1' 2='2' 3='3-4' 4='5-9' 5='>=10';
@@ -100,22 +100,22 @@ proc format;
 	value colosigfmt 1 = 'Yes' 0 = 'No' -9='Missing';
 	value l_sameyear 1 = 'Yes' 0 = 'No' -9='Missing';
 
-	value rfphysicfmt -9='missing' 0='Never/rarely' 1='<1 hr/week' 2='1-3 hr/week' 3='4-7 hr/week' 4='>7 hr/week';
+	value rfphysicfmt -9='Missing' 0='Never/rarely' 1='<1 hr/week' 2='1-3 hr/week' 3='4-7 hr/week' 4='>7 hr/week';
 	value rfphysfmt 9='Unknown' 0='Never' 1='Rarely' 2='<1 hr/week' 3='1-3 hr/week' 4='4-7 hr/week' 5='>7 hr/week';
-	value rfhormtype 9='missing' 0='never' 1='estrogen only' 2='progestin only' 3=' both estrogen and progestin' 4='unknown type' 8='NA'; 
+	value rfhormtype 9='Missing' 0='Never' 1='Estrogen only' 2='Progestin only' 3=' Both estrogen and progestin' 4='Unknown type' 8='NA'; 
 
 	** Lacey - MHT encodings;
-	value l_afterRfq 9='missing' 0='ET-only started before RFQ' 1 = 'ET-only started at/after RFQ' 8 = 'N/A' ;
-	value l_eptcurdur 10='missing' 9='missing' 0='No HT' 1 = '<5 Former' 2 = '<5 Current' 3 = '5+ Former'
+	value l_afterRfq 9='Missing' 0='ET-only started before RFQ' 1 = 'ET-only started at/after RFQ' 8 = 'N/A' ;
+	value l_eptcurdur 10='Missing' 9='Missing' 0='No HT' 1 = '<5 Former' 2 = '<5 Current' 3 = '5+ Former'
 						4 = '5+ Current' 5 = 'Unknown Former' 6 = 'Unknown Current' 7 = '<5 Unknown'
 						8 = '5+ Unknown';
-	value l_eptcurdurr 10='missing' 9='missing' 0='No HT' 1 = '<10 Former' 2 = '<10 Current' 3 = '10+ Former'
+	value l_eptcurdurr 10='Missing' 9='Missing' 0='No HT' 1 = '<10 Former' 2 = '<10 Current' 3 = '10+ Former'
 						4 = '10+ Current' 5 = 'Unknown Former' 6 = 'Unknown Current' 7 = '<10 Unknown'
 						8 = '10+ Unknown';
 	value l_eptcurrent 4 = 'Other/Unknown HT' 3 = 'Unknown' 2 = 'Current' 1 = 'Former' 0 = 'No HT' -9='Missing';
-	value l_eptcurrentvr -9 = 'Other/Unknown HT' 3 = 'Unknown' 1 = 'Ever EPT' 0 = 'No HT' -9='Missing';
-	value l_eptdose -9='missing' 9 = 'Unknown HT' 8 = 'ET' 5 = 'Unknown dose' 4 = '10' 3 = '5' 2 = '2.5' 1 = '<1' 0 = 'No HT' -9='Missing';
-	value l_eptdur -9='missing' 99 = 'Unknown HT' 88 = 'ET' 9 = 'DK' 3 = '10+' 2 = '5-9' 1 = '<5' 0 = 'No HT' 9='Missing';
+	value l_eptcurrentvr 1 = 'Ever EPT' 0 = 'No HT' -9='Missing';
+	value l_eptdose -9='Missing' 9 = 'Unknown HT' 8 = 'ET' 5 = 'Unknown dose' 4 = '10' 3 = '5' 2 = '2.5' 1 = '<1' 0 = 'No HT' -9='Missing';
+	value l_eptdur -9='Missing' 99 = 'Unknown HT' 88 = 'ET' 9 = 'DK' 3 = '10+' 2 = '5-9' 1 = '<5' 0 = 'No HT' 9='Missing';
 	value l_eptregdose 99 = 'Unknown HT' 88 = 'ET only' 13 = '15-25 d/m or unknown EPT regimen' 12 = 'CEPT and unknown dose'
 							11 = 'CEPT & other dose' 10 = 'CEPT & 10 mg' 9 = 'CEPT & 5 mg' 8 = 'CEPT & 2.5 mg'
 							7 = 'CEPT & <1 mg' 6 = 'SEPT and unknown dose' 5 = 'SEPT & other dose' 4 = 'SEPT & 10 mg'
@@ -130,10 +130,10 @@ proc format;
 	value l_et_ept_et 9 = 'N/A' 2 = 'Other' 1 = 'Yes' 0 = 'No';
 	value l_etcurdur;
 	value l_etcurrent 4 = 'Other/Unknown HT' 3 = 'Uknown' 2 = 'Current' 1='Former' 0 = 'No HT' -9='Missing';
-	value l_etcurrentvr 4 = 'Other/Unknown HT' 3 = 'Uknown' 1 = 'Ever ET' 0 = 'No HT' -9='Missing';
-	value l_etdose -9='missing' 9 = 'Unk HT' 3 = 'Unknown' 2 = 'Other' 1 = '.625' 0 = 'No HT';
-	value l_etdur -9='missing' 99 = 'Unknown HT' 88 = 'EPT or Other/Unknown HT type' 9 = 'DK' 2 = '10+' 1 = '<10' 0 = 'No HT';
-	value l_etfreq -9='missing' 9 = 'Unknown HT' 3 = 'Unknown' 2 = 'Other' 1 = 'Daily' 0 = 'No HT';
+	value l_etcurrentvr 1 = 'Ever ET' 0 = 'No HT' -9='Missing';
+	value l_etdose -9='Missing' 9 = 'Unk HT' 3 = 'Unknown' 2 = 'Other' 1 = '.625' 0 = 'No HT';
+	value l_etdur -9='Missing' 99 = 'Unknown HT' 88 = 'EPT or Other/Unknown HT type' 9 = 'DK' 2 = '10+' 1 = '<10' 0 = 'No HT';
+	value l_etfreq -9='Missing' 9 = 'Unknown HT' 3 = 'Unknown' 2 = 'Other' 1 = 'Daily' 0 = 'No HT';
 	value l_ettype 9 = 'Unknown HT' 6 = 'Unsure' 5 = 'Other' 4 = 'Estratab' 3 = 'Estrace' 2 = 'Ogen' 1 = 'Premarin' 0 = 'No HT';
 	value l_fldosereg 99 = 'No EPT' 9 = 'Unknown regimen' 8 = 'Other dose & regimen' 7 = 'Unknown dose' 6 = 'Unknown dose'
 						5 = 'SEPT/CEPT w/other dose' 4 = 'SEPT/CEPT w/other dose' 3 = 'High' 2 = 'Low' 1 = 'Low' 0 = 'OK';
@@ -146,10 +146,10 @@ proc format;
 						2 = 'PT-EPT' 1 = 'EPT-only' 0 = 'ET-EPT';
 	value colosigfmt 1 = 'Yes' 0 = 'No' -9='Missing';
 	value rf_est_cur 9='Unknown' 8='NA' 1='Yes' 0='No';
-	value rfq15afmt 0='No' 1='Sigmoidoscopy';
-	value rfq15bfmt 0='No' 1='Colonoscopy';
-	value rfq15cfmt 0='No' 1='Proctoscopy';
-	value rfq15dfmt 0='No' 1='Unknown type';
-	value rfq15efmt 0='0' 1='No procedures';
+	value $rfq15afmt '0'='No' '1'='Sigmoidoscopy';
+	value $rfq15bfmt '0'='No' '1'='Colonoscopy';
+	value $rfq15cfmt '0'='No' '1'='Proctoscopy';
+	value $rfq15dfmt '0'='No' '1'='Unknown type';
+	value $rfq15efmt '0'='NA' '1'='None';
   
 run;
