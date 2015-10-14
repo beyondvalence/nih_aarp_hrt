@@ -116,23 +116,6 @@ data ranalysis;
 			HORM_CUR						/* Currently taking replacement hormones? */
 			HORM_YRS						/* Total years used replacement hormones */
 
-			/** follow up reproductive factors 
-			FUQ_ESTPRG
-			FUQ_ESTPRG_BRAND
-			FUQ_ESTPRG_CUR
-			FUQ_ESTPRG_DUR
-			FUQ_ESTPRG_STOP
-			FUQ_ESTROGEN
-			FUQ_EST_BRAND
-			FUQ_EST_CUR
-			FUQ_EST_DUR
-			FUQ_EST_STOP
-			FUQ_EVER_BBD
-			FUQ_EVER_MAMMOGRAM
-			FUQ_HORMEVER
-			FUQ_HORMONES
-			**/
-
 			LACEY_NATL_MENO
 			AGE_FLB					/* age at first live birth */
 			LIVECHILD
