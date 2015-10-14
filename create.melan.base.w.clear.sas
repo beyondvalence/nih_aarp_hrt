@@ -1,6 +1,8 @@
 **************************;
 ***** Start2 here ********;
 **************************;
+libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.base.sas';
 ** uses the pre-created analysis_use from above checkpoint;
 data melan; ** name the output of the first primary analysis include to melan;
 	set conv.analysis_use;

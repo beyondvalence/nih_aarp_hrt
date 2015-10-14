@@ -2,6 +2,8 @@
 ***** Start2 here ********;
 **************************;
 ** uses the pre-created analysis_use from above checkpoint;
+libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.risk.sas';
 data melan_r; ** name the output of the first primary analysis include to melan_r;
 	set conv.ranalysis;
 	****** Define melanoma - pulled from allcancer-coffee analysis ******; 
