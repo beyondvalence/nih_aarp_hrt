@@ -336,7 +336,7 @@ data conv.melan;
 	horm_yrs_nat_me = horm_yrs_nat;
 	if horm_yrs_nat_me in (9,-9)		then horm_yrs_nat_me=.;
 	horm_yrs_surg_me = horm_yrs_surg;
-	if horm_yrs_surg_me in (9,-9)		then horm_yrs_surg_me=.;
+	if horm_yrs_surg_me in (9,-9)	then horm_yrs_surg_me=.;
 
 	uvrq_me = uvrq_c;
 	if	uvrq_me in (9,-9)				then uvrq_me=.;
