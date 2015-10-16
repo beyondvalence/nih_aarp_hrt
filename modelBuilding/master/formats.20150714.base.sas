@@ -27,7 +27,7 @@ proc format;
 	value racefmt -9='Missing' 0='Non-Hispanic white' 1='Non-Hispanic black' 2='Hispanic, Asian, PI, AIAN';
 	value educfmt -9='Missing' 0='Less than high school' 1='High school graduate' 2='Some college' 3='College or graduate school';
 	value educmfmt -9='Missing' 1='Less than high school' 2='High school graduate' 3='Post high school' 4='Some college' 5='College or post graduate' 9='Unknown';
-	value bmifmt -9='Missing' 1='< 25' 2='25 to < 30' 3='>=30';
+	value bmifmt -9='Missing' 1='>18.5 to < 25' 2='25 to < 30' 3='30 to < 60';
 	value bminewfmt -9='Missing or extreme' 1='18.5 to <25' 2='25 to <30' 3='30 to <60';
 	value physiccfmt -9='Missing' 0='Never/rarely' 1='1-3 per month' 2='1-2 per week' 3='3-4 per week' 4='5+ per week';
 	value physicfmt -9='Missing' 0='Never' 1='Rarely' 2='1-3 per month' 3='1-2 per week' 4='3-4 per week' 5='5+ per week' 9='Unknown';
