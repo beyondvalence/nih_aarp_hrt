@@ -114,8 +114,8 @@ proc format;
 						8 = '10+ Unknown';
 	value l_eptcurrent 4 = 'Other/Unknown HT' 3 = 'Unknown' 2 = 'Current' 1 = 'Former' 0 = 'No HT' -9='Missing';
 	value l_eptcurrentvr 1 = 'Ever EPT' 0 = 'No HT' -9='Missing';
-	value l_eptdose -9='Missing' 9 = 'Unknown HT' 8 = 'ET' 5 = 'Unknown dose' 4 = '10' 3 = '5' 2 = '2.5' 1 = '<1' 0 = 'No HT' -9='Missing';
-	value l_eptdur -9='Missing' 99 = 'Unknown HT' 88 = 'ET' 9 = 'DK' 3 = '10+' 2 = '5-9' 1 = '<5' 0 = 'No HT' 9='Missing';
+	value l_eptdose -9='Missing' 9 = 'Unknown HT' 8 = 'ET' 5 = 'Unknown dose' 4 = '10' 3 = '5' 2 = '2.5' 1 = '<1' 0 = 'No HT';
+	value l_eptdur -9='Missing' 99 = 'Unknown HT' 88 = 'ET' 9 = 'DK' 3 = '10+' 2 = '5-9' 1 = '<5' 0 = 'No HT';
 	value l_eptregdose 99 = 'Unknown HT' 88 = 'ET only' 13 = '15-25 d/m or unknown EPT regimen' 12 = 'CEPT and unknown dose'
 							11 = 'CEPT & other dose' 10 = 'CEPT & 10 mg' 9 = 'CEPT & 5 mg' 8 = 'CEPT & 2.5 mg'
 							7 = 'CEPT & <1 mg' 6 = 'SEPT and unknown dose' 5 = 'SEPT & other dose' 4 = 'SEPT & 10 mg'
