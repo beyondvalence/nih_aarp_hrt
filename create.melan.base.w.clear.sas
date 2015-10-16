@@ -241,10 +241,10 @@ data conv.melan;
 
 	** bmi three categories;
 	bmi_c=-9;
-	if      0<=bmi_cur<25					then bmi_c=1; /* < 25 */
-   	else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 to <30*/
-   	else if bmi_cur>=30 					then bmi_c=3; /* >=30*/ 
-	else if bmi_cur=.						then bmi_c=-9;
+	if      18.5<bmi_cur<25 				then bmi_c=1; /* 18.5 up to 25 */
+   	else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 up to 30 */
+   	else if 30<=bmi_cur<60 					then bmi_c=3; /* 30 up to 60 */
+	else 										 bmi_c=-9; /* missing or extreme */
 
 	** physical exercise cat;
 	physic_c=.;
