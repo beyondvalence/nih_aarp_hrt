@@ -905,8 +905,8 @@ run;
 ********************************************************************************;
 
 proc phreg data = use multipass;
-	class horm_yrs_nat_me (ref='Never') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_ins(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
+	class horm_yrs_nat_me (ref='Never used') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_ins(0) = horm_yrs_nat_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
 	ods output ParameterEstimates=A_horm_yrs_nat NObs=obs;
 run;
 
@@ -940,8 +940,8 @@ run;
 ********************************************************************************;
 
 proc phreg data = use multipass;
-	class horm_yrs_nat_me (ref='Never') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_mal(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
+	class horm_yrs_nat_me (ref='Never used') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_mal(0) = horm_yrs_nat_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
 	ods output ParameterEstimates=A_horm_yrs_nat NObs=obs;
 run;
 
@@ -974,8 +974,8 @@ run;
 ********************************************************************************;
 
 proc phreg data = use multipass;
-	class horm_yrs_surg_me (ref='Never') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_ins(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
+	class horm_yrs_surg_me (ref='Never used') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_ins(0) = horm_yrs_surg_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
 	ods output ParameterEstimates=A_horm_yrs_surg NObs=obs;
 run;
 
@@ -1009,8 +1009,8 @@ run;
 ********************************************************************************;
 
 proc phreg data = use multipass;
-	class horm_yrs_surg_me (ref='Never') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_mal(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
+	class horm_yrs_surg_me (ref='Never used') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_mal(0) = horm_yrs_surg_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
 	ods output ParameterEstimates=A_horm_yrs_surg NObs=obs;
 run;
 
@@ -1123,7 +1123,8 @@ proc print data=A_horm_yrs_surg_me_mal;
 run;
 ods _all_ close;
 ods html;
-
+***BASEBASEEND***;
+***RISKRISKSTART***;
 ******************************************************************************;
 ******************************************************************************;
 ************************** RISKFACTOR ****************************************;
@@ -1168,54 +1169,6 @@ data A_TOT ;
 	set A_TOT; 
 	type='_ins'; model='Total'; 
 run;
-
-/** for natural menopause;
-proc phreg data = use_r multipass;
-	class  l_eptcurrent_me (ref='No HT') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_ins(0)=l_eptcurrent_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
-	where menostat_c=1;
-	ods output ParameterEstimates=A_eptcur_NM NObs = obs;
-run;
-data A_eptcur_NM; 
-	set A_eptcur_NM ; 
-	where Parameter='l_eptcurrent_me';
-	Sortvar=1; 
-run;
-
-data A_NM (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL )); 
-	set A_eptcur_NM obs;
-run;
-data A_NM (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
-	set A_NM;
-run;
-data A_NM; 
-	set A_NM; 
-	type='_ins'; model='Natur'; 
-run;
-
-** for surgical menopause;
-proc phreg data = use_r multipass;
-	class  l_eptcurrent_me (ref='No HT') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_ins(0)=l_eptcurrent_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
-	where menostat_c=2;
-	ods output ParameterEstimates=A_eptcur_SR NObs = obs;
-run;
-data A_eptcur_SR; 
-	set A_eptcur_SR ; 
-	where Parameter='l_eptcurrent_me';
-	Sortvar=1; 
-run;
-
-data A_SR (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL )); 
-	set A_eptcur_SR obs;
-run;
-data A_SR (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
-	set A_SR;
-run;
-data A_SR ; 
-	set A_SR; 
-	type='_ins'; model='Surg'; 
-run; **/
 
 data A_All_eptcurrent_me_ins ; 
 	set A_TOT; 
