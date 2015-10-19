@@ -2320,7 +2320,7 @@ run;
 
 data A_eptcurvr; 
 	set A_eptcurvr ; 
-	where Parameter='l_eptcurrent_eve';
+	where Parameter='l_eptcurrent_ever_me';
 	Sortvar=1; 
 run;
 
@@ -2356,7 +2356,7 @@ run;
 
 data A_eptcurvr; 
 	set A_eptcurvr ; 
-	where Parameter='l_eptcurrent_eve';
+	where Parameter='l_eptcurrent_ever_me';
 	Sortvar=1; 
 run;
 
@@ -2391,7 +2391,7 @@ run;
 
 data A_etcurvr; 
 	set A_etcurvr ; 
-	where Parameter='l_etcurrent_ever';
+	where Parameter='l_etcurrent_ever_me';
 	Sortvar=1; 
 run;
 
@@ -2427,7 +2427,7 @@ run;
 
 data A_etcurvr; 
 	set A_etcurvr ; 
-	where Parameter='l_etcurrent_ever';
+	where Parameter='l_etcurrent_ever_me';
 	Sortvar=1; 
 run;
 
