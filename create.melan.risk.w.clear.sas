@@ -500,7 +500,7 @@ data conv.melan_r;
 	menostat_me = menostat_c;
 	if	menostat_me in (9,-9) 			then menostat_me=.;
 	menop_age_me = menop_age_c;
-	if	menop_age_me in (9,-9)			then meno_age_me=.;
+	if	menop_age_me in (9,-9)			then menop_age_me=.;
 	parity_me=parity_c;
 	if	parity_me in (9,-9)				then parity_me=.;
 	flb_age_me = flb_age_c;
