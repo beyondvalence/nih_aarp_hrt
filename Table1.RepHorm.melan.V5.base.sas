@@ -83,15 +83,12 @@ ods output TrendTest=Table1Trd
 proc freq data=use;
 	title 'freq for melanoma_ins';
 	tables melanoma_ins * (
-		agecat attained_age birth_cohort
-		educ_c bmi_c physic_c  
-		fmenstr menostat_c ovarystat_c 
-		menop_age menopi_age mht_ever horm_ever
-		parity flb_age_c oralbc_yn_c oralbc_dur_c 
+ 
+		fmenstr_c   
+		menop_age_C parity_c flb_age_c 
+		oralbc_dur_c 
 		horm_yrs_nat_c horm_yrs_surg_c 
-		uvrq marriage
-		smoke_former smoke_dose smoke_quit
-		coffee_c etoh_c rel_1d_cancer
+
 		)	  
 		/chisq trend nocol nopercent scores=table ;
 run;
@@ -107,7 +104,7 @@ data Table1ap;
 	set Table1Chi Table1Trd; by Table; run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1ap_ins.xls' style=minimal;
 proc print data= Table1ap; 
-	title1 'AARP Baseline, In situ';
+	title1 'AARP Baseline, in situ';
 	title2 'print chi2 and trend for melanoma_ins';
 run; 
 ods html close;
