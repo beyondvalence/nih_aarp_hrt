@@ -35,11 +35,11 @@ run;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v15.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v16.xls' style=minimal;
 proc tabulate data=use missing;
 	title1 'AARP-Baseline, Table 1';
 	title2 'melanoma in situ and malignant';
-	title3 '20151009FRI WTL v15';
+	title3 '20151022THU WTL v16';
 	class melanoma_c
 		educ_c bmi_c physic_c  
 		fmenstr_C menostat_c ovarystat_c 
