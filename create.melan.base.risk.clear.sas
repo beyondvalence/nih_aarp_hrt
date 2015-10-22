@@ -122,11 +122,11 @@ data analysis_use;
 	****  Create exit date, exit age, and person years for First Primary Cancer;
 	** with first primary cancer as skin cancer;
 	** Chooses the earliest of 4 possible exit dates for skin cancer;
-  	exit_dt = min(mdy(12,31,2006), skin_dxdt, dod, raadate); 
+  	exit_dt = min(mdy(12,31,2006), cancer_dxdt, dod, raadate); 
   	exit_age = round(((exit_dt-f_dob)/365.25),.001);
   	personyrs = round(((exit_dt-entry_dt)/365.25),.001);
 
-	format exit_dt entry_date f_dob dod skin_dxdt raadate Date9.;
+	format exit_dt entry_date f_dob dod cancer_dxdt raadate Date9.;
 run;
 /* check point for merging the exposure and outcome data */
 ** copy and save the analysis_use dataset to the converted folder;
@@ -292,7 +292,7 @@ data ranalysis;
 			RF_PRG_DATEFLAG   				/* prog start and stop date (intact) indicator *
 			RF_PRG_START_DT RF_PRG_STOP_DT 	/* prog start and end dates */
 	;
-	format skin_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.;
+	format cancer_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.;
 run;
 
 ** create exit dates, exit ages, person years and rf_person years;
@@ -302,7 +302,7 @@ data ranalysis;
 	****  Create exit date, exit age, and person years for First Primary Cancer;
 	** with first primary cancer as skin cancer;
 	* Chooses the earliest of 4 possible exit dates for skin cancer;
-  	exit_dt = min(mdy(12,31,2006), skin_dxdt, dod, raadate); 
+  	exit_dt = min(mdy(12,31,2006), cancer_dxdt, dod, raadate); 
   	exit_age = round(((exit_dt-f_dob)/365.25),.001);
   	personyrs = round(((exit_dt-entry_dt)/365.25),.001);
 	rf_personyrs = round(((exit_dt-rf_entry_dt)/365.25),.001);
