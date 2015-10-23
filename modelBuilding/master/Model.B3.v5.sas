@@ -1037,13 +1037,13 @@ run;
 
 ******************************************************************************;
 
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\modelB\base_model_B3v5.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\modelB\base_model_B3v6.xls' style=minimal;
 
 ** put prints here;
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Baseline:';
-	title2 'Model B3v5';
-	title3 '20151016FRI WTL';
+	title2 'Model B3v6';
+	title3 '20151022THU WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
