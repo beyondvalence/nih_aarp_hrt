@@ -81,11 +81,11 @@ ods output TrendTest=Table1Trd
 	where=(Name1='P2_TREND'));
 
 proc freq data=use;
-	title 'freq for melanoma_ins';
-	tables melanoma_ins * (
+	title 'freq for melanoma_mal';
+	tables melanoma_mal * (
  
 		fmenstr_c   
-		menop_age_C parity_c flb_age_c 
+		menop_age_c parity_c flb_age_c 
 		oralbc_dur_c 
 		horm_yrs_nat_c horm_yrs_surg_c 
 
@@ -102,10 +102,10 @@ proc sort data=Table1Trd;
 	by Table; run;
 data Table1ap; 
 	set Table1Chi Table1Trd; by Table; run;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1ap_ins.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1ap_mal.xls' style=minimal;
 proc print data= Table1ap; 
-	title1 'AARP Baseline, in situ';
-	title2 'print chi2 and trend for melanoma_ins';
+	title1 'AARP Baseline, malignant';
+	title2 'print chi2 and trend for melanoma_mal';
 run; 
 ods html close;
 
