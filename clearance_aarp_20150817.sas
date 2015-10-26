@@ -653,6 +653,127 @@ ods _all_ close; ods html;
 proc freq data=use_r;
 	title;
 	tables	
+		educ_c*educm 
+		educ_c*melanoma_c 
+		/ missing nocol norow nopercent;
+run;
+proc means data=use_r missing;
+	class bmi_c;
+	var bmi_cur ;
+run;
+proc freq data=use_r;
+	tables
+		bmi_c*melanoma_c
+		physic_c*physic
+		physic_c*melanoma_c
+		fmenstr_c*fmenstr
+		fmenstr_c*melanoma_c 
+		fmenstr_me*fmenstr_c
+		fmenstr_me*melanoma_c / missing nocol norow nopercent;
+run;
+proc freq data=use_r;
+	title1 'perstop_menop: periods stop due to natural menopause?';
+	title2 'perstop_surg: periods stop due to surgery?';
+	title3 'hystat: hyterectomy status';
+	title4 'ovarystat: ovary status';
+	tables
+		menostat_c*perstop_menop*perstop_surg*hyststat*ovarystat 
+		/ missing list nopercent nocum;
+	where melanoma_c=0;
+run;
+proc freq data=use_r;
+	title;
+	tables
+		menostat_c*melanoma_c
+		menostat_me*menostat_c
+		menostat_me*melanoma_c
+		ovarystat_c*menostat_c
+		ovarystat_c*ovarystat
+		ovarystat_c*melanoma_c
+		ovarystat_me*menostat_c
+		ovarystat_me*ovarystat_c
+		ovarystat_me*melanoma_c
+		menop_age_c*menop_age
+		menop_age_c*melanoma_c
+		menop_age_me*menop_age_c
+		menop_age_me*melanoma_c
+		parity_c*parity_ever
+		parity_c*livechild
+		parity_c*melanoma_c
+		parity_me*parity_c
+		parity_me*melanoma_c
+		flb_age_c*age_flb
+		flb_age_c*melanoma_c
+		flb_age_me*flb_age_c
+		flb_age_me*melanoma_c
+		oralbc_yn_c*oralbc_yrs
+		oralbc_yn_c*melanoma_c
+		oralbc_yn_me*oralbc_yn_c
+		oralbc_yn_me*melanoma_c
+		oralbc_dur_c*oralbc_yrs
+		oralbc_dur_c*melanoma_c
+		oralbc_dur_me*oralbc_dur_c
+		oralbc_dur_me*melanoma_c
+		mht_ever_c*hormstat
+		mht_ever_c*melanoma_c
+		mht_ever_me*mht_ever_c
+		mht_ever_me*melanoma_c
+		hormstat_c*hormstat
+		hormstat_c*melanoma_c
+		hormstat_me*hormstat_c
+		hormstat_me*melanoma_c
+		horm_yrs_c*melanoma_c
+		horm_yrs_me*horm_yrs_c
+		horm_yrs_me*melanoma_c
+		horm_yrs_nat_c*menostat_c
+		horm_yrs_nat_c*horm_yrs_c
+		horm_yrs_nat_c*melanoma_c
+		horm_yrs_nat_me*horm_yrs_nat_c
+		horm_yrs_nat_me*melanoma_c
+		horm_yrs_surg_c*menostat_c
+		horm_yrs_surg_c*horm_yrs
+		horm_yrs_surg_c*melanoma_c
+		horm_yrs_surg_me*horm_yrs_surg_c
+		horm_yrs_surg_me*melanoma_c
+		/ missing nocol norow nopercent;
+run;
+proc means data=use_r missing;
+	title 'based on current study population';
+	class uvrq_c;
+	var exposure_jul_78_05;
+run;
+proc freq data=use_r;
+	title;
+	tables
+		uvrq_c*melanoma_c
+		uvrq_me*uvrq_c
+		uvrq_me*melanoma_c
+		marriage_c*marriage
+		marriage_c*melanoma_c
+		smoke_former_c*smoke_former
+		smoke_former_c*melanoma_c
+		smoke_dose_c*smoke_dose
+		smoke_dose_c*melanoma_c
+		smoke_quit_c*smoke_quit
+		smoke_quit_c*melanoma_c 
+		coffee_c*qp12b
+		coffee_c*melanoma_c
+		/ missing nocol norow nopercent;
+run;
+proc means data=use_r missing;
+	class etoh_c;
+	var mped_a_bev;
+run;
+proc freq data=use_r;
+	tables
+		etoh_c*melanoma_c
+		rel_1d_cancer_c*rel_1d_cancer
+		rel_1d_cancer_c*melanoma_c
+		/ missing nocol norow nopercent;
+run;
+proc freq data=use_r;
+	title;
+	tables	
 		rf_physic_c*rf_phys_modvig_curr
 		rf_physic_c*melanoma_c
 
