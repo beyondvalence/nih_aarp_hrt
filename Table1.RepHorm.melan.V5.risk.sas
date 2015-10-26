@@ -41,7 +41,7 @@ ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v16.xls' st
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
-	title3 '20151022THU WTL';
+	title3 '20151026MON WTL';
 	title4 'v16';
 	class melanoma_c 
 		educ_c bmi_c physic_c  
