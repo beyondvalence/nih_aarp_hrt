@@ -402,17 +402,17 @@ data conv.melan_r;
 
 	** ET dose ***************;
 	l_etdose_c=.;
-	if l_etcurrent_ever_c=1 & lacey_etdose in (1,2) then l_etdose_c=lacey_etdose;
+	if l_etcurrent_ever_c=1 & RF_EST_DOSE in (1,2,3,4) then l_etdose_c=RF_EST_DOSE;
 	else l_etdose_c=-9;
 	l_etdose_me = l_etdose_c;
-	if l_etdose_me=-9						then l_etdose_me=.;
+	if l_etdose_me=-9									then l_etdose_me=.;
 
 	** ET duration ***************;
 	l_etdur_c=.;
-	if l_etcurrent_ever_c=1 & lacey_etdur in (1,2) then l_etdur_c=lacey_etdur;
+	if l_etcurrent_ever_c=1 & lacey_etdur in (1,2)	then l_etdur_c=lacey_etdur;
 	else l_etdur_c=-9;
 	l_etdur_me = l_etdur_c;
-	if l_etdur_me=-9						then l_etdur_me=.;
+	if l_etdur_me=-9								then l_etdur_me=.;
 
 	** ET freq ***************;
 	l_etfreq_c=.;
@@ -424,18 +424,14 @@ data conv.melan_r;
 	** finished HRT variables;
 	*******************************************************************************************;
 
-	/* colonoscopy and sigmoidoscopy rf_Q15* */
+	/** colonoscopy and sigmoidoscopy rf_Q15 **/
 	colo_sig_any=-9;
-	if rf_Q15A=1 		then colo_sig_any=1;
-	if rf_Q15B=1		then colo_sig_any=1;
-	if rf_Q15C=1		then colo_sig_any=1;
-	if rf_Q15D=1		then colo_sig_any=1;
-	if rf_Q15E=1		then colo_sig_any=0;
-
-	any_screen=colo_sig_any;
-	if rf_Q15E = "0"	then rf_Q15E=0;
-	if rf_Q15E = "1"	then rf_Q15E=1;
-
+	if rf_Q15E=1			then colo_sig_any=0;
+	else if rf_Q15A=1 		then colo_sig_any=1;
+	else if rf_Q15B=1		then colo_sig_any=1;
+	else if rf_Q15C=1		then colo_sig_any=1;
+	else if rf_Q15D=1		then colo_sig_any=1;
+	
 run;
 
 /***************************************************************************************/ 
@@ -652,7 +648,7 @@ proc datasets library=conv;
 			l_etcurrent_ever_c l_etcurrent_ever_me  l_etcurrentvr.
 			l_etcurrent_c l_etcurrent_me lacey_etcurrent l_eptcurrent. 
 
-			l_etdose_c l_etdose_me lacey_etdose l_etdose.
+			l_etdose_c l_etdose_me lacey_etdose RF_EST_DOSE l_estdose. /*testing EST format*/
 			l_etdur_c l_etdur_me lacey_etdur l_etdur. 
 			l_etfreq_c l_etfreq_me lacey_etfreq l_etfreq.
 
