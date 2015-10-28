@@ -10,8 +10,9 @@
 #
 # Created: July 02 2015 WTL
 # Updated: v20150813THU WTL
-# Updated1: v20151015THU WTL
+# Updatedv6: v20151028WED WTL
 # Used IMS: anchovy
+# under git version control
 # Warning: original IMS datasets are in LINUX latin1 encoding
 ******************************************************************************/
 
@@ -19,7 +20,7 @@ libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 libname results 'C:\REB\AARP_HRTandMelanoma\Results';
 
 ******************************************************************************;
-** Analysis of Model B3, v5
+** Analysis of Model B3, v6
 ** in situ and malignant melanoma
 ** with marriage_c, family history of cancer
 ** and menop_age_c for menostat_c
@@ -2230,7 +2231,7 @@ data A_TOT ;
 run;
 
 data A_All_ht_type_ever_me_ins ; 
-	set A_TOT A_NM; 
+	set A_TOT; 
 run;
 
 ******************************************************************************;
@@ -2343,13 +2344,13 @@ run;
 
 ******************************************************************************;
 ods _all_ close;ods html;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\modelB\risk_model_B3v5.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\modelB\risk_model_B3v6.xls' style=minimal;
 
 
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Riskfactor:';
-	title2 'Model B3v5';
-	title3 '20151019MON WTL';
+	title2 'Model B3v6';
+	title3 '20151028WED WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
