@@ -37,12 +37,12 @@ run;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v16.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v17.xls' style=minimal;
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
-	title3 '20151026MON WTL';
-	title4 'v16';
+	title3 '20151028WED WTL';
+	title4 'v17';
 	class melanoma_c 
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
@@ -53,10 +53,10 @@ proc tabulate data=use_r missing;
 		smoke_former_c smoke_dose_c smoke_quit_c
 		coffee_c etoh_c rel_1d_cancer_c
 		/* Lacey EPT below */
-		ht_nat_ever_c ht_nat_c
-		ht_surg_ever_c ht_surg_c
+		ht_type_ever_c ht_type_c
 		l_eptcurrent_ever_c l_eptcurrent_c
 		l_eptdose_c l_eptdur_c
+		l_eptreg_c
 		/* Lacey ET below */
 		l_etcurrent_ever_c l_etcurrent_c
 		l_etdose_c l_etdur_c l_etfreq_c
@@ -73,10 +73,10 @@ proc tabulate data=use_r missing;
 		smoke_former_c smoke_dose_c smoke_quit_c
 		coffee_c etoh_c rel_1d_cancer_c
 		/* Lacey EPT below */
-		ht_nat_ever_c ht_nat_c
-		ht_surg_ever_c ht_surg_c
+		ht_type_ever_c ht_type_c
 		l_eptcurrent_ever_c l_eptcurrent_c
 		l_eptdose_c l_eptdur_c
+		l_eptreg_c
 		/* Lacey ET below */
 		l_etcurrent_ever_c l_etcurrent_c
 		l_etdose_c l_etdur_c l_etfreq_c
