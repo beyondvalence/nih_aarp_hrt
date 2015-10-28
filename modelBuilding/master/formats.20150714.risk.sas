@@ -310,6 +310,7 @@ proc format;
 	value l_etcurrent 4 = 'Other/Unknown HT' 3 = 'Uknown' 2 = 'Current' 1='Former' 0 = 'No HT' -9='Missing';
 	value l_etcurrentvr 1 = 'Ever ET' 0 = 'No HT' -9='Missing';
 	value l_etdose -9='Missing' 9 = 'Unk HT' 3 = 'Unknown' 2 = 'Other' 1 = '.625' 0 = 'No HT';
+	value l_estdose -9='Missing' 1='1. 0.3 mg' 2='2. 0.625 mg' 3='3. 1.250 mg' 4='4. Other';
 	value l_etdur -9='Missing' 
 						99 = 'Unknown HT' 
 						88 = 'EPT or Other/Unknown HT type' 
