@@ -274,7 +274,7 @@ data ranalysis;
 			RF_EST_CUR						/* est current y/n *
 			RF_EST_DUR						/* est years taken *
 			RF_EST_CALC_MO					/* est overall duration taken *
-			RF_ESTONLY_CALC_MO 				/* est only overall duration taken *
+			RF_ESTONLY_CALC_MO 				/* est only overall duration taken */
 			RF_EST_DOSE						/* est dose taken *
 			RF_EST_FREQ						/* est frequency taken *
 			RF_EST_DATEFLAG					/* est start and stop date (intact) indicator *
@@ -286,7 +286,7 @@ data ranalysis;
 			RF_PRG_CUR						/* prog current y/n *
 			RF_PRG_DUR						/* prog years taken *
 			RF_PRG_CALC_MO					/* prog overall duration taken *
-			RF_PRGONLY_CALC_MO  			/* prog only overall duration taken *
+			RF_PRGONLY_CALC_MO  			/* prog only overall duration taken */
 			RF_PRG_DOSE						/* prog dose taken *
 			RF_PRG_FREQ						/* prog frequency taken *
 			RF_PRG_DATEFLAG   				/* prog start and stop date (intact) indicator *
