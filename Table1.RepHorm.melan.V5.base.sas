@@ -35,18 +35,18 @@ run;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v16.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v17.xls' style=minimal;
 proc tabulate data=use missing;
 	title1 'AARP-Baseline, Table 1';
 	title2 'melanoma in situ and malignant';
-	title3 '20151022THU WTL v16';
+	title3 '20151028WED WTL v17';
 	class melanoma_c
 		educ_c bmi_c physic_c  
 		fmenstr_C menostat_c ovarystat_c 
 		menop_age_C parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
 		mht_ever_c hormstat_c
-		horm_yrs_nat_c horm_yrs_surg_c 
+		horm_yrs_c 
 		uvrq_c marriage_c
 		smoke_former_c smoke_quit_c smoke_dose_c
 		coffee_c etoh_c rel_1d_cancer_c
@@ -57,7 +57,7 @@ proc tabulate data=use missing;
 		menop_age_C parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
 		mht_ever_c hormstat_c
-		horm_yrs_nat_c horm_yrs_surg_c 
+		horm_yrs_c
 		uvrq_c marriage_c
 		smoke_former_c smoke_quit_c smoke_dose_c
 		coffee_c etoh_c rel_1d_cancer_c

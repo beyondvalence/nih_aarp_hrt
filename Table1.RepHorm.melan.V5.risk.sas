@@ -48,7 +48,7 @@ proc tabulate data=use_r missing;
 		fmenstr_c menostat_c ovarystat_c 
 		menop_age_c parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
-		horm_yrs_nat_c horm_yrs_surg_c 
+		horm_yrs_c
 		uvrq_c marriage_c
 		smoke_former_c smoke_dose_c smoke_quit_c
 		coffee_c etoh_c rel_1d_cancer_c
@@ -68,7 +68,7 @@ proc tabulate data=use_r missing;
 		fmenstr_c menostat_c ovarystat_c 
 		menop_age_c parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
-		horm_yrs_nat_c horm_yrs_surg_c 
+		horm_yrs_c
 		uvrq_c marriage_c
 		smoke_former_c smoke_dose_c smoke_quit_c
 		coffee_c etoh_c rel_1d_cancer_c
