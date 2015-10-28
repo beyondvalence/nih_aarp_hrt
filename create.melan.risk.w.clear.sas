@@ -336,41 +336,19 @@ data conv.melan_r;
 	else if rf_phys_modvig_curr=9			then rf_physic_c=-9; /* missing */
 	else rf_physic_c=-9;
 
-	** lacey hormone type by natural menopause and surgery;
+	** lacey hormone type ;
 	** edited 20150708WED WTL;
-	ht_nat_c=-9;
-	if 		lacey_ht_type = 0 & menostat_c=1		then ht_nat_c=0; /* no ht */
-	else if	lacey_ht_type = 1 &	menostat_c=1		then ht_nat_c=1; /* et */
-	else if	lacey_ht_type = 2 &	menostat_c=1		then ht_nat_c=2; /* ept */
-	else if	lacey_ht_type = 3 & menostat_c=1		then ht_nat_c=3; /* unk type */
-	else if lacey_ht_type = 9 & menostat_c=1		then ht_nat_c=-9; /* unknown */
-	else if menostat_c NE 1							then ht_nat_c=.;
+	ht_type_c=lacey_ht_type;
+	if lacey_ht_type = 9 					then ht_type_c=-9; /* unknown */
 
-	ht_nat_me = ht_nat_c;
-	if ht_nat_me in (9, -9)				then ht_nat_me=.;
+	ht_type_me = ht_type_c;
+	if ht_type_me in (9, -9)				then ht_type_me=.;
 
-	ht_nat_ever_c=ht_nat_c;
-	if ht_nat_ever_c in (1,2,3)						then ht_nat_ever_c=1; /* ever HT */
+	ht_type_ever_c=ht_type_c;
+	if ht_type_ever_c in (1,2,3)			then ht_type_ever_c=1; /* ever HT */
 
-	ht_nat_ever_me = ht_nat_ever_c;
-	if ht_nat_ever_me in (9,-9)			then ht_nat_ever_me=.;
-
-	ht_surg_c=-9;
-	if 		lacey_ht_type = 0 & menostat_c=2			then ht_surg_c=0; /* no ht */
-	else if	lacey_ht_type = 1 &	menostat_c=2			then ht_surg_c=1; /* et */
-	else if	lacey_ht_type = 2 &	menostat_c=2			then ht_surg_c=2; /* ept */
-	else if	lacey_ht_type = 3 & menostat_c=2			then ht_surg_c=3; /* unk type */
-	else if lacey_ht_type = 9 & menostat_c=2			then ht_surg_c=-9; /* unknown */
-	else if menostat_c NE 2								then ht_surg_c=.;
-
-	ht_surg_me = ht_surg_c;
-	if ht_surg_me in (9, -9)			then ht_surg_me=.;
-
-	ht_surg_ever_c=ht_surg_c;
-	if ht_surg_ever_c in (1,2,3)						then ht_surg_ever_c=1; /* ever HT */
-
-	ht_surg_ever_me=ht_surg_ever_c;
-	if ht_surg_ever_me in (9,-9)		then ht_surg_ever_me=.;
+	ht_type_ever_me = ht_type_ever_c;
+	if ht_type_ever_me in (9,-9)			then ht_type_ever_me=.;
 
 	*******************************************************************************************;
 	*************** HRT variables *************************************************************;
@@ -403,7 +381,14 @@ data conv.melan_r;
 	else l_eptdur_c=-9;
 	l_eptdur_me = l_eptdur_c;
 	if l_eptdur_me=-9						then l_eptdur_me=.;
-	
+
+	** EPT regimen ***************;
+	l_eptreg_c = .;
+	if lacey_eptreg in (1,2,3,4,8)			then l_eptreg_c=lacey_eptreg;
+	else l_eptreg_c=-9;
+	l_eptreg_me = l_eptreg_c;
+	if l_eptreg_me=-9						then l_eptreg_me=.;
+
 	** ET current ***************;
 	l_etcurrent_ever_c = lacey_etcurrent;
 	if l_etcurrent_ever_c in (1,2,3)		then l_etcurrent_ever_c=1; /* ever ET */
@@ -600,8 +585,8 @@ proc datasets library=conv;
 			lacey_samestart44 = "Classifies estrogen and progestin therapy in terms of when each was started relative to the other"
 			lacey_sameyears = "EPT-only users - same reported duration EP?"
 
-			ht_nat_c="lacey Hormone therapy type, natural meno"
-			ht_surg_c="lacey Hormone therapy type, surgical meno"
+			ht_type_c="lacey Hormone therapy type"
+
 			
 	;
 	** set variable value labels;
@@ -654,16 +639,15 @@ proc datasets library=conv;
 			rf_phys_modvig_curr rfphysfmt.
 			rf_physic_c rfphysicfmt.
 			lacey_ht_type l_httype.
-			ht_nat_c ht_nat_me l_httype.
-			ht_nat_ever_c ht_nat_ever_me l_httypevr.
-			ht_surg_c ht_surg_me l_httype.
-			ht_surg_ever_c ht_surg_ever_me l_httypevr.
+			ht_type_c ht_type_me l_httype.
+			ht_type_ever_c ht_type_ever_me l_httypevr.
 
 			l_eptcurrent_ever_c l_eptcurrent_ever_me l_eptcurrentvr.
 			l_eptcurrent_c l_eptcurrent_me lacey_eptcurrent l_eptcurrent. 
 
 			l_eptdose_c l_eptdose_me lacey_eptdose l_eptdose.
 			l_eptdur_c l_eptdur_me lacey_eptdur l_eptdur.
+			lacey_eptreg l_eptreg_c l_eptreg_me l_eptreg.
 
 			l_etcurrent_ever_c l_etcurrent_ever_me  l_etcurrentvr.
 			l_etcurrent_c l_etcurrent_me lacey_etcurrent l_eptcurrent. 
