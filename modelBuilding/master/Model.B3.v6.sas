@@ -64,7 +64,7 @@ libname results 'C:\REB\AARP_HRTandMelanoma\Results';
 
 ****22 l_etcurrent_ever_c			l_etcurrent_ever (ref='No HT')
 ****23 l_etcurrent_c				l_etcurrent_me (ref='No HT')
-****24 l_etdose_c					l_etdose_me (ref='.625')
+****24 l_etdose_c					l_etdose_me (ref='1. 0.3 mg')
 ****25 l_etdur_c					l_etdur_me (ref='<10')
 
 ****26 l_etfreq						l_etfreq_me (ref='Daily')
@@ -1348,14 +1348,14 @@ run;
 ******************************************************************************;
 ********************************************************************************;
 ** R06_ins
-** ME: l_etdose_me (ref='.625')  
+** ME: l_etdose_me (ref='1. 0.3 mg')  
 ** melanoma: _ins, 
 ** variables: ME;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use_r multipass;
-	class  l_etdose_me (ref='.625') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	class  l_etdose_me (ref='1. 0.3 mg') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
 	model exit_age*melanoma_ins(0)=l_etdose_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
 	ods output ParameterEstimates=A_etdose NObs = obs;
 run;
@@ -1384,14 +1384,14 @@ run;
 ******************************************************************************;
 ********************************************************************************;
 ** R06_mal
-** ME: l_etdose_me (ref='.625')  
+** ME: l_etdose_me (ref='1. 0.3 mg')  
 ** melanoma: _mal, 
 ** variables: ME;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use_r multipass;
-	class  l_etdose_me (ref='.625') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	class  l_etdose_me (ref='1. 0.3 mg') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
 	model exit_age*melanoma_mal(0)=l_etdose_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
 	ods output ParameterEstimates=A_etdose NObs = obs;
 run;
@@ -2215,7 +2215,7 @@ run;
 
 data A_htvr; 
 	set A_htvr ; 
-	where Parameter='ht_nat_ever_me';
+	where Parameter='ht_type_ever_me';
 	Sortvar=1; 
 run;
 
@@ -2350,7 +2350,7 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\modelB\risk_model_B
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Riskfactor:';
 	title2 'Model B3v6';
-	title3 '20151028WED WTL';
+	title3 '20151029THU WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
