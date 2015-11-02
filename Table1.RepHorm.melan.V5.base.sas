@@ -84,10 +84,10 @@ proc freq data=use;
 	title 'freq for melanoma_mal';
 	tables melanoma_mal * (
  
-		fmenstr_c   
-		menop_age_c parity_c flb_age_c 
-		oralbc_dur_c 
-		horm_yrs_nat_c horm_yrs_surg_c 
+		fmenstr_me   
+		menop_age_me parity_me flb_age_me 
+		oralbc_dur_me
+		horm_yrs_me 
 
 		)	  
 		/chisq trend nocol nopercent scores=table ;
