@@ -36,26 +36,26 @@ proc format;
 	value marriagecfmt 1='Married' 2='Widowed' 3='Divorced/separated' 5='Never married' -9='Missing';
 
 	** fmenstr, menopause status recoded 20150721WTL;
-	value fmenstrcfmt -9='Missing' 0='10>=' 1='11-12' 2='13-14' 3='15+';
-	value fmenstrfmt -9='Missing' 1='10>=' 2='11-12' 3='13-14' 4='15+' 9='Unknown';
+	value fmenstrcfmt -9='Missing' 0='1. 10>=' 1='2. 11-12' 2='3. 13-14' 3='4. 15+';
+	value fmenstrfmt -9='Missing' 1='1. 10>=' 2='2. 11-12' 3='3. 13-14' 4='4. 15+' 9='Unknown';
 	value menostatfmt -9='Missing' 9='Pre-menopausal' 1='Natural menopause' 2='Surgical/hyst menopause'
 						3='Radiation or chemotherapy' 4='Other reason';
 	value agemenofmt 1='<40' 2='40-44' 3='45-49' 4='50-54' 5='>55' 6='Still menstruating' 9='Unknown';
 	value menopagefmt -9='Missing' 1='<45' 2='45-49' 3='50-54' 4='>=55' 5='Still menstruating';
-	value menopiagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 5='Still menstruating';
+	value menopiagefmt -9='Missing' 1='1. <45' 2='2. 45-49' 3='3. 50+' 5='Still menstruating';
 	value menoagefmt -9='Missing' 1='<50' 2='50-54' 3='55+' 4='Periods did not stop';
 	value surgagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 4='Periods did not stop';
-	value flbagefmt -9='Missing' 1='< 20 years old' 2='20-29' 3='30+' 9='Nulliparous/missing parity';
+	value flbagefmt -9='Missing' 1='1. < 20 years old' 2='2. 20-29' 3='3. 30+' 9='Nulliparous/missing parity';
 	value ageflbfmt 9='Unknown' 0='Never gave birth' 1='<16' 2='16-19' 3='20-24' 4='25-29' 5='30-34' 6='35-39' 7='>=40';
 	value parityfmt -9='Missing' 0='Nulliparous' 1='1-2 live children' 2='>=3 live children';
 	value livechildfmt 9='Unknown' 0='Never had a child' 1='1' 2='2' 3='3-4' 4='5-9' 5='>=10';
 	value hormstatfmt -9='Missing' 0='Never' 1='Current' 2='Former' 9='Unknown';
 	value hormeverfmt -9='Missing' 0='Never' 1='Ever';
 	value hormcurfmt 9='Missing' 0='No' 1='Yes currently';
-	value hormyrsfmt -9='Missing' 0='Never used' 1='1. <5 years' 2='2. 5-9 years' 3='3. >=10 years' 9='Unknown';
-	value oralbcdurfmt -9='Missing' 0='Never/<1yr' 1='1-4 years' 2='5-9 years' 3='10+ years' 9='Unknown';
+	value hormyrsfmt -9='Missing' 0='1. Never used' 1='1. <5 years' 2='2. 5-9 years' 3='3. >=10 years' 9='Unknown';
+	value oralbcdurfmt -9='Missing' 0='1. Never/<1yr' 1='2. 1-4 years' 2='3. 5-9 years' 3='4. 10+ years' 9='Unknown';
 	value oralbcynfmt -9='Missing' 0='Never/<1yr' 1='Ever';
-	value oralbcyrsfmt 9='Unknown' 0='Never/<1yr' 1='1-4 years' 2='5-9 years' 3='10+ years';
+	value oralbcyrsfmt 9='Unknown' 0='1. Never/<1yr' 1='2. 1-4 years' 2='3. 5-9 years' 3='4. 10+ years';
 	value uvrqfmt -9='Missing' 1='176.095 to 186.918' 2='186.918 to 239.642' 3='239.642 to 253.731' 
 					4='253.731 to 289.463';
 	value rphysicfmt -9='Missing' 1='Rarely' 2='<1 hour/week' 3='1-3 hours/week' 4='4-7 hours/week' 5='>7 hours/week';
