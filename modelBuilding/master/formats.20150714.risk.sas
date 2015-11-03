@@ -297,12 +297,12 @@ proc format;
 						0 = 'No HT';
 	value l_estvsprg 9 = 'N/A' 8 = 'Unknown' 2 = 'E<P' 1 = 'E>P' 0 = 'E=P';
 	value l_eptreg 9 = 'Unknown HT' 
-						0 = 'No HT' 
-						1 = 'Sequential' 
-						2 = '15-25 d/m' 
-						3 = 'Continuous' 
-						4 = 'Unknown regimen' 
-						8 = 'ET' 
+						0 = '1. No HT' 
+						1 = '3. Sequential' 
+						2 = '4. 15-25 d/m' 
+						3 = '5. Continuous' 
+						4 = '6. Unknown regimen' 
+						8 = '2. ET' 
 						-9='Missing';
 
 	value l_et_ept_et 9 = 'N/A' 2 = 'Other' 1 = 'Yes' 0 = 'No';
