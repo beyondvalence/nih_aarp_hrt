@@ -384,7 +384,7 @@ data conv.melan_r;
 
 	** EPT regimen ***************;
 	l_eptreg_c = .;
-	if lacey_eptreg in (1,2,3,4,8)			then l_eptreg_c=lacey_eptreg;
+	if lacey_eptreg in (0,1,2,3,4,8)		then l_eptreg_c=lacey_eptreg;
 	else l_eptreg_c=-9;
 	l_eptreg_me = l_eptreg_c;
 	if l_eptreg_me=-9						then l_eptreg_me=.;
