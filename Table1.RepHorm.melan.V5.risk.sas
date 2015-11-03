@@ -35,6 +35,11 @@ proc means data=use_r n sum mean stddev;
 	where melanoma_c=2;
 run; 
 
+proc sql;
+	title 'total riskfactor person years';
+	select sum(personyrs) as personyrs_risk
+	from use_r;
+
 ** Categorical variables in table 1;
 ods _all_ close;
 ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v17.xls' style=minimal;

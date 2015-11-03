@@ -19,6 +19,11 @@ data use;
 	set conv.melan;
 run;
 
+proc sql ;
+	title 'total baseline person years';
+	select sum(personyrs) as personyrs_base
+	from use;
+
 ** reset the results ods output;
 ods html close; 
 ods html;
@@ -81,8 +86,8 @@ ods output TrendTest=Table1Trd
 	where=(Name1='P2_TREND'));
 
 proc freq data=use;
-	title 'freq for melanoma_mal';
-	tables melanoma_mal * (
+	title 'freq for melanoma_ins';
+	tables melanoma_ins * (
  
 		fmenstr_me   
 		menop_age_me parity_me flb_age_me 
@@ -102,10 +107,10 @@ proc sort data=Table1Trd;
 	by Table; run;
 data Table1ap; 
 	set Table1Chi Table1Trd; by Table; run;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1ap_mal.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1ap_ins.xls' style=minimal;
 proc print data= Table1ap; 
-	title1 'AARP Baseline, malignant';
-	title2 'print chi2 and trend for melanoma_mal';
+	title1 'AARP Baseline, in situ';
+	title2 'print chi2 and trend for melanoma_ins';
 run; 
 ods html close;
 
