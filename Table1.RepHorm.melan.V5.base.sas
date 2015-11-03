@@ -40,11 +40,11 @@ run;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v17.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v18.xls' style=minimal;
 proc tabulate data=use missing;
 	title1 'AARP-Baseline, Table 1';
 	title2 'melanoma in situ and malignant';
-	title3 '20151028WED WTL v17';
+	title3 '20151103TUE WTL v18';
 	class melanoma_c
 		educ_c bmi_c physic_c  
 		fmenstr_C menostat_c ovarystat_c 
@@ -54,7 +54,7 @@ proc tabulate data=use missing;
 		horm_yrs_c 
 		uvrq_c marriage_c
 		smoke_former_c smoke_quit_c smoke_dose_c
-		coffee_c etoh_c rel_1d_cancer_c
+		coffee_c etoh_c rel_1d_cancer_c colo_sig_any
 	; 
 	table
 		educ_c bmi_c physic_c  
@@ -65,10 +65,10 @@ proc tabulate data=use missing;
 		horm_yrs_c
 		uvrq_c marriage_c
 		smoke_former_c smoke_quit_c smoke_dose_c
-		coffee_c etoh_c rel_1d_cancer_c
+		coffee_c etoh_c rel_1d_cancer_c colo_sig_any
 		,
 		(melanoma_c)* (N colpctn='Percent') /nocellmerge
-	;  *;
+	;  
 run; 
 ods htmlcss close;
 ods html;
