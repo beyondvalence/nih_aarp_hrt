@@ -2340,6 +2340,77 @@ run;
 data A_All_ovarystat_me_mal ; 
 	set A_TOT; 
 run;
+******************************************************************************;
+********************************************************************************;
+** R0g_ins
+** ME: l_eptreg_me (ref='No HT') 
+** melanoma: _ins, 
+** variables: ME;
+********************************************************************************;
+
+** overall (natural + surgical menopause);
+proc phreg data = use_r multipass;
+	class  l_eptreg_me (ref='1. No HT') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_ins(0)=l_eptreg_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
+	ods output ParameterEstimates=A_eptreg NObs = obs;
+run;
+
+data A_eptreg; 
+	set A_eptreg ; 
+	where Parameter='l_eptreg_me';
+	Sortvar=1; 
+run;
+
+data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
+	set A_eptreg obs;
+run;
+data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
+	set A_TOT; 
+run;
+data A_TOT ; 
+	set A_TOT; 
+	type='_ins'; model='Total'; 
+run;
+
+data A_All_eptreg_me_ins ; 
+	set A_TOT; 
+run;
+
+******************************************************************************;
+********************************************************************************;
+** R0g_mal
+** ME: l_eptreg_me (ref='No HT') 
+** melanoma: _mal, 
+** variables: ME;
+********************************************************************************;
+
+** overall (natural + surgical menopause);
+proc phreg data = use_r multipass;
+	class  l_eptreg_me (ref='1. No HT') uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No');
+	model exit_age*melanoma_mal(0)=l_eptreg_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
+	ods output ParameterEstimates=A_eptreg NObs = obs;
+run;
+
+data A_eptreg; 
+	set A_eptreg ; 
+	where Parameter='l_eptreg_me';
+	Sortvar=1; 
+run;
+
+data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
+	set A_eptreg obs;
+run;
+data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
+	set A_TOT; 
+run;
+data A_TOT ; 
+	set A_TOT; 
+	type='_mal'; model='Total'; 
+run;
+
+data A_All_eptreg_me_mal ; 
+	set A_TOT; 
+run;
 
 
 ******************************************************************************;
@@ -2350,7 +2421,7 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\modelB\risk_model_B
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Riskfactor:';
 	title2 'Model B3v6';
-	title3 '20151029THU WTL';
+	title3 '20151102MON WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
@@ -2432,6 +2503,12 @@ proc print data=A_All_eptdur_me_ins;
 	title1 'Estrogen-Progestin Duration';
 run;
 proc print data=A_All_eptdur_me_mal;
+	title;
+run;
+proc print data=A_All_eptreg_me_ins;
+	title1 'Estrogen-Progestin Regimen';
+run;
+proc print data=A_All_eptreg_me_mal;
 	title;
 run;
 proc print data=A_All_etcurrent_ever_me_ins;
