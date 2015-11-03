@@ -544,7 +544,6 @@ proc datasets library=conv;
 			mht_ever_me mhteverfmt.
 			hormstat_me  hormstatfmt.
 			horm_yrs_me hormyrsfmt.
-			horm_yrs_nat_me horm_yrs_surg_me hormyrsfmt.
 			uvrq_me uvrqfmt.			
 
 			/* baseline regular variables*/
@@ -564,7 +563,7 @@ proc datasets library=conv;
 			oralbc_dur_c oralbc_yrs oralbcdurfmt. 
 			mht_ever_c  parity_ever mhteverfmt.
 			hormstat_c hormstat hormstatfmt. 
-			horm_yrs_c horm_yrs_me horm_yrs_nat_c horm_yrs_surg_c  horm_yrs hormyrsfmt.
+			horm_yrs_c horm_yrs_me horm_yrs hormyrsfmt.
 			uvrq_c uvrqfmt.
 			marriage  marriagefmt. marriage_c marriagecfmt.
 			smoke_former_c smoke_former smokeformerfmt.
