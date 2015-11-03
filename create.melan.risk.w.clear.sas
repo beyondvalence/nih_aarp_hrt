@@ -666,3 +666,7 @@ ods html;
 data use_r;
 	set conv.melan_r;
 run;
+data conv.melan_hosp;
+	set conv.melan_r;
+	keep westatid colo_sig_any;
+run;
