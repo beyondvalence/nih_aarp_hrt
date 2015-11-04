@@ -32,7 +32,14 @@ ods html;
 ** Study sample info    ***;
 ***************************;
 
-proc means data=use n sum mean stddev;
+proc means data=use n sum mean median stddev;
+	title 'baseline frequencies';
+	var entry_age personyrs;
+	where melanoma_c=2;
+run; 
+
+
+proc means data=use n sum mean median stddev;
 	title 'baseline frequencies';
 	var entry_age personyrs;
 	where melanoma_c=2;

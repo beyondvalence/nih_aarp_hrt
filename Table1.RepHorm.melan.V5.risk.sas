@@ -29,7 +29,7 @@ ods html;
 ** Study sample info    ***;
 ***************************;
 
-proc means data=use_r n sum mean stddev;
+proc means data=use_r n sum mean median stddev;
 	title 'riskfactor frequencies';
 	var entry_age personyrs;
 	where melanoma_c=2;
