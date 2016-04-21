@@ -23,11 +23,10 @@ ods html;
 options nocenter yearcutoff=1900 errors=1;
 title1 'NIH-AARP UVR Melanoma Study';
 
-libname uvr 'C:\REB\AARP_HRTandMelanoma\Data\anchovy';
+libname anchovy 'C:\REB\AARP_HRTandMelanoma\Data\anchovy';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 
 filename uv_pub 'C:\REB\AARP_HRTandMelanoma\Data\anchovy\uv_public.v9x';
-ods html close;
 ods html;
 
 ** import the UVR with file extension v9x from the anchovy folder;
@@ -50,11 +49,11 @@ run;
 
 ** input: first primary cancer; 
 ** output: analysis_use;
-** uses exp05jun14, out09jan14, uv_pub1;
+** uses exp23feb16, out25mar16, uv_pub1;
 ** baseline dataset;
 * %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\first.primary.analysis.include.sas';
 data analysis_use;
-	merge conv.exp05jun14 conv.out09jan14;
+	merge anchovy.exp23feb16 anchovy.out25mar16;
 	by westatid;
 
 	keep	westatid
@@ -368,27 +367,6 @@ ods _all_ close; ods html;
          ex_renal        = 0,
          ex_prevcan      = 1,
          ex_deathcan     = 1);
-
-/**************************************************************************************      
-* Define outliers for total energy;
-%outbox(data     = conv.melan,
-        id       = westatid,
-        by       = ,
-        comb_by  = ,
-        var      = calories,
-        cutoff1  = 3,
-        cutoff2  = 2,
-        keepzero = N,
-        lambzero = Y,
-        print    = N,
-        step     = 0.01,
-        addlog   = 0);
-
-data conv.melan excl_kcal;
-   set conv.melan;
-   if noout_calories <= .z  then output excl_kcal;
-   else output conv.melan;
-run; */
 
 /***************************************************************************************/ 
 /*   Exclude if non-whites, racem = 1
@@ -1004,64 +982,3 @@ run;
 data use;
 	set conv.melan;
 run;
-
-** check the contents of the created melan other;
-proc contents data=conv.melan;
-	title 'melanoma content';
-run;
-
-proc freq data=conv.melan;
-	table horm_yrs_me*melanoma_c /missing;
-run;
-
-** check that the melanoma cases were properly created;
-proc freq data=conv.melan;
-	title 'melanoma frequencies';
-	table cancer_siterec3*melanoma_c /nopercent norow nocol;
-	table cancer_seergroup /nopercent norow nocol;
-	table agecat UVRQ birth_cohort UVRQ*birth_cohort UVRQ*agecat /nopercent norow;
-	table melanoma_c*sex /nopercent norow; * verify only females;
-run;
-
-** check the repro and hormone vars ;
-proc freq data=conv.melan;
-	title 'hormone frequencies';
-	*table DAUGH_ESTONLY_CALC_MO_2002 DAUGH_ESTPRG_CALC_MO_2002 DAUGH_EST_CALC_MO_2002 
-	DAUGH_PRGONLY_CALC_MO_2002 DAUGH_PRG_CALC_MO_2002;
-	table FMENSTR HORMEVER*HORMSTAT melanoma_c*HORM_CUR melanoma_c*HORMSTAT HORM_YRS;
-run;
-
-** check coffee and alcohol variables;
-ods html close;
-ods html;
-proc freq data=conv.melan;
-	title 'coffee, alchohol, meno_age, surg_age_c, attained age';
-	table coffee_c etoh_c meno_age_c surg_age_c attained_age smoke_former birth_cohort;
-run;
-
-proc freq data=melan;
-	title 'checking main effect coding';
-	table surg_age_c*surg_age_c_me rel_1d_cancer*rel_1d_cancer_me bmi_c*bmi_c_me;
-run;
-** check new natural and surgical menopause reason variables, 20150512 edit;
-proc freq data=conv.melan;
-	table meno_age_c*nat_meno_reason 
-			surg_age_c*surg_meno_reason /missing;
-run;
-
-proc freq data=conv.melan;
-	table meno_reason nat_meno_reason 
-			surg_meno_reason radchem_meno_reason 
-			meno_age_c surg_age_c /missing;
-run;
-ods html close;
-/*****************************************************
-#
-#
-proc phreg data=conv.melan;
-	title 'melanoma HR with UVR quintiles';
-	class agecat(ref='1') UVRQ(ref='1');
-	model (entry_age, exit_age)*melan_case(0) = agecat UVRQ /rl;
-
-run;
-*****************************************************/
