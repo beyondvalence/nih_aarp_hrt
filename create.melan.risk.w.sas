@@ -416,6 +416,7 @@ run;
 
 /***************************************************************************************/ 
 /*   Exclude if younger than 60 and with no menopause reason                           */ 
+/*   exclude: excl_4_npostmeno;
 **   edit 20151002FRI WTL;
 /***************************************************************************************/ 
 data conv.melan_r;
@@ -428,7 +429,30 @@ run;
 proc freq data=conv.melan_r;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
+run; 
+
+/***************************************************************************************/ 
+/*   Exclude if person-years <= 0                                                      */
+**   exclude: excl_5_pyzero;
+**   edit: 20150901TUE WTL; 
+**   moved: 20160504WED WTL;
+/***************************************************************************************/      
+data conv.melan_r;
+	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
+	set conv.melan_r;
+    excl_5_pyzero=0;
+   	if personyrs <= 0 then excl_5_pyzero=1;
+   	where excl_4_npostmeno=0;
 run;
+proc freq data=conv.melan_r;
+	tables excl_4_npostmeno*excl_5_pyzero 
+			excl_5_pyzero*melanoma_c /missing;
+run; 
+data conv.melan_r;
+	title;
+	set conv.melan_r;
+	where excl_5_pyzero=0;
+run; title;
 
 ** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
 proc univariate data=conv.melan_r;
@@ -836,28 +860,6 @@ data conv.melan_r;
 	*******************************************************************************************;
 run;
 
-/***************************************************************************************/ 
-/*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_5_pyzero;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/      
-data conv.melan_r;
-	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
-	set conv.melan_r;
-    excl_5_pyzero=0;
-   	if personyrs <= 0 then excl_5_pyzero=1;
-   	where excl_4_npostmeno=0;
-run;
-proc freq data=conv.melan_r;
-	tables excl_4_npostmeno*excl_5_pyzero 
-			excl_5_pyzero*melanoma_c /missing;
-run; 
-data conv.melan_r;
-	title;
-	set conv.melan_r;
-	where excl_5_pyzero=0;
-run;
-
 data conv.melan_r;
 	set conv.melan_r;
 	** recode parity and flb_age_c to consolidate contradicting missings in each;
@@ -865,8 +867,8 @@ data conv.melan_r;
 	*** -9 in flb_age means missing to begin with;
 	*** whereas 9 in flb_age means they were coerced to be missing due to missing parity;
 	if		parity in (1,2) & flb_age_c=9	then flb_age_c=-9; 
-	else if parity=2 & flb_age_c=9			then flb_age_c=-9;
-	if 		parity in (0,-9)					then flb_age_c=9;
+	else if parity=2 & flb_age_c=9			then flb_age_c=-9; * redundant?;
+	if 		parity in (0,-9)				then flb_age_c=9;
 run;
 
 ods html close;
