@@ -9,7 +9,7 @@
 # new recodes include: new BMI and imputed menopause status
 # and new exclusion coding with indicator vairables
 #
-# uses the uv_public, out09jan14, exp05jun14 datasets
+# uses the uv_public, exp23feb16 out25mar16 datasets
 #
 # Created: February 06 2015
 # Updated: v20151001THU WTL
@@ -285,50 +285,6 @@ data melan; ** name the output of the first primary analysis include to melan;
 	else melanoma_mal=0;
 run;
 
-*******************************************************;
-/* Check for exclusions from Loftfield Coffee paper;
-** total of n=566398;
-proc copy noclone in=Work out=conv;
-	select analysis;
-run;
-*/
-*******************************************************;
-/*
-proc contents data=conv.rexp05jun14;
-	title 'risk exposure contents';
-run;
-*/
-/**
-create and merge the HRT variables from the risk factor dataset
-to the working melan dataset 
-** also include bmi, physical exercise;
-data rexposure;
-  set conv.rexp05jun14
-	(keep=	westatid 
-			riskfactor characteristics variables
-			rf_agecat
-			rf_phys_modvig_15_18
-
-			hormone variables
-			RF_ESTNAME_ESTRACE RF_ESTNAME_ESTRATAB RF_ESTNAME_OGEN
-			RF_ESTNAME_OTHER RF_ESTNAME_PREMARIN RF_ESTNAME_UNSURE
-			RF_ESTONLY_CALC_MO RF_ESTPRG_CALC_MO RF_ESTROGEN RF_EST_CALC_MO
-			RF_EST_CUR RF_EST_DATEFLAG RF_EST_DOSE RF_EST_DUR
-			RF_EST_FREQ RF_EST_START_DT RF_EST_STOP_DT
-
-			RF_PRGNAME_CYCRIN RF_PRGNAME_MEDRO RF_PRGNAME_OTHER RF_PRGNAME_PROVERA
-			RF_PRGNAME_UNSURE RF_PRGONLY_CALC_MO RF_PRG_CALC_MO RF_PRG_CUR
-			RF_PRG_DATEFLAG RF_PRG_DOSE RF_PRG_DUR RF_PRG_FREQ
-			RF_PRG_START_DT RF_PRG_STOP_DT RF_PROGESTIN	
-		);
-run;
-
-** the HRT variables to the melan set;
-data melan;
-	merge melan rexposure;
-	by westatid;
-run;
-**/
 ** merge the melan dataset with the UV data;
 data melan;
 	merge melan conv.uv_pub1;
@@ -404,19 +360,6 @@ proc freq data=conv.melan;
 			excl_2_premeno*melanoma_c /missing;
 run;
 
-/***************************************************************************************/ 
-/*   Exclude unknown menopausal statuses, menostat = 9?
-/*	 Exclusions Edit: 20150828FRI WTL
-/*   Do not use, will be captured by the postmeno inclusions (Lisa) 20150831MON;
-/***************************************************************************************/ 
-/*
-data conv.melan excl_unkmenostat; 
-	set conv.melan; 
-	if menostat=9
-		then output excl_unkmenostat;
-	else output conv.melan;
-run; 
-*/
 
 /** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
 proc univariate data=conv.melan;
@@ -475,6 +418,28 @@ run;
 proc freq data=conv.melan;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
+run;
+
+/***************************************************************************************/ 
+/*   Exclude if person-years <= 0                                                      */
+**   exclude: excl_5_pyzero;
+**   edit: 20150901TUE WTL;
+/***************************************************************************************/      
+data conv.melan;
+	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
+	set conv.melan;
+    excl_5_pyzero=0;
+   	if personyrs <= 0 then excl_5_pyzero=1;
+   	where excl_4_npostmeno=0;
+run;
+proc freq data=conv.melan;
+	tables excl_4_npostmeno*excl_5_pyzero 
+			excl_5_pyzero*melanoma_c /missing;
+run; 
+data conv.melan;
+	title;
+	set conv.melan;
+	where excl_5_pyzero=0;
 run;
 
 /**
@@ -763,27 +728,7 @@ data conv.melan;
 /* for riskfactor */
 run;
 
-/***************************************************************************************/ 
-/*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_5_pyzero;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/      
-data conv.melan;
-	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
-	set conv.melan;
-    excl_5_pyzero=0;
-   	if personyrs <= 0 then excl_5_pyzero=1;
-   	where excl_4_npostmeno=0;
-run;
-proc freq data=conv.melan;
-	tables excl_4_npostmeno*excl_5_pyzero 
-			excl_5_pyzero*melanoma_c /missing;
-run; 
-data conv.melan;
-	title;
-	set conv.melan;
-	where excl_5_pyzero=0;
-run;
+
 
 data conv.melan;
 	set conv.melan;
@@ -915,7 +860,6 @@ proc datasets library=conv;
 			stage_c = "stage of first primary cancer"
 			physic_1518_c = "level of physical activity at ages 15-18 (base)"
 			marriage = "marriage status"
-			postmeno = "Postmenopausal status"
 
 			smoke_f_c = "ever smoking status"
 			smoke_former ="Smoking Status"
@@ -975,7 +919,6 @@ proc datasets library=conv;
 			menop_age menop_age_me menopagefmt.
 			mht_ever mht_ever_me mhteverfmt.
 			menopi_age menopi_age_me menopiagefmt.
-			postmeno postmenofmt.
 	;
 run;
 /******************************************************************************************/

@@ -34,50 +34,6 @@ data melan; ** name the output of the first primary analysis include to melan;
 	else melanoma_mal=0;
 run;
 
-*******************************************************;
-/* Check for exclusions from Loftfield Coffee paper;
-** total of n=566398;
-proc copy noclone in=Work out=conv;
-	select analysis;
-run;
-*/
-*******************************************************;
-/*
-proc contents data=conv.rexp05jun14;
-	title 'risk exposure contents';
-run;
-*/
-/**
-create and merge the HRT variables from the risk factor dataset
-to the working melan dataset 
-** also include bmi, physical exercise;
-data rexposure;
-  set conv.rexp05jun14
-	(keep=	westatid 
-			riskfactor characteristics variables
-			rf_agecat
-			rf_phys_modvig_15_18
-
-			hormone variables
-			RF_ESTNAME_ESTRACE RF_ESTNAME_ESTRATAB RF_ESTNAME_OGEN
-			RF_ESTNAME_OTHER RF_ESTNAME_PREMARIN RF_ESTNAME_UNSURE
-			RF_ESTONLY_CALC_MO RF_ESTPRG_CALC_MO RF_ESTROGEN RF_EST_CALC_MO
-			RF_EST_CUR RF_EST_DATEFLAG RF_EST_DOSE RF_EST_DUR
-			RF_EST_FREQ RF_EST_START_DT RF_EST_STOP_DT
-
-			RF_PRGNAME_CYCRIN RF_PRGNAME_MEDRO RF_PRGNAME_OTHER RF_PRGNAME_PROVERA
-			RF_PRGNAME_UNSURE RF_PRGONLY_CALC_MO RF_PRG_CALC_MO RF_PRG_CUR
-			RF_PRG_DATEFLAG RF_PRG_DOSE RF_PRG_DUR RF_PRG_FREQ
-			RF_PRG_START_DT RF_PRG_STOP_DT RF_PROGESTIN	
-		);
-run;
-
-** the HRT variables to the melan set;
-data melan;
-	merge melan rexposure;
-	by westatid;
-run;
-**/
 ** merge the melan dataset with the UV data;
 data melan;
 	merge melan conv.uv_pub1;
@@ -117,26 +73,6 @@ ods _all_ close; ods html;
          ex_prevcan      = 1,
          ex_deathcan     = 1);
 
-/**************************************************************************************      
-* Define outliers for total energy;
-%outbox(data     = conv.melan,
-        id       = westatid,
-        by       = ,
-        comb_by  = ,
-        var      = calories,
-        cutoff1  = 3,
-        cutoff2  = 2,
-        keepzero = N,
-        lambzero = Y,
-        print    = N,
-        step     = 0.01,
-        addlog   = 0);
-
-data conv.melan excl_kcal;
-   set conv.melan;
-   if noout_calories <= .z  then output excl_kcal;
-   else output conv.melan;
-run; */
 
 /***************************************************************************************/ 
 /*   Exclude if non-whites, racem = 1
@@ -220,6 +156,27 @@ run;
 proc freq data=conv.melan;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
+run;
+/***************************************************************************************/ 
+/*   Exclude if person-years <= 0                                                      */
+**   exclude: excl_5_pyzero;
+**   edit: 20151001THU WTL;
+/***************************************************************************************/      
+data conv.melan;
+	title 'Ex 5. exclude women with zero or less person years, excl_6_pyzero';
+	set conv.melan;
+    excl_5_pyzero=0;
+   	if personyrs <= 0 then excl_5_pyzero=1;
+   	where excl_4_npostmeno=0;
+run;
+proc freq data=conv.melan;
+	tables excl_4_npostmeno*excl_5_pyzero 
+			excl_5_pyzero*melanoma_c /missing;
+run; 
+data conv.melan;
+	title;
+	set conv.melan;
+	where excl_5_pyzero=0;
 run;
 
 /******************************************************************************************/
@@ -383,28 +340,6 @@ data conv.melan;
 
 	** total;
 	total=1;
-run;
-
-/***************************************************************************************/ 
-/*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_5_pyzero;
-**   edit: 20151001THU WTL;
-/***************************************************************************************/      
-data conv.melan;
-	title 'Ex 5. exclude women with zero or less person years, excl_6_pyzero';
-	set conv.melan;
-    excl_5_pyzero=0;
-   	if personyrs <= 0 then excl_5_pyzero=1;
-   	where excl_4_npostmeno=0;
-run;
-proc freq data=conv.melan;
-	tables excl_4_npostmeno*excl_5_pyzero 
-			excl_5_pyzero*melanoma_c /missing;
-run; 
-data conv.melan;
-	title;
-	set conv.melan;
-	where excl_5_pyzero=0;
 run;
 
 data conv.melan;
