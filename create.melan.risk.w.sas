@@ -6,11 +6,11 @@
 # reproductive, hormonal, contraceptives, UVR variables
 # !!!! for risk factors dataset !!!!!
 #
-# uses the uv_public, rout09jan14, rexp16feb15 datasets
+# uses the uv_public, rout25mar16, rexp23feb16 datasets
 # note: using new rexp dataset above
 #
 # Created: April 03 2015
-# Updated: v20151002FRI WTL
+# Updated: v20160504WED WTL
 # <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
@@ -23,6 +23,7 @@ title1 'NIH-AARP UVR Melanoma Study _riskfactor';
 
 libname uvr 'C:\REB\AARP_HRTandMelanoma\Data\anchovy';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
+libname anchovy 'C:\REB\AARP_HRTandMelanoma\Data\anchovy';
 
 filename uv_pub 'C:\REB\AARP_HRTandMelanoma\Data\anchovy\uv_public.v9x';
 
@@ -52,12 +53,11 @@ ods html close;
 ods html;
 ** input: first primary cancer _risk; 
 ** output: ranalysis;
-** uses: rexp05jun14, rout09jan14, uv_pub1 (merged later);
 ** riskfactor dataset;
 * %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\first.primary.analysis.risk.include.sas';
 data ranalysis;
-  merge conv.rout09jan14 (in=ino)
-        conv.rexp05jun14 (in=ine);
+  merge anchovy.rout25mar16 (in=ino)
+        anchovy.rexp23feb16 (in=ine);
   by westatid;
   keep		westatid
 			rf_entry_dt
@@ -1213,62 +1213,3 @@ data conv.melan_hosp;
 	set conv.melan_r;
 	keep westatid colo_sig_any;
 run;
-** check the contents of the created melan other;
-proc contents data=conv.melan_r;
-	title 'melanoma risk content';
-run;
-proc freq data=conv.melan_r;
-	title 'check menopause status table';
-	table menostat_c ht_type_nat ht_type_surg fmenstr*melanoma_c /missing;
-run;
-** check that the melanoma cases were properly created;
-proc freq data=conv.melan_r;
-	title 'melanoma frequencies risk';
-	table cancer_siterec3*melanoma_c /nopercent norow nocol;
-	table cancer_seergroup /nopercent norow nocol;
-	table agecat UVRQ birth_cohort UVRQ*birth_cohort UVRQ*agecat /nopercent norow;
-	table melanoma_c*sex /nopercent norow; * verify only females;
-run;
-
-** check the repro and hormone vars ;
-proc freq data=conv.melan_r;
-	title 'hormone frequencies';
-	*table DAUGH_ESTONLY_CALC_MO_2002 DAUGH_ESTPRG_CALC_MO_2002 DAUGH_EST_CALC_MO_2002 DAUGH_PRGONLY_CALC_MO_2002 DAUGH_PRG_CALC_MO_2002;
-	table FMENSTR HORMEVER*HORMSTAT melanoma_c*HORM_CUR melanoma_c*HORMSTAT HORM_YRS;
-run;
-*** for lacey hormone therapy vars;
-proc freq data=conv.melan_r;
-	title 'lacey hormone therapy freq- EPT';
-	table lacey_afterrfq lacey_eptcurdur lacey_eptcurdur2 lacey_eptcurrent lacey_eptdose
-			lacey_eptdur lacey_eptregdose lacey_eptregyrs lacey_epttype 
-			lacey_est_vs_prg lacey_et_ept_et;
-proc freq data=conv.melan_r;
-	title 'lacey hormone therapy freq- ET';
-	table lacey_etcurdur lacey_etcurrent lacey_etdose lacey_etdur lacey_etfreq lacey_ettype;
-run;
-proc freq data=conv.melan_r;
-	title 'lacey hormone therapy freq- formulation';
-	table lacey_fl_dosereg lacey_ht_formulation lacey_ht_type lacey_sameduration 
-			lacey_samestart44 lacey_sameyears;
-run;
-
-** check coffee and alcohol variables;
-ods html close;
-ods html;
-proc freq data=conv.melan_r;
-	title 'coffee, alchohol, meno_age, hyst_age';
-	table coffee_c etoh_c meno_age_c hyst_age_c attained_age birth_cohort;
-	table uvrq;
-run;
-ods html close;
-ods html;
-/*****************************************************
-#
-#
-proc phreg data=conv.melan_r;
-	title 'melanoma HR with UVR quintiles';
-	class agecat(ref='1') UVRQ(ref='1');
-	model (entry_age, exit_age)*melan_case(0) = agecat UVRQ /rl;
-
-run;
-*****************************************************/
