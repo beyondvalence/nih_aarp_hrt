@@ -56,12 +56,12 @@ proc sql;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v18.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v19.xls' style=minimal;
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
 	title3 '20160505THU WTL';
-	title4 'v18';
+	title4 'v19';
 	class melanoma_c 
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
