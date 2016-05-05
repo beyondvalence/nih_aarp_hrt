@@ -37,17 +37,7 @@ data melan_r; ** name the output of the first primary analysis include to melan_
 
 run;
 
-*******************************************************;
-/* Check for exclusions from Loftfield Coffee paper;
-** total of n=566398;
-proc copy noclone in=Work out=conv;
-	select analysis;
-run;
-*/
-*******************************************************;
-
-ods html close;
-ods html;
+ods html close; ods html;
 
 ** merge the melan_r dataset with the UV data;
 data melan_r;
@@ -60,12 +50,9 @@ run;
 proc copy noclone in=Work out=conv;
 	select melan_r;
 run;
-
+title;
 **** Exclusions risk macro;
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\exclusions.first.primary.risk.macro.sas';
-
-**** Outbox macro for use with outliers;
-*%include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\outbox.macro.sas';
 
 **** Use the exclusion macro to make "standard" exclusions and get counts of excluded subjects;
 
@@ -146,6 +133,7 @@ run;
 
 /***************************************************************************************/ 
 /*   Exclude if younger than 60 and with no menopause reason                           */ 
+/*   exclude: excl_4_npostmeno;
 **   edit 20151002FRI WTL;
 /***************************************************************************************/ 
 data conv.melan_r;
@@ -159,6 +147,29 @@ proc freq data=conv.melan_r;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
 run;
+
+/***************************************************************************************/ 
+/*   Exclude if person-years <= 0                                                      */
+**   exclude: excl_5_pyzero;
+**   edit: 20150901TUE WTL;
+/***************************************************************************************/      
+data conv.melan_r;
+	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
+	set conv.melan_r;
+    excl_5_pyzero=0;
+   	if personyrs <= 0 then excl_5_pyzero=1;
+   	where excl_4_npostmeno=0;
+run;
+proc freq data=conv.melan_r;
+	tables excl_4_npostmeno*excl_5_pyzero 
+			excl_5_pyzero*melanoma_c /missing;
+run; 
+data conv.melan_r;
+	title;
+	set conv.melan_r;
+	where excl_5_pyzero=0;
+run;
+
 
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
@@ -432,32 +443,6 @@ data conv.melan_r;
 	else if rf_Q15C=1		then colo_sig_any=1;
 	else if rf_Q15D=1		then colo_sig_any=1;
 	
-run;
-
-/***************************************************************************************/ 
-/*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_5_pyzero;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/      
-data conv.melan_r;
-	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
-	set conv.melan_r;
-    excl_5_pyzero=0;
-   	if personyrs <= 0 then excl_5_pyzero=1;
-   	where excl_4_npostmeno=0;
-run;
-proc freq data=conv.melan_r;
-	tables excl_4_npostmeno*excl_5_pyzero 
-			excl_5_pyzero*melanoma_c /missing;
-run; 
-data conv.melan_r;
-	title;
-	set conv.melan_r;
-	where excl_5_pyzero=0;
-run;
-
-data conv.melan_r;
-	set conv.melan_r;
 	** recode parity and flb_age_c to consolidate contradicting missings in each;
 	** if nulliparous or missing number of births, then age at birth should be missing;
 	*** -9 in flb_age means missing to begin with;
