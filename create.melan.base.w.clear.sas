@@ -56,10 +56,8 @@ run;
 **** Exclusions macro;
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\exclusions.first.primary.macro.sas';
 
-**** Outbox macro for use with outliers;
-*%include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\outbox.macro.sas';
-
 **** Use the exclusion macro to make "standard" exclusions and get counts of excluded subjects;
+title;
 ods _all_ close; ods html;
 %exclude(data            = conv.melan,
          ex_proxy        = 1,
@@ -110,21 +108,6 @@ proc freq data=conv.melan;
 			excl_2_premeno*melanoma_c /missing;
 run;
 
-** need to change the exposure percentiles after exclusions;
-** uvr exposure;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** 185.266 186.255 186.918 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
-** birth cohort;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** -11887  -11303  -11009  -10728  -10149  -9511   -8834   -8111   -7744   -7330   -6414;
-** etoh;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** 0       0       0       0.01    0.04    0.06    0.1     0.22    0.32    0.52    1.12;
-** year of birth;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** 1927	   1929    1929    1930    1933    1935    1935    1937    1938    1939    1942;
-
-
 /***************************************************************************************/ 
 /*   Exclude if self-reported periods stopped due to radchem                           */ 
 **	 exclude: excl_3_radchem;
@@ -144,6 +127,7 @@ run;
 
 /***************************************************************************************/ 
 /*   Exclude if younger than 60 and with no menopause reason                           */ 
+**   exclude: excl_4_npostmeno;
 **   edit 20151002FRI WTL;
 /***************************************************************************************/ 
 data conv.melan;
@@ -157,6 +141,7 @@ proc freq data=conv.melan;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
 run;
+
 /***************************************************************************************/ 
 /*   Exclude if person-years <= 0                                                      */
 **   exclude: excl_5_pyzero;
@@ -398,9 +383,9 @@ run;
 ** 20150721TUE WTL;
 
 data conv.melan;
-	merge conv.melan (in=snsd) conv.melan_hosp;
+	merge conv.melan (in=colo) conv.melan_hosp;
 	by westatid;
-	if snsd;
+	if colo;
 	if colo_sig_any = . 				then colo_sig_any=-9;
 	any_screen=colo_sig_any;
 run;
