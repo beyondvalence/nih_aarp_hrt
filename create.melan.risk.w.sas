@@ -10,7 +10,7 @@
 # note: using new rexp dataset above
 #
 # Created: April 03 2015
-# Updated: v20160504WED WTL
+# Updated: v20160505THU WTL
 # <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
@@ -250,13 +250,6 @@ proc copy noclone in=Work out=conv;
 run;
 ods html close;
 ods html;
-proc contents data=conv.ranalysis;
-	title 'ranalysis variables';
-run;
-proc print data=conv.ranalysis (obs=10);
-	title 'ranalysis observations';
-	var entry_dt exit_dt raadate skin_dxdt f_dob rf_entry_dt personyrs rf_personyrs;
-run;
 proc means data=conv.ranalysis;
 	title 'check creation of ranalysis variables';
 	var skin_dxdt dod raadate f_dob entry_dt rf_entry_dt 
@@ -334,7 +327,8 @@ proc copy noclone in=Work out=conv;
 run;
 ** quick checks on the conv.melan file;
 ** especially for the seer ICD-O-3 codes;
-** melanoma code is 25010, seergroup=18 skin cancer;
+** cancer_siterec3 code is 25010;
+** cancer_seergroup=18 skin cancer;
 ** check to see if the melanoma was coded correctly;
 proc freq data=conv.melan_r;
 	title 'check cancer sites';
