@@ -14,27 +14,41 @@
 #
 *******************************************************************/
 
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\format.risk.w.sas';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
-
 
 data use_r;
 	set conv.melan_r;
 run;
 
-** reset the results ods output;
-ods html close; 
-ods html;
-
 ***************************;
 ** Study sample info    ***;
 ***************************;
+ods html close; ods html;
+proc means data=use_r n sum mean median stddev maxdec=1;
+	title 'riskfactor frequencies, all';
+	var entry_age personyrs;
+run; 
 
-proc means data=use_r n sum mean median stddev;
-	title 'riskfactor frequencies';
+proc means data=use_r n sum mean median stddev maxdec=1;
+	title 'riskfactor frequencies, no melanoma';
+	var entry_age personyrs;
+	where melanoma_c=0;
+run; 
+
+proc means data=use_r n sum mean median stddev maxdec=1;
+	title 'riskfactor frequencies, in situ';
+	var entry_age personyrs;
+	where melanoma_c=1;
+run; 
+
+proc means data=use_r n sum mean median stddev maxdec=1;
+	title 'riskfactor frequencies, malignant';
 	var entry_age personyrs;
 	where melanoma_c=2;
 run; 
 
+** total personyears;
 proc sql;
 	title 'total riskfactor person years';
 	select sum(personyrs) as personyrs_risk
@@ -42,12 +56,12 @@ proc sql;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v17.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v18.xls' style=minimal;
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
-	title3 '20151028WED WTL';
-	title4 'v17';
+	title3 '20160505THU WTL';
+	title4 'v18';
 	class melanoma_c 
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
