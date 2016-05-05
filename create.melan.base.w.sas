@@ -12,7 +12,7 @@
 # uses the uv_public, exp23feb16 out25mar16 datasets
 #
 # Created: February 06 2015
-# Updated: v20151001THU WTL
+# Updated: v20160505THU WTL
 # <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
@@ -166,92 +166,11 @@ proc copy noclone in=Work out=conv;
 	select analysis_use;
 run;
 
-/******************************************************************
-#      NIH-AARP UVR- Reproductive Factors- Melanoma Study
-*******************************************************************
-#
-# creates formats for the master model building file
-# baseline
-#
-#
-# Created: June 29 2015
-# Updated: v20150818TUE WTL
-# Used IMS: anchovy
-# Warning: original IMS datasets are in LINUX latin1 encoding
-*******************************************************************/
-libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
-libname results 'C:\REB\AARP_HRTandMelanoma\Results\baseline\mht';
+****************************;
+******* Start2 here ********;
+****************************;
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\format.base.w.sas';
 
-proc format;
-	value sexfmt 0 = 'Male' 1 = 'Female';
-	value melanfmt 0 = 'no melanoma' 1 = 'in situ' 2 = 'malignant';
-	value melanomafmt 0 = 'no melanoma' 1 = 'melanoma';
-	value melanomainsfmt 0 = 'no melanoma' 1='melanoma in situ';
-	value melanomamalfmt 0 = 'no melanoma' 1='malignant melanoma';
-
-	value agecatfmt 1 = '50-55 years' 2 = '55-59 years' 3 = '60-64 years' 4 = '65-69 years' 5 = '>=70 years';
-	value birthcohortfmt 1='1925-1928' 2='1929-1931' 3='1932-1934' 4='1935-1938' 5='1939-1945';
-	value attainedagefmt -9='missing' 0='>=50 to <55' 1='>=55 to <60' 2='>=60 to <65' 3='>=65 to <70' 4='70+';
-	value racefmt -9='missing' 0='non-Hispanic white' 1='non-Hispanic black' 2='Hispanic, Asian, PI, AIAN';
-	value educfmt -9='missing' 0='Less than high school' 1='High school graduate' 2='some college' 3='college or graduate school';
-	value educmfmt -9='missing' 1='Less than high school' 2='High school graduate' 3='Post high school' 4='Some college' 5='College or post graduate' 9='Unknown';
-	value bmifmt -9='missing' 1='< 25' 2='25 to < 30' 3='>=30';
-	value bminewfmt -9='missing or extreme' 1='18.5 to <25' 2='25 to <30' 3='30 to <60';
-	value physicfmt -9='missing' 0='Never/rarely' 1='1-3 per month' 2='1-2 per week' 3='3-4 per week' 4='5+ per week';
-	value smokingfmt -9='missing' 0='never smoked' 1='ever smoke';
-	value marriagefmt 1='married' 2='widowed' 3='divorced/separated' 5='never married' 9='unknown';
-
-	** fmenstr, menopause status recoded 20150721WTL;
-	value fmenstrfmt -9='missing' 0='10>=' 1='11-12' 2='13-14' 3='15+';
-	value menostatfmt -9='missing' 9='pre-menopausal' 1='natural menopause' 2='surgical/hyst menopause'
-						3='radiation or chemotherapy' 4='other reason';
-	value menopagefmt 9='missing' 1='<45' 2='45-49' 3='50-54' 4='>=55' 5='still menstruating';
-	value menopiagefmt 9='missing' 1='<45' 2='45-49' 3='50+' 5='still menstruating';
-	value menoagefmt -9='missing' 1='<50' 2='50-54' 3='55+' 4='periods did not stop';
-	value surgagefmt -9='missing' 1='<45' 2='45-49' 3='50+' 4='periods did not stop';
-	value flbagefmt -9='missing' 1='< 20 years old' 2='20s' 3='30s' 9='nulliparous/missing parity';
-	value parityfmt -9='missing' 0='Nulliparous' 1='1-2 live children' 2='>=3 live children';
-	value hormstatfmt -9='missing' 0='Never' 1='Current' 2='Former' 9='Unknown';
-	value hormeverfmt -9='missing' 0='Never' 1='Ever';
-	value hormcurfmt 9='missing' 0='No' 1='Yes currently';
-	value hormyrsfmt -9='missing' 0='Never used' 1='1. <5 years' 2='2. 5-9 years' 3='3. >=10 years';
-	value oralbcdurfmt -9='missing' 0='Never/<1yr' 1='1-4 years' 2='5-9 years' 3='10+ years';
-	value oralbcynfmt -9='missing' 0='Never/<1yr' 1='ever';
-	value uvrqfmt -9='missing' 1='0 to 186.918' 2='186.918 to 239.642' 3='239.642 to 253.731' 
-					4='253.731 to 289.463';
-	value rphysicfmt -9='missing' 1='Rarely' 2='<1 hour/week' 3='1-3 hours/week' 4='4-7 hours/week' 5='>7 hours/week';
-	value relativefmt 9='Unknown' 0='No' 1='Yes' -9='missing';
-
-	** menopause reason edit 20150723THU WTL;
-	value menoreasonfmt 3='rad/chem meno reason' 2='surgical meno reason' 1='natural meno reason'
-						0='periods did not stop';
-	value natmenofmt -9='missing' 0='periods did not stop' 1='natural meno reason';
-	value surgmenofmt -9='missing' 0='periods did not stop' 1='surgical meno reason';
-	value radchemmenofmt -9='missing' 0='periods did not stop' 1='radchem meno reason';
-	value ovarystatfmt -9='missing' 1='both removed' 2='both intact';
-	value mhteverfmt -9='missing' 0='never' 1='ever';
-	value postmenofmt 99='not postmeno' 1='postmeno1' 2='postmeno2' 3='postmeno3' 4='postmeno4' 5='postmeno5';
-
-	** smoking;
-	value smokeformerfmt -9='missing' 0='never smoked' 1='former smoker' 2='current smoker' 9='Unknown';
-	value smokequitfmt -9='missing' 0='never smoked' 1='stopped 10+ years ago' 2='stopped 5-9 years ago'
-						3='stopped 1-4 years ago' 4='stopped within last year' 5='currently smoking'
-						9='Unknown';
-	value smokedosefmt -9='missing' 0='never smoked' 1='1-10 cigs a day' 2='11-20 cigs a day' 
-						3='21-30 cigs a day' 4='31-40 cigs a day' 5='41-60 cigs a day' 
-						6='61+ cigs a day' 9='Unknown';
-	value smokequitdosefmt -9='missing' 0='never smoked' 1='quit, <=20 cigs/day' 2='quit, >20 cigs/day'
-							3='currently smoking, <=20 cigs/day' 4='currently smoking, >20 cigs/day';
-	value coffeefmt -9='missing' 0='none' 1='<=1 cup/day' 2='2-3 cups/day' 3='>=4 cups/day';
-	value etohfmt -9='missing' 0='none' 1='<=1' 2='>1 and <=3' 3='>3';
-	value colosigfmt 1 = 'Yes' 0 = 'No' -9='Missing';
-	value l_sameyear 1 = 'Yes' 0 = 'No' -9='Missing';
-run;
-
-
-**************************;
-***** Start2 here ********;
-**************************;
 ** uses the pre-created analysis_use from above checkpoint;
 ods _all_ close; ods html;
 data melan; ** name the output of the first primary analysis include to melan;
@@ -360,33 +279,6 @@ proc freq data=conv.melan;
 			excl_2_premeno*melanoma_c /missing;
 run;
 
-
-/** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
-proc univariate data=conv.melan;
-	var F_DOB;  dob_year; dob_year;exposure_jul_78_05;
-	output 	out=siriusblack
-			pctlpts= 10 20 25 30 40 50 60 70 75 80 90 
-			pctlpre=p;
-run;*/
-*proc print data=siriusblack; 
-	*title 'uvr exposure percentiles';
-	*title 'DOB exposure percentiles';
-*run; 
-
-** need to change the exposure percentiles after exclusions;
-** uvr exposure;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** 185.266 186.255 186.918 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
-** birth cohort;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** -11887  -11303  -11009  -10728  -10149  -9511   -8834   -8111   -7744   -7330   -6414;
-** etoh;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** 0       0       0       0.01    0.04    0.06    0.1     0.22    0.32    0.52    1.12;
-** year of birth;
-** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-** 1927	   1929    1929    1930    1933    1935    1935    1937    1938    1939    1942;
-
 /***************************************************************************************/ 
 /*   Exclude if self-reported periods stopped due to radchem                           */ 
 **	 exclude: excl_3_radchem;
@@ -406,6 +298,7 @@ run;
 
 /***************************************************************************************/ 
 /*   Exclude if younger than 60 and with no menopause reason                           */ 
+**   exclude: excl_4_npostmeno;
 **   edit 20151002FRI WTL;
 /***************************************************************************************/ 
 data conv.melan;
@@ -442,17 +335,32 @@ data conv.melan;
 	where excl_5_pyzero=0;
 run;
 
-/**
+/** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
 proc univariate data=conv.melan;
-	var exposure_jul_78_05; 
-	output 	out=sauron 
+	var F_DOB;  dob_year; dob_year;exposure_jul_78_05;
+	output 	out=uvout
 			pctlpts= 10 20 25 30 40 50 60 70 75 80 90 
 			pctlpre=p;
-run;
-proc print data=sauron;
-	title 'UVR exposure percentiles';
-run; 
-**/
+run;*/
+*proc print data=uvout; 
+	*title 'uvr exposure percentiles';
+	*title 'DOB exposure percentiles';
+*run; 
+
+** need to change the exposure percentiles after exclusions;
+** uvr exposure;
+** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+** 185.266 186.255 186.918 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
+** birth cohort;
+** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+** -11887  -11303  -11009  -10728  -10149  -9511   -8834   -8111   -7744   -7330   -6414;
+** etoh;
+** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+** 0       0       0       0.01    0.04    0.06    0.1     0.22    0.32    0.52    1.12;
+** year of birth;
+** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+** 1927	   1929    1929    1930    1933    1935    1935    1937    1938    1939    1942;
+
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
 ** for both baseline and riskfactor questionnaire variables;
@@ -728,8 +636,6 @@ data conv.melan;
 /* for riskfactor */
 run;
 
-
-
 data conv.melan;
 	set conv.melan;
 	** recode parity and flb_age_c to consolidate contradicting missings in each;
@@ -740,7 +646,6 @@ data conv.melan;
 	else if parity=2 & flb_age_c=9			then flb_age_c=-9;
 	if 		parity in (0,-9)					then flb_age_c=9;
 run;
-
 
 /* recode the variables for main effect */
 /* such that missings (9, -9) are coded as missing (.), so they are not counted when used as the main effect */
@@ -816,9 +721,9 @@ run;
 ** 20150721TUE WTL;
 
 data conv.melan;
-	merge conv.melan (in=snsd) conv.melan_hosp;
+	merge conv.melan (in=hosp) conv.melan_hosp;
 	by westatid;
-	if snsd;
+	if hosp;
 	if colo_sig_any = . 				then colo_sig_any=-9;
 run;
 
