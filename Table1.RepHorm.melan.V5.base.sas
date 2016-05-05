@@ -7,55 +7,65 @@
 # for v6, baseline to FUP
 # 
 # Created: April 1 2015
-# Updated: v20150916WED WTL
+# Updated: v20160505THU WTL
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
 #
 *******************************************************************/
 
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\format.base.w.sas';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 
 data use;
 	set conv.melan;
 run;
 
+** total personyears;
 proc sql ;
 	title 'total baseline person years';
 	select sum(personyrs) as personyrs_base
 	from use;
 
-** reset the results ods output;
-ods html close; 
-ods html;
-
-***************************;
-** Study sample info    ***;
-***************************;
-
-proc means data=use n sum mean median stddev;
-	title 'baseline frequencies';
+*****************************;
+*** Study population info ***;
+*****************************;
+ods html close; ods html;
+proc means data=use n sum mean median stddev maxdec=1;
+	title 'baseline frequencies, everyone';
 	var entry_age personyrs;
-	where melanoma_c=2;
 run; 
 
 
-proc means data=use n sum mean median stddev;
-	title 'baseline frequencies';
+proc means data=use n sum mean median stddev maxdec=1;
+	title 'baseline frequencies, no melanoma';
+	var entry_age personyrs;
+	where melanoma_c=0;
+run; 
+
+proc means data=use n sum mean median stddev maxdec=1;
+	title 'baseline frequencies, in situ melanoma';
+	var entry_age personyrs;
+	where melanoma_c=1;
+run; 
+
+
+proc means data=use n sum mean median stddev maxdec=1;
+	title 'baseline frequencies, malignant melanoma';
 	var entry_age personyrs;
 	where melanoma_c=2;
 run; 
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v18.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v19.xls' style=minimal;
 proc tabulate data=use missing;
 	title1 'AARP-Baseline, Table 1';
 	title2 'melanoma in situ and malignant';
-	title3 '20151103TUE WTL v18';
+	title3 '20160505THU WTL v19';
 	class melanoma_c
 		educ_c bmi_c physic_c  
-		fmenstr_C menostat_c ovarystat_c 
-		menop_age_C parity_c flb_age_c 
+		fmenstr_c menostat_c ovarystat_c 
+		menop_age_c parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
 		mht_ever_c hormstat_c
 		horm_yrs_c 
@@ -65,11 +75,11 @@ proc tabulate data=use missing;
 	; 
 	table
 		educ_c bmi_c physic_c  
-		fmenstr_C menostat_c ovarystat_c 
-		menop_age_C parity_c flb_age_c 
+		fmenstr_c menostat_c ovarystat_c 
+		menop_age_c parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
 		mht_ever_c hormstat_c
-		horm_yrs_c
+		horm_yrs_c 
 		uvrq_c marriage_c
 		smoke_former_c smoke_quit_c smoke_dose_c
 		coffee_c etoh_c rel_1d_cancer_c colo_sig_any
