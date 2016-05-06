@@ -46,11 +46,6 @@ data conv.uv_pub1;
 run;
 ods html close;
 ods html;
-proc contents data=conv.rout09jan14;
-	title 'risk outcomes check';
-run;
-ods html close;
-ods html;
 ** input: first primary cancer _risk; 
 ** output: ranalysis;
 ** riskfactor dataset;
@@ -193,7 +188,7 @@ data ranalysis;
 			RF_EST_CUR						/* est current y/n *
 			RF_EST_DUR						/* est years taken *
 			RF_EST_CALC_MO					/* est overall duration taken *
-			RF_ESTONLY_CALC_MO 				/* est only overall duration taken *
+			RF_ESTONLY_CALC_MO 				/* est only overall duration taken */
 			RF_EST_DOSE						/* est dose taken *
 			RF_EST_FREQ						/* est frequency taken *
 			RF_EST_DATEFLAG					/* est start and stop date (intact) indicator *
@@ -301,16 +296,6 @@ data melan_r; ** name the output of the first primary analysis include to melan_
 	else melanoma_mal=0;
 
 run;
-
-*******************************************************;
-/* Check for exclusions from Loftfield Coffee paper;
-** total of n=566398;
-proc copy noclone in=Work out=conv;
-	select analysis;
-run;
-*/
-*******************************************************;
-
 ods html close;
 ods html;
 
@@ -338,7 +323,7 @@ run;
 
 **** Exclusions risk macro;
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\exclusions.first.primary.risk.macro.sas';
-
+title; ods html close; ods html;
 **** Outbox macro for use with outliers;
 *%include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\outbox.macro.sas';
 
@@ -839,7 +824,7 @@ data conv.melan_r;
 	if lacey_etdur=-9						then lacey_etdur_me=.;
 
 	** ET dose ***************;
-	if lacey_etcurrent in (1,2) & lacey_etdose in (1,2) then lacey_etdose=lacey_etdose;
+	if lacey_etcurrent in (1,2) & RF_EST_DOSE in (1,2,3,4) then lacey_etdose=RF_EST_DOSE;
 	else lacey_etdose=-9;
 	lacey_etdose_me = lacey_etdose;
 	if lacey_etdose=-9						then lacey_etdose_me=.;
@@ -877,8 +862,6 @@ data conv.melan_r;
 	if	agecat_me in (9,-9)				then agecat_me=.;
 	attained_age_me = attained_age;
 	if	attained_age_me in (9,-9)		then attained_age_me=.;
-	birth_cohort_me = birth_cohort;
-	if	birth_cohort_me in (9,-9)		then birth_cohort_me=.;
 	race_c_me = race_c;
 	if	race_c_me in (9,-9)				then race_c_me=.;
 	educ_c_me = educ_c;
