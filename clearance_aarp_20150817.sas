@@ -138,7 +138,8 @@ run;
 
 /***************************************************************************************/ 
 /*   Exclude if younger than 60 and with no menopause reason                           */ 
-**   edit 20151005MON WTL;
+**   exclude: excl_4_npostmeno;
+**   edit 20151002FRI WTL;
 /***************************************************************************************/ 
 data conv.melan;
 	title 'Ex 4. exclude those younger than 60 and with no menopause reason, excl_4_npostmeno';
@@ -150,6 +151,28 @@ run;
 proc freq data=conv.melan;
 	tables excl_3_radchem*excl_4_npostmeno 
 			excl_4_npostmeno*melanoma_c /missing;
+run;
+
+/***************************************************************************************/ 
+/*   Exclude if person-years <= 0                                                      */
+**   exclude: excl_5_pyzero;
+**   edit: 20151001THU WTL;
+/***************************************************************************************/      
+data conv.melan;
+	title 'Ex 5. exclude women with zero or less person years, excl_6_pyzero';
+	set conv.melan;
+    excl_5_pyzero=0;
+   	if personyrs <= 0 then excl_5_pyzero=1;
+   	where excl_4_npostmeno=0;
+run;
+proc freq data=conv.melan;
+	tables excl_4_npostmeno*excl_5_pyzero 
+			excl_5_pyzero*melanoma_c /missing;
+run; 
+data conv.melan;
+	title;
+	set conv.melan;
+	where excl_5_pyzero=0;
 run;
 
 /***************************************************************************************/ 
@@ -345,53 +368,6 @@ data conv.melan;
 
 run;
 
-
-/***************************************************************************************/ 
-/*   Exclude if missing info on cause of menopause                                     */ 
-**   exclude: excl_5_unkmenop;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/ 
-data conv.melan ;
-	title 'Ex 5. exclude women with missing menopause cause, excl_5_unkmenop';
-	set conv.melan;
-	** no hysterectomy, oopherectomy, surgical or natural menopause reason;
-	** rad/chem was excluded above;
-	excl_5_unkmenop=0;
-	if ( hyststat NE 1 & ovarystat NE 1 & perstop_surg NE 1 & perstop_menop NE 1 ) then excl_5_unkmenop=1;
-	where excl_4_radchem=0;
-run;
-proc freq data=conv.melan;
-	tables excl_4_radchem*excl_5_unkmenop 
-			excl_5_unkmenop*melanoma_c /missing;
-run;
-
-/***************************************************************************************/ 
-/*   Exclude if person-years <= 0                                                      */
-**   exclude: excl_6_pyzero;
-**   edit: 20150901TUE WTL;
-/***************************************************************************************/      
-data conv.melan;
-	title 'Ex 6. exclude women with zero or less person years, excl_6_pyzero';
-	set conv.melan;
-    excl_6_pyzero=0;
-   	if personyrs <= 0 then excl_6_pyzero=1;
-   	where excl_5_unkmenop=0;
-run;
-proc freq data=conv.melan;
-	tables excl_5_unkmenop*excl_6_pyzero 
-			excl_6_pyzero*melanoma_c /missing;
-run; 
-data conv.melan;
-	title;
-	set conv.melan;
-	where excl_6_pyzero=0;
-run;
-
-data conv.melan;
-	set conv.melan;
-
-run;
-
 **************************;
 ***** Start2 here ********;
 **************************;
@@ -498,7 +474,7 @@ run;
 
 	** ET duration ***************;
 	l_etdur_c=.;
-	if lacey_etcurrent in (1,2) & lacey_etdur in (1,2) then l_etdur_c=lacey_etdur;
+	if lacey_etcurrent in (1,2) & RF_EST_DOSE in (1,2,3,4) then l_etdur_c=RF_EST_DOSE;
 	else l_etdur_c=-9;
 	l_etdur_me = l_etdur_c;
 	if l_etdur_me=-9						then l_etdur_me=.;
@@ -526,7 +502,7 @@ run;
 /** baseline tables **/
 ods _all_ close; ods html;
 proc freq data=use;
-	title;
+	title 'baseline table qc';
 	tables	
 		educ_c*educm 
 		educ_c*melanoma_c 
@@ -651,7 +627,7 @@ run;
 
 ods _all_ close; ods html;
 proc freq data=use_r;
-	title;
+	title 'riskfactor table qc';
 	tables	
 		educ_c*educm 
 		educ_c*melanoma_c 
@@ -827,7 +803,7 @@ proc freq data=use_r;
 		l_etcurrent_me*l_etcurrent_c
 		l_etcurrent_me*melanoma_c
 
-		l_etdose_c*lacey_etdose
+		l_etdose_c*RF_EST_DOSE
 		l_etdose_c*melanoma_c
 		l_etdose_me*l_etdose_c
 		l_etdose_me*melanoma_c
