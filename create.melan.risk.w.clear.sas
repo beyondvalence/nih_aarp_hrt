@@ -633,7 +633,7 @@ proc datasets library=conv;
 			l_etcurrent_ever_c l_etcurrent_ever_me  l_etcurrentvr.
 			l_etcurrent_c l_etcurrent_me lacey_etcurrent l_eptcurrent. 
 
-			l_etdose_c l_etdose_me lacey_etdose RF_EST_DOSE l_estdose. /*testing EST format*/
+			l_etdose_c l_etdose_me lacey_etdose RF_EST_DOSE l_estdose. 
 			l_etdur_c l_etdur_me lacey_etdur l_etdur. 
 			l_etfreq_c l_etfreq_me lacey_etfreq l_etfreq.
 
