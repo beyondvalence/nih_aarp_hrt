@@ -69,7 +69,7 @@ proc tabulate data=use_r missing;
 		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
 		horm_yrs_c
 		uvrq_c marriage_c
-		smoke_former_c smoke_dose_c smoke_quit_c
+		smoke_former_c smoke_quit_c smoke_dose_c 
 		coffee_c etoh_c rel_1d_cancer_c
 		/* Lacey EPT below */
 		ht_type_ever_c ht_type_c
@@ -89,7 +89,7 @@ proc tabulate data=use_r missing;
 		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
 		horm_yrs_c
 		uvrq_c marriage_c
-		smoke_former_c smoke_dose_c smoke_quit_c
+		smoke_former_c smoke_quit_c smoke_dose_c 
 		coffee_c etoh_c rel_1d_cancer_c
 		/* Lacey EPT below */
 		ht_type_ever_c ht_type_c
