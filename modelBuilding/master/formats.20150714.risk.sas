@@ -77,9 +77,9 @@ proc format;
 
 	** fmenstr, menopause status recoded 20150721WTL;
 	value fmenstrcfmt -9='Missing' 
-						0='10>=' 
-						1='11-12' 
-						2='13-14' 
+						0='1. 10>=' 
+						1='2. 11-12' 
+						2='3. 13-14' 
 						3='15+';
 	value fmenstrfmt -9='Missing' 
 						1='10>=' 
