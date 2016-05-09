@@ -9,18 +9,20 @@ ods output TrendTest=Table1Trd
 ods html;
 proc freq data=use;
 	title 'freq for melanoma_mal';
-	tables melanoma_ins * (  
-		fmenstr_me  meno_age_c_me surg_age_c_me
-		parity_me flb_age_c_me oralbc_dur_c_me
+	tables melanoma_mal * (  
+		fmenstr_me  menop_age_me
+		parity_me flb_age_me oralbc_dur_me
+		horm_yrs_me
 		)	  
-		/chisq trend nocol nopercent scores=tablei;
+		/chisq trend nocol nopercent scores=table;
 run;
 proc sort data=Table1Trd; 
 	by Table; 
 run;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\table2\modelA\table2.trend.base.ins.v2.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\table2\modelA\table2.trend.base.mal.v3.xls' style=minimal;
 proc print data= Table1Trd; 
-	title 'print chi2 and trend for melanoma_ins';
+	title1 'print chi2 and trend for baseline melanoma_mal';
+	title2 '20160509MON WTL';
 run; 
 ods html close;
 
@@ -35,16 +37,15 @@ ods output TrendTest=Table1Trd
 	where=(Name1='P2_TREND'));
 
 proc freq data=use_r;
-	title 'freq for melanoma_mal';
-	tables melanoma_mal* (
-		fmenstr_me meno_age_c_me surg_age_c_me
-		parity_me flb_age_c_me oralbc_dur_c_me 
+	title 'freq for melanoma_ins';
+	tables melanoma_ins* (
+		fmenstr_me menop_age_me
+		parity_me flb_age_me oralbc_dur_me 
+		horm_yrs_me
 		/* Lacey EPT below */
-		lacey_eptcurrent_me 
-		lacey_eptdose_me lacey_eptdur_me
+		l_eptdose_me l_eptdur_me
 		/* Lacey ET below */
-		lacey_etcurrent_me lacey_etdose_me lacey_etdur 
-		lacey_etfreq
+		l_etdose_me 
 		)	  
 		/chisq trend nocol nopercent scores=table ;
 	  run;
@@ -54,11 +55,35 @@ data Table1Trd;
 proc sort data=Table1Trd; 	
 	by Table; run;
 
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\table2\modelA\Table2.trend.risk_mal.v1.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\table2\modelA\Table2.trend.risk_ins.v3.xls' style=minimal;
 proc print data= Table1Trd; 
-	title 'print trend for melanoma_mal, risk'; run; 
-ods html close;
+	title1 'print trend for riskfactor melanoma_ins, '; 
+	title2 '20160509MON WTL';
+run; 
 
+
+ods html close;
+ods html;
+** test ptrend for risk ins fmenstr
+******************************************************************************;
+********************************************************************************;
+** R09_ins
+** ME: fmenstr_me (ref='15+')  
+** melanoma: _ins, 
+** variables: ME;
+********************************************************************************;
+
+** overall (natural + surgical menopause);
+proc phreg data = use_r multipass;
+	class  uvrq_c (ref='176.095 to 186.918') educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
+	model exit_age*melanoma_ins(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c / entry = entry_age RL; 
+	ods output ParameterEstimates=A_fmenstr NObs = obs;
+run;
+
+
+
+
+** l_etfreq by menopause status ********************************************************************************;
 ******************************************************************************;
 ********************************************************************************;
 ** R16_ins
