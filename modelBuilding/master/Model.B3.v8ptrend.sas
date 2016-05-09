@@ -1,8 +1,6 @@
 /*****************************************************************************;
 #             NIH-AARP UVR- Reproductive Factors- Melanoma Study
 /*****************************************************************************;
-#             NIH-AARP UVR- Reproductive Factors- Melanoma Study
-******************************************************************************;
 #
 # Model Building B3v8 p-trends:
 # Main Effect= ME
