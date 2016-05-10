@@ -7,7 +7,7 @@
 # for v6, baseline to FUP
 # 
 # Created: April 1 2015
-# Updated: v20160505THU WTL
+# Updated: v20160510TUE WTL
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
 #
@@ -20,16 +20,18 @@ data use;
 	set conv.melan;
 run;
 
+*****************************;
+*** Study population info ***;
+*** v20  ********************;
+*****************************;
+ods html close; ods html;
+
 ** total personyears;
 proc sql ;
 	title 'total baseline person years';
 	select sum(personyrs) as personyrs_base
 	from use;
 
-*****************************;
-*** Study population info ***;
-*****************************;
-ods html close; ods html;
 proc means data=use n sum mean median stddev maxdec=1;
 	title 'baseline frequencies, everyone';
 	var entry_age personyrs;

@@ -7,7 +7,7 @@
 # for v6, riskfactor to FUP
 # 
 # Created: April 1 2015
-# Updated: v20151009FRI WTL
+# Updated: v20160510TUE WTL
 # removed rf_physic
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
@@ -25,6 +25,11 @@ run;
 ** Study sample info    ***;
 ***************************;
 ods html close; ods html;
+proc sql ;
+	title 'total riskfactor person years';
+	select sum(personyrs) as personyrs_base
+	from use_r;
+
 proc means data=use_r n sum mean median stddev maxdec=1;
 	title 'riskfactor frequencies, all';
 	var entry_age personyrs;
