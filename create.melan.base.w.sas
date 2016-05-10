@@ -149,17 +149,6 @@ data analysis_use;
 	;
 run;
 
-data analysis_use;
-	set analysis_use;
-	****  Create exit date, exit age, and person years for First Primary Cancer;
-	** with first primary cancer as skin cancer;
-	** Chooses the earliest of 4 possible exit dates for skin cancer;
-  	exit_dt = min(mdy(12,31,2006), skin_dxdt, dod, raadate); 
-  	exit_age = round(((exit_dt-f_dob)/365.25),.001);
-  	personyrs = round(((exit_dt-entry_dt)/365.25),.001);
-
-	format exit_dt entry_date f_dob dod skin_dxdt raadate Date9.;
-run;
 /* check point for merging the exposure and outcome data */
 ** copy and save the analysis_use dataset to the converted folder;
 proc copy noclone in=Work out=conv;
@@ -176,6 +165,16 @@ ods _all_ close; ods html;
 data melan; ** name the output of the first primary analysis include to melan;
 	title;
 	set conv.analysis_use;
+
+	****  Create exit date, exit age, and person years for First Primary Cancer;
+	** with first primary cancer as skin cancer;
+	** Chooses the earliest of 4 possible exit dates for skin cancer;
+  	exit_dt = min(mdy(12,31,2011), skin_dxdt, dod, raadate); 
+  	exit_age = round(((exit_dt-f_dob)/365.25),.001);
+  	personyrs = round(((exit_dt-entry_dt)/365.25),.001);
+
+	format exit_dt entry_date f_dob dod skin_dxdt raadate Date9.;
+
 	****** Define melanoma - pulled from allcancer-coffee analysis ******; 
 	** create the melanoma case variable from the cancer ICD-O-3 and SEER coding of 25010;
 	melanoma_c = .;
