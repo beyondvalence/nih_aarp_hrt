@@ -6,6 +6,22 @@ libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.risk.sas';
 data melan_r; ** name the output of the first primary analysis include to melan_r;
 	set conv.ranalysis;
+
+	****  Create exit date, exit age, and person years for First Primary Cancer;
+	** with first primary cancer as skin cancer;
+	* Chooses the earliest of 4 possible exit dates for skin cancer;
+  	exit_dt = min(mdy(12,31,2011), skin_dxdt, dod, raadate); 
+  	exit_age = round(((exit_dt-f_dob)/365.25),.001);
+  	personyrs = round(((exit_dt-entry_dt)/365.25),.001);
+	rf_personyrs = round(((exit_dt-rf_entry_dt)/365.25),.001);
+	
+	format exit_dt Date9.;
+
+	label 	exit_dt="Exit Date"
+			exit_age="Exit Age"
+			personyrs="Person Years from Baseline"
+			rf_personyrs="Person Years from Riskfactor";
+
 	****** Define melanoma - pulled from allcancer-coffee analysis ******; 
 	** create the melanoma case variable from the cancer ICD-O-3 and SEER coding of 25010;
 	** contains both melanoma subtypes;
@@ -452,9 +468,6 @@ data conv.melan_r;
 	if 		parity_c in (0,-9)					then flb_age_c=9;
 run;
 
-ods html close;
-ods html;
-
 /* recode the variables for main effect */
 /* such that missings (9, -9) are coded as missing (.), so they are not counted */
 data conv.melan_r;
@@ -478,14 +491,6 @@ data conv.melan_r;
 	if mht_ever_me in (9,-9)			then mht_ever_me=.;
 	hormstat_me = hormstat_c;
 	if hormstat_me in (9,-9)			then hormstat_me=.;
-	horm_nat_me = horm_nat_c;
-	if	horm_nat_me  in (9,-9)			then horm_nat_me=.;
-	horm_nat_ever_me = horm_nat_ever_c;
-	if horm_nat_ever_me in (9,-9)		then horm_nat_ever_me=.;
-	horm_surg_me = horm_surg_c;
-	if	horm_surg_me in (9,-9)			then horm_surg_me=.;
-	horm_surg_ever_me = horm_surg_ever_c;
-	if horm_surg_ever_me in (9,-9)	then horm_surg_ever_me=.;
 
 	uvrq_me = uvrq_c;
 	if	uvrq_me in (9,-9)				then uvrq_me=.;
@@ -522,8 +527,6 @@ proc datasets library=conv;
 			menostat_c = "menopause status"
 			menop_age_c ="age at natural menopause"
 			physic_c = "level of physical activity"	
-			horm_nat_c = "hormone usage, natural menopause"
-			horm_surg_c = "hormone usage, surgical menopause"
 			parity_c = "total number of live births"
 			bmi_c = "bmi, rough"
 
@@ -534,7 +537,6 @@ proc datasets library=conv;
 			coffee_c = 'Coffee drinking'
 			etoh_c = 'Total alchohol per day including food sources'
 			colo_sig_any = "Colonoscopy or Sigmoidoscopy in past 3 years?"
-			any_screen = "Colonoscopy or Sigmoidoscopy in past 3 years?"
 
 			horm_cur = 'Current Hormone Use'
 			horm_yrs_c = 'Hormone Use Duration'

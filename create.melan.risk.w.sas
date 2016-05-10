@@ -209,10 +209,24 @@ data ranalysis;
 	format skin_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.;
 run;
 
-** create exit dates, exit ages, person years and rf_person years;
-** and recode coffee drinking;
-data ranalysis;
-	set ranalysis;
+
+/* check point for merging the exposure and outcome data */
+** copy and save the analysis_use dataset to the converted folder;
+proc copy noclone in=Work out=conv;
+	select ranalysis;
+run;
+ods html close;
+ods html;
+
+%include 'C:\REB\NSAIDS melanoma AARP\Analysis\format.risk.w.sas';
+
+**************************;
+***** Start2 here ********;
+**************************;
+** uses the pre-created analysis_use from above checkpoint;
+data melan_r; ** name the output of the first primary analysis include to melan_r;
+	set conv.ranalysis;
+
 	****  Create exit date, exit age, and person years for First Primary Cancer;
 	** with first primary cancer as skin cancer;
 	* Chooses the earliest of 4 possible exit dates for skin cancer;
@@ -221,51 +235,13 @@ data ranalysis;
   	personyrs = round(((exit_dt-entry_dt)/365.25),.001);
 	rf_personyrs = round(((exit_dt-rf_entry_dt)/365.25),.001);
 	
-	** coffee drinking;
-	coffee_c=.;
-	
-	if		qp12b='0'							then coffee_c=0; 	/* none */
-	else if qp12b in ('1','2','3','4','5','6')	then coffee_c=1; 	/* <=1/day */
-	else if qp12b='7'							then coffee_c=2; 	/* 2-3/day */
-	else if qp12b in ('8','9')					then coffee_c=3; 	/* >=4/day */
-	else if qp12b='M' or qp12b='E'				then coffee_c=-9;	/* missing */
-	else	coffee_c=-9; 											/* missing */
-	
 	format exit_dt Date9.;
 
 	label 	exit_dt="Exit Date"
 			exit_age="Exit Age"
 			personyrs="Person Years from Baseline"
 			rf_personyrs="Person Years from Riskfactor";
-run;
-/* check point for merging the exposure and outcome data */
-** copy and save the analysis_use dataset to the converted folder;
-proc copy noclone in=Work out=conv;
-	select ranalysis;
-run;
-ods html close;
-ods html;
-proc means data=conv.ranalysis;
-	title 'check creation of ranalysis variables';
-	var skin_dxdt dod raadate f_dob entry_dt rf_entry_dt 
-		entry_age rf_entry_age
-		exit_dt exit_age personyrs rf_personyrs;
-run;
 
-%include 'C:\REB\NSAIDS melanoma AARP\Analysis\format.risk.w.sas';
-
-** check coffee categorical variables;
-proc freq data=conv.ranalysis;
-	title 'check coffee variable';
-	table coffee_c;
-	format coffee_c coffeefmt.;
-run;
-**************************;
-***** Start2 here ********;
-**************************;
-** uses the pre-created analysis_use from above checkpoint;
-data melan_r; ** name the output of the first primary analysis include to melan_r;
-	set conv.ranalysis;
 	****** Define melanoma - pulled from allcancer-coffee analysis ******; 
 	** create the melanoma case variable from the cancer ICD-O-3 and SEER coding of 25010;
 	** contains both melanoma subtypes;
@@ -520,13 +496,6 @@ data conv.melan_r;
 	else if educm=5			then educ_c=3; /* college and grad */
 	else if educm=9			then educ_c=-9; /* missing */
 
-	** race cat;
-	race_c=.;
-	if      racem=1			then race_c=0; /* non hispanic white */
-	else if racem=2			then race_c=1; /* non hispanic black */
-	else if racem in (3,4) 	then race_c=2; /* hispanic, asian PI AIAN */
-	else if racem=9			then race_c=-9; /* missing */
-
 	** age at first live birth cat;
 	flb_age_c=9;
 	if 		age_flb in (1,2)	then flb_age_c=1; /* < 20 years old */
@@ -588,6 +557,16 @@ data conv.melan_r;
 	else if bf_smoke_former=2	then smoke_f_c=1; /* current smoker? (ever)*/
 	else if bf_smoke_former=9	then smoke_f_c=-9; /* missing */
 	else smoke_f_c=-9;
+
+	** coffee drinking;
+	coffee_c=.;
+	
+	if		qp12b='0'							then coffee_c=0; 	/* none */
+	else if qp12b in ('1','2','3','4','5','6')	then coffee_c=1; 	/* <=1/day */
+	else if qp12b='7'							then coffee_c=2; 	/* 2-3/day */
+	else if qp12b in ('8','9')					then coffee_c=3; 	/* >=4/day */
+	else if qp12b='M' or qp12b='E'				then coffee_c=-9;	/* missing */
+	else	coffee_c=-9; 											/* missing */
 
 	** hormonal status cat, 20150708WED edit;
 	*** natural meno;
