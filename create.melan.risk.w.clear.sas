@@ -173,7 +173,7 @@ data conv.melan_r;
 	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
 	set conv.melan_r;
     excl_5_pyzero=0;
-   	if personyrs <= 0 then excl_5_pyzero=1;
+   	if personyrs <= 0 then excl_5_pyzero=1; *does not exclude anyone with new excl macro 20160513FRI;
    	where excl_4_npostmeno=0;
 run;
 proc freq data=conv.melan_r;
@@ -185,7 +185,10 @@ data conv.melan_r;
 	set conv.melan_r;
 	where excl_5_pyzero=0;
 run;
-
+proc freq data=conv.melan_r;
+	title 'riskfactor counts';
+	table melanoma_c*sex;
+run;
 
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;

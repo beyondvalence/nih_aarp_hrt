@@ -173,6 +173,10 @@ data conv.melan;
 	set conv.melan;
 	where excl_5_pyzero=0;
 run;
+proc freq data=conv.melan;
+	title 'baseline counts';
+	table melanoma_c*sex;
+run;
 
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
