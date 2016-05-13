@@ -23,6 +23,7 @@ run;
 
 ***************************;
 ** Study sample info    ***;
+** v21 ********************;
 ***************************;
 ods html close; ods html;
 proc sql ;
@@ -53,20 +54,14 @@ proc means data=use_r n sum mean median stddev maxdec=1;
 	where melanoma_c=2;
 run; 
 
-** total personyears;
-proc sql;
-	title 'total riskfactor person years';
-	select sum(personyrs) as personyrs_risk
-	from use_r;
-
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v19.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v21.xls' style=minimal;
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
-	title3 '20160505THU WTL';
-	title4 'v19';
+	title3 '20160513FRI WTL';
+	title4 'v21';
 	class melanoma_c 
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
