@@ -1,13 +1,13 @@
 /******************************************************************
 #      NIH-AARP UVR- Reproductive Factors- Melanoma Study
 *******************************************************************
-# creates Table 1 descriptives
+# creates Table 1 base descriptives
 # with SAS output to MS Excel
 # uses melan dataset
 # for v6, baseline to FUP
 # 
 # Created: April 1 2015
-# Updated: v20160510TUE WTL
+# Updated: v20160513FRI WTL
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
 #
@@ -22,7 +22,7 @@ run;
 
 *****************************;
 *** Study population info ***;
-*** v20  ********************;
+*** v21  ********************;
 *****************************;
 ods html close; ods html;
 
@@ -59,11 +59,11 @@ run;
 
 ** Categorical variables in table 1;
 ods _all_ close;
-ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v19.xls' style=minimal;
+ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v21.xls' style=minimal;
 proc tabulate data=use missing;
 	title1 'AARP-Baseline, Table 1';
 	title2 'melanoma in situ and malignant';
-	title3 '20160505THU WTL v19';
+	title3 '20160513FRI WTL v21';
 	class melanoma_c
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 

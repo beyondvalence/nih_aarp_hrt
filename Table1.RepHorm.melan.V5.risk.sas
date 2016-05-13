@@ -1,13 +1,13 @@
 /******************************************************************
 #      NIH-AARP UVR- Reproductive Factors- Melanoma Study
 *******************************************************************
-# creates Table 1 descriptives
+# creates Table 1 risk descriptives
 # with SAS output to MS Excel
 # use_rs melan_r dataset
 # for v6, riskfactor to FUP
 # 
 # Created: April 1 2015
-# Updated: v20160510TUE WTL
+# Updated: v20160513FRI WTL
 # removed rf_physic
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
