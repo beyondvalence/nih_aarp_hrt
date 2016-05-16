@@ -29,8 +29,7 @@ data use;
 	set conv.melan;
 run;
 
-title1 "baseline table 2 ptrends";
-title2 "fmenstr_me menop_age_me parity_me flb_age_me oralbc_dur_me horm_yrs_me";
+title1 "base table2 ptrends";
 
 ******************************************************************************;
 ********************************************************************************;
@@ -38,7 +37,7 @@ title2 "fmenstr_me menop_age_me parity_me flb_age_me oralbc_dur_me horm_yrs_me";
 ** ME: fmenstr_me (ref="15+")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 "fmenstr_me ";
 proc phreg data = use multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never") menop_age_c (ref="1. <45");
 	model exit_age*melanoma_ins(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c / entry = entry_age RL; 
@@ -55,7 +54,7 @@ run;
 ** ME: menop_age_me (ref="<45")
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'menop_age_me ';
 proc phreg data = use multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never") menostat_c (ref="Natural menopause");
 	model exit_age*melanoma_ins(0)=menop_age_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menostat_c / entry = entry_age RL; 
@@ -72,7 +71,7 @@ run;
 ** ME: parity_me (ref="1-2 live children")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'parity_me ';
 proc phreg data = use multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never");
 	model exit_age*melanoma_ins(0)=parity_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
@@ -89,7 +88,7 @@ run;
 ** ME: flb_age_me (ref="< 20 years old")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'flb_age_me ';
 proc phreg data = use multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never");
 	model exit_age*melanoma_ins(0)=flb_age_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
@@ -106,7 +105,7 @@ run;
 ** ME: oralbc_dur_me (ref="Never/<1yr")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'oralbc_dur_me ';
 proc phreg data = use multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never");
 	model exit_age*melanoma_ins(0)=oralbc_dur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
@@ -123,7 +122,7 @@ run;
 ** ME: horm_yrs_me (ref="Never used")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'horm_yrs_me';
 proc phreg data = use multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
 	model exit_age*melanoma_ins(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
@@ -146,9 +145,7 @@ data use_r;
 	set conv.melan_r;
 run;
 
-title1 "riskfactor table 2 ptrends";
-title2 "fmenstr_me menop_age_me parity_me flb_age_me oralbc_dur_me horm_yrs_me";
-title3 "l_eptdose_me l_eptdur_me  l_etdose_me";
+title1 "risk table2 ptrends";
 
 ******************************************************************************;
 ********************************************************************************;
@@ -156,14 +153,14 @@ title3 "l_eptdose_me l_eptdur_me  l_etdose_me";
 ** ME: fmenstr_me (ref="15+")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 "fmenstr_me ";
 proc phreg data = use_r multipass;
-	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never") menop_age_c (ref="1. <45");
+	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never") menop_age_c;
 	model exit_age*melanoma_ins(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c / entry = entry_age RL; 
 run;
 
 proc phreg data = use_r multipass;
-	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never") menop_age_c (ref="1. <45");
+	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never") menop_age_c;
 	model exit_age*melanoma_mal(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c / entry = entry_age RL; 
 run;
 
@@ -173,7 +170,7 @@ run;
 ** ME: menop_age_me (ref="<45")
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'menop_age_me ';
 proc phreg data = use_r multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never") menostat_c (ref="Natural menopause");
 	model exit_age*melanoma_ins(0)=menop_age_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menostat_c / entry = entry_age RL; 
@@ -190,7 +187,7 @@ run;
 ** ME: parity_me (ref="1-2 live children")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'parity_me ';
 proc phreg data = use_r multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never");
 	model exit_age*melanoma_ins(0)=parity_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
@@ -207,7 +204,7 @@ run;
 ** ME: flb_age_me (ref="< 20 years old")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'flb_age_me ';
 proc phreg data = use_r multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never");
 	model exit_age*melanoma_ins(0)=flb_age_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
@@ -224,7 +221,7 @@ run;
 ** ME: oralbc_dur_me (ref="Never/<1yr")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'oralbc_dur_me ';
 proc phreg data = use_r multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No") mht_ever_c (ref="Never");
 	model exit_age*melanoma_ins(0)=oralbc_dur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
@@ -241,7 +238,7 @@ run;
 ** ME: horm_yrs_me (ref="Never used")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'horm_yrs_me ';
 proc phreg data = use_r multipass;
 	class uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
 	model exit_age*melanoma_ins(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
@@ -257,7 +254,7 @@ run;
 ** ME: l_eptdose_me (ref="<1")  
 ** melanoma: _ins_mal,
 ********************************************************************************;
-
+title2 'l_eptdose_me ';
 proc phreg data = use_r multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
 	model exit_age*melanoma_ins(0)=l_eptdose_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
@@ -273,7 +270,7 @@ run;
 ** ME: l_eptdur_me (ref="<5")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'l_eptdur_me ';
 proc phreg data = use_r multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
 	model exit_age*melanoma_ins(0)=l_eptdur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
@@ -291,7 +288,7 @@ run;
 ** ME: l_etdose_me (ref="1. 0.3 mg")  
 ** melanoma: _ins_mal, 
 ********************************************************************************;
-
+title2 'l_etdose_me';
 proc phreg data = use_r multipass;
 	class  uvrq_c (ref="176.095 to 186.918") educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
 	model exit_age*melanoma_ins(0)=l_etdose_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL; 
