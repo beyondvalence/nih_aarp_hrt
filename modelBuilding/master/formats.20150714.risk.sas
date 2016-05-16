@@ -7,7 +7,7 @@
 
 #
 # Created: June 29 2015
-# Updated: v20150721TUE WTL
+# Updated: v20160516MON WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
@@ -106,10 +106,18 @@ proc format;
 						3='50-54' 
 						4='>=55' 
 						5='Still menstruating';
-	value menopiagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 5='Still menstruating';
+	value menopiagefmt -9='Missing' 
+						1='<45' 
+						2='2. 45-49' 
+						3='3. 50+' 
+						5='4. Still menstruating';
 	value menoagefmt -9='Missing' 1='<50' 2='50-54' 3='55+' 4='Periods did not stop';
 	value surgagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 4='Periods did not stop';
-	value flbagefmt -9='Missing' 1='< 20 years old' 2='20-29' 3='30+' 9='Nulliparous/Missing parity';
+	value flbagefmt -9='Missing' 
+						1='< 20 years old' 
+						2='2. 20-29' 
+						3='3. 30+' 
+						9='Nulliparous/Missing parity';
 	value ageflbfmt 9='Unknown' 
 						0='Never gave birth' 
 						1='<16' 
@@ -119,7 +127,10 @@ proc format;
 						5='30-34' 
 						6='35-39' 
 						7='>=40';
-	value parityfmt -9='Missing' 0='Nulliparous' 1='1-2 live children' 2='>=3 live children';
+	value parityfmt -9='Missing' 
+						0='1. Nulliparous' 
+						1='1-2 live children' 
+						2='3. >=3 live children';
 	value livechildfmt 9='Unknown' 0='Never had a child' 1='1' 2='2' 3='3-4' 4='5-9' 5='>=10';
 	value hormstatfmt -9='Missing' 0='Never' 1='Current' 2='Former' 9='Unknown';
 	value hormeverfmt -9='Missing' 0='Never' 1='Ever';
@@ -130,9 +141,18 @@ proc format;
 						2='2. 5-9 years' 
 						3='3. >=10 years' 
 						9='Unknown';
-	value oralbcdurfmt -9='Missing' 0='Never/<1yr' 1='1-4 years' 2='5-9 years' 3='10+ years' 9='Unknown';
+	value oralbcdurfmt -9='Missing' 
+						0='Never/<1yr' 
+						1='2. 1-4 years' 
+						2='3. 5-9 years' 
+						3='4. 10+ years' 
+						9='Unknown';
 	value oralbcynfmt -9='Missing' 0='Never/<1yr' 1='Ever';
-	value oralbcyrsfmt 9='Unknown' 0='Never/<1yr' 1='1-4 years' 2='5-9 years' 3='10+ years';
+	value oralbcyrsfmt 9='Unknown' 
+						0='Never/<1yr' 
+						1='2. 1-4 years' 
+						2='3. 5-9 years' 
+						3='4. 10+ years';
 	value uvrqfmt -9='Missing' 1='176.095 to 186.918' 2='186.918 to 239.642' 3='239.642 to 253.731' 
 					4='253.731 to 289.463';
 	value rphysicfmt -9='Missing' 
@@ -236,9 +256,9 @@ proc format;
 						7 = '<10 Unknown'
 						8 = '10+ Unknown';
 	value l_eptcurrent 4 = 'Other/Unknown HT' 
-						3 = 'Unknown' 
-						2 = 'Current' 
-						1 = 'Former' 
+						3 = '4. Unknown' 
+						2 = '2. Current' 
+						1 = '3. Former' 
 						0 = 'No HT' 
 						-9='Missing';
 	value l_eptcurrentvr 1 = 'Ever EPT' 0 = 'No HT' -9='Missing';
@@ -246,17 +266,17 @@ proc format;
 						9 = 'Unknown HT' 
 						8 = 'ET' 
 						5 = 'Unknown dose' 
-						4 = '10' 
-						3 = '5' 
-						2 = '2.5' 
+						4 = '4. 10' 
+						3 = '3. 5' 
+						2 = '2. 2.5' 
 						1 = '<1' 
 						0 = 'No HT';
 	value l_eptdur -9='Missing' 
 						99 = 'Unknown HT' 
 						88 = 'ET' 
 						9 = 'DK' 
-						3 = '10+' 
-						2 = '5-9' 
+						3 = '3. 10+' 
+						2 = '2. 5-9' 
 						1 = '<5' 
 						0 = 'No HT';
 	value l_eptregdose 99 = 'Unknown HT' 
@@ -298,24 +318,28 @@ proc format;
 	value l_estvsprg 9 = 'N/A' 8 = 'Unknown' 2 = 'E<P' 1 = 'E>P' 0 = 'E=P';
 	value l_eptreg 9 = 'Unknown HT' 
 						0 = '1. No HT' 
+						8 = '2. ET' 
 						1 = '3. Sequential' 
 						2 = '4. 15-25 d/m' 
 						3 = '5. Continuous' 
 						4 = '6. Unknown regimen' 
-						8 = '2. ET' 
 						-9='Missing';
 
 	value l_et_ept_et 9 = 'N/A' 2 = 'Other' 1 = 'Yes' 0 = 'No';
 	value l_etcurdur;
-	value l_etcurrent 4 = 'Other/Unknown HT' 3 = 'Uknown' 2 = 'Current' 1='Former' 0 = 'No HT' -9='Missing';
+	value l_etcurrent 4 = 'Other/Unknown HT' 3 = '4. Unknown' 2 = '2. Current' 1='3. Former' 0 = 'No HT' -9='Missing';
 	value l_etcurrentvr 1 = 'Ever ET' 0 = 'No HT' -9='Missing';
 	value l_etdose -9='Missing' 9 = 'Unk HT' 3 = 'Unknown' 2 = 'Other' 1 = '.625' 0 = 'No HT';
-	value l_estdose -9='Missing' 1='1. 0.3 mg' 2='2. 0.625 mg' 3='3. 1.250 mg' 4='4. Other';
+	value l_estdose -9='Missing' 
+						1='1. 0.3 mg' 
+						2='2. 0.625 mg' 
+						3='3. 1.250 mg' 
+						4='4. Other';
 	value l_etdur -9='Missing' 
 						99 = 'Unknown HT' 
 						88 = 'EPT or Other/Unknown HT type' 
 						9 = 'DK' 
-						2 = '10+' 
+						2 = '2. 10+' 
 						1 = '<10' 
 						0 = 'No HT';
 	value l_etfreq -9='Missing' 9 = 'Unknown HT' 3 = 'Unknown' 2 = 'Other' 1 = 'Daily' 0 = 'No HT';
