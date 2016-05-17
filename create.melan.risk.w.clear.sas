@@ -180,10 +180,27 @@ proc freq data=conv.melan_r;
 	tables excl_4_npostmeno*excl_5_pyzero 
 			excl_5_pyzero*melanoma_c /missing;
 run; 
+
+/***************************************************************************************/ 
+/*   Exclude if UVR is missing                                                         */
+**   exclude: excl_6_exposure;
+**   edit: 20160517TUE WTL;
+/***************************************************************************************/      
+data conv.melan_r;
+	title 'Ex 6. exclude women with missing UVR, excl_6_exposure';
+	set conv.melan_r;
+    excl_6_exposure=0;
+   	if exposure_jul_78_05 <= 0 then excl_6_exposure=1;
+   	where excl_5_pyzero=0;
+run;
+proc freq data=conv.melan_r;
+	tables excl_5_pyzero*excl_6_exposure 
+			excl_6_exposure*melanoma_c /missing;
+run; 
 data conv.melan_r;
 	title;
 	set conv.melan_r;
-	where excl_5_pyzero=0;
+	where excl_6_exposure=0;
 run;
 proc freq data=conv.melan_r;
 	title 'riskfactor counts';
