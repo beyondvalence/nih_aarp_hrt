@@ -257,8 +257,8 @@ proc format;
 						8 = '10+ Unknown';
 	value l_eptcurrent 4 = 'Other/Unknown HT' 
 						3 = '4. Unknown' 
-						2 = '2. Current' 
-						1 = '3. Former' 
+						2 = '3. Current' 
+						1 = '2. Former' 
 						0 = 'No HT' 
 						-9='Missing';
 	value l_eptcurrentvr 1 = 'Ever EPT' 0 = 'No HT' -9='Missing';
@@ -327,7 +327,7 @@ proc format;
 
 	value l_et_ept_et 9 = 'N/A' 2 = 'Other' 1 = 'Yes' 0 = 'No';
 	value l_etcurdur;
-	value l_etcurrent 4 = 'Other/Unknown HT' 3 = '4. Unknown' 2 = '2. Current' 1='3. Former' 0 = 'No HT' -9='Missing';
+	value l_etcurrent 4 = 'Other/Unknown HT' 3 = '4. Unknown' 2 = '3. Current' 1='2. Former' 0 = 'No HT' -9='Missing';
 	value l_etcurrentvr 1 = 'Ever ET' 0 = 'No HT' -9='Missing';
 	value l_etdose -9='Missing' 9 = 'Unk HT' 3 = 'Unknown' 2 = 'Other' 1 = '.625' 0 = 'No HT';
 	value l_estdose -9='Missing' 
@@ -342,7 +342,7 @@ proc format;
 						2 = '2. 10+' 
 						1 = '<10' 
 						0 = 'No HT';
-	value l_etfreq -9='Missing' 9 = 'Unknown HT' 3 = 'Unknown' 2 = 'Other' 1 = 'Daily' 0 = 'No HT';
+	value l_etfreq -9='Missing' 9 = 'Unknown HT' 3 = 'Unknown' 2 = '2. Other' 1 = 'Daily' 0 = 'No HT';
 	value l_ettype 9 = 'Unknown HT' 
 						6 = 'Unsure' 
 						5 = 'Other' 
@@ -374,7 +374,12 @@ proc format;
 						2 = 'ET-EPT' 
 						1 = 'ET' 
 						0 = 'No HT';
-	value l_httype 9 = 'Unknown' 3 = 'Other/Unknown type' 2 = 'EPT' 1 = 'ET' 0 = 'No HT' -9='Missing';
+	value l_httype 9 = 'Unknown' 
+					3 = '4. Other/Unknown type' 
+					2 = '3. EPT' 
+					1 = '2. ET' 
+					0 = 'No HT' 
+					-9='Missing';
 	value l_httypevr 9 = 'Unknown' 3 = 'Other/Unknown type' 1 = 'Ever HT' 0 = 'No HT' -9='Missing';
 	value l_sameduration 1 = 'Yes' 0 = 'No';
 	value l_samestart 9 = 'NA' 8 = 'Unknown' 6 = 'EPT-ET' 5 = 'EPT-PT' 4 = 'PT-ET' 3 = 'ET-PT' 
