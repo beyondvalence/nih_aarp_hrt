@@ -158,7 +158,7 @@ run;
 **   edit: 20151001THU WTL;
 /***************************************************************************************/      
 data conv.melan;
-	title 'Ex 5. exclude women with zero or less person years, excl_6_pyzero';
+	title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
 	set conv.melan;
     excl_5_pyzero=0;
    	if personyrs <= 0 then excl_5_pyzero=1;
@@ -168,10 +168,27 @@ proc freq data=conv.melan;
 	tables excl_4_npostmeno*excl_5_pyzero 
 			excl_5_pyzero*melanoma_c /missing;
 run; 
+
+/***************************************************************************************/ 
+/*   Exclude if UVR is missing                                                         */
+**   exclude: excl_6_exposure;
+**   edit: 20160517TUE WTL;
+/***************************************************************************************/      
+data conv.melan;
+	title 'Ex 6. exclude women with missing UVR, excl_6_exposure';
+	set conv.melan;
+    excl_6_exposure=0;
+   	if exposure_jul_78_05 <= 0 then excl_6_exposure=1;
+   	where excl_5_pyzero=0;
+run;
+proc freq data=conv.melan;
+	tables excl_5_pyzero*excl_6_exposure 
+			excl_6_exposure*melanoma_c /missing;
+run; 
 data conv.melan;
 	title;
 	set conv.melan;
-	where excl_5_pyzero=0;
+	where excl_6_exposure=0;
 run;
 proc freq data=conv.melan;
 	title 'baseline counts';
@@ -403,9 +420,6 @@ data conv.melan;
 	if colo_sig_any = . 				then colo_sig_any=-9;
 	any_screen=colo_sig_any;
 run;
-
-ods html close;
-ods html;
 
 ** add labels;
 proc datasets library=conv;
