@@ -1,0 +1,1112 @@
+51992  **************************;
+51993  ***** Start2 here ********;
+51994  **************************;
+51995  ** uses the pre-created analysis_use from above checkpoint;
+51996  libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
+NOTE: Libref CONV was successfully assigned as follows:
+      Engine:        V9
+      Physical Name: C:\REB\AARP_HRTandMelanoma\Data\converted
+51997  %include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.risk.sas';
+NOTE: Format SEXFMT is already on the library.
+NOTE: Format SEXFMT has been output.
+NOTE: Format MELANFMT is already on the library.
+NOTE: Format MELANFMT has been output.
+NOTE: Format MELANOMAFMT is already on the library.
+NOTE: Format MELANOMAFMT has been output.
+NOTE: Format MELANOMAINSFMT is already on the library.
+NOTE: Format MELANOMAINSFMT has been output.
+NOTE: Format MELANOMAMALFMT is already on the library.
+NOTE: Format MELANOMAMALFMT has been output.
+NOTE: Format AGECATFMT is already on the library.
+NOTE: Format AGECATFMT has been output.
+NOTE: Format BIRTHCOHORTFMT is already on the library.
+NOTE: Format BIRTHCOHORTFMT has been output.
+NOTE: Format ATTAINEDAGEFMT is already on the library.
+NOTE: Format ATTAINEDAGEFMT has been output.
+NOTE: Format RACEFMT is already on the library.
+NOTE: Format RACEFMT has been output.
+NOTE: Format EDUCFMT is already on the library.
+NOTE: Format EDUCFMT has been output.
+NOTE: Format EDUCMFMT is already on the library.
+NOTE: Format EDUCMFMT has been output.
+NOTE: Format BMIFMT is already on the library.
+NOTE: Format BMIFMT has been output.
+NOTE: Format BMINEWFMT is already on the library.
+NOTE: Format BMINEWFMT has been output.
+NOTE: Format PHYSICCFMT is already on the library.
+NOTE: Format PHYSICCFMT has been output.
+NOTE: Format PHYSICFMT is already on the library.
+NOTE: Format PHYSICFMT has been output.
+NOTE: Format SMOKINGFMT is already on the library.
+NOTE: Format SMOKINGFMT has been output.
+NOTE: Format MARRIAGEFMT is already on the library.
+NOTE: Format MARRIAGEFMT has been output.
+NOTE: Format MARRIAGECFMT is already on the library.
+NOTE: Format MARRIAGECFMT has been output.
+NOTE: Format FMENSTRCFMT is already on the library.
+NOTE: Format FMENSTRCFMT has been output.
+NOTE: Format FMENSTRFMT is already on the library.
+NOTE: Format FMENSTRFMT has been output.
+NOTE: Format MENOSTATFMT is already on the library.
+NOTE: Format MENOSTATFMT has been output.
+NOTE: Format AGEMENOFMT is already on the library.
+NOTE: Format AGEMENOFMT has been output.
+NOTE: Format MENOPAGEFMT is already on the library.
+NOTE: Format MENOPAGEFMT has been output.
+NOTE: Format MENOPIAGEFMT is already on the library.
+NOTE: Format MENOPIAGEFMT has been output.
+NOTE: Format MENOAGEFMT is already on the library.
+NOTE: Format MENOAGEFMT has been output.
+NOTE: Format SURGAGEFMT is already on the library.
+NOTE: Format SURGAGEFMT has been output.
+NOTE: Format FLBAGEFMT is already on the library.
+NOTE: Format FLBAGEFMT has been output.
+NOTE: Format AGEFLBFMT is already on the library.
+NOTE: Format AGEFLBFMT has been output.
+NOTE: Format PARITYFMT is already on the library.
+NOTE: Format PARITYFMT has been output.
+NOTE: Format LIVECHILDFMT is already on the library.
+NOTE: Format LIVECHILDFMT has been output.
+NOTE: Format HORMSTATFMT is already on the library.
+NOTE: Format HORMSTATFMT has been output.
+NOTE: Format HORMEVERFMT is already on the library.
+NOTE: Format HORMEVERFMT has been output.
+NOTE: Format HORMCURFMT is already on the library.
+NOTE: Format HORMCURFMT has been output.
+NOTE: Format HORMYRSFMT is already on the library.
+NOTE: Format HORMYRSFMT has been output.
+NOTE: Format ORALBCDURFMT is already on the library.
+NOTE: Format ORALBCDURFMT has been output.
+NOTE: Format ORALBCYNFMT is already on the library.
+NOTE: Format ORALBCYNFMT has been output.
+NOTE: Format ORALBCYRSFMT is already on the library.
+NOTE: Format ORALBCYRSFMT has been output.
+NOTE: Format UVRQFMT is already on the library.
+NOTE: Format UVRQFMT has been output.
+NOTE: Format RPHYSICFMT is already on the library.
+NOTE: Format RPHYSICFMT has been output.
+NOTE: Format RELATIVEFMT is already on the library.
+NOTE: Format RELATIVEFMT has been output.
+NOTE: Format MENOREASONFMT is already on the library.
+NOTE: Format MENOREASONFMT has been output.
+NOTE: Format NATMENOFMT is already on the library.
+NOTE: Format NATMENOFMT has been output.
+NOTE: Format SURGMENOFMT is already on the library.
+NOTE: Format SURGMENOFMT has been output.
+NOTE: Format RADCHEMMENOFMT is already on the library.
+NOTE: Format RADCHEMMENOFMT has been output.
+NOTE: Format OVARYSTATFMT is already on the library.
+NOTE: Format OVARYSTATFMT has been output.
+NOTE: Format MHTEVERFMT is already on the library.
+NOTE: Format MHTEVERFMT has been output.
+NOTE: Format PERSTOPMENOPFMT is already on the library.
+NOTE: Format PERSTOPMENOPFMT has been output.
+NOTE: Format PERSTOPSURGFMT is already on the library.
+NOTE: Format PERSTOPSURGFMT has been output.
+NOTE: Format HYSTSTATFMT is already on the library.
+NOTE: Format HYSTSTATFMT has been output.
+NOTE: Format SMOKEFORMERFMT is already on the library.
+NOTE: Format SMOKEFORMERFMT has been output.
+NOTE: Format SMOKEQUITFMT is already on the library.
+NOTE: Format SMOKEQUITFMT has been output.
+NOTE: Format SMOKEDOSEFMT is already on the library.
+NOTE: Format SMOKEDOSEFMT has been output.
+NOTE: Format SMOKEQUITDOSEFMT is already on the library.
+NOTE: Format SMOKEQUITDOSEFMT has been output.
+NOTE: Format COFFEEFMT is already on the library.
+NOTE: Format COFFEEFMT has been output.
+NOTE: Format $QP12BFMT is already on the library.
+NOTE: Format $QP12BFMT has been output.
+NOTE: Format ETOHFMT is already on the library.
+NOTE: Format ETOHFMT has been output.
+NOTE: Format COLOSIGFMT is already on the library.
+NOTE: Format COLOSIGFMT has been output.
+NOTE: Format L_SAMEYEAR is already on the library.
+NOTE: Format L_SAMEYEAR has been output.
+NOTE: Format RFPHYSICFMT is already on the library.
+NOTE: Format RFPHYSICFMT has been output.
+NOTE: Format RFPHYSFMT is already on the library.
+NOTE: Format RFPHYSFMT has been output.
+NOTE: Format RFHORMTYPE is already on the library.
+NOTE: Format RFHORMTYPE has been output.
+NOTE: Format L_AFTERRFQ is already on the library.
+NOTE: Format L_AFTERRFQ has been output.
+NOTE: Format L_EPTCURDUR is already on the library.
+NOTE: Format L_EPTCURDUR has been output.
+NOTE: Format L_EPTCURDURR is already on the library.
+NOTE: Format L_EPTCURDURR has been output.
+NOTE: Format L_EPTCURRENT is already on the library.
+NOTE: Format L_EPTCURRENT has been output.
+NOTE: Format L_EPTCURRENTVR is already on the library.
+NOTE: Format L_EPTCURRENTVR has been output.
+NOTE: Format L_EPTDOSE is already on the library.
+NOTE: Format L_EPTDOSE has been output.
+NOTE: Format L_EPTDUR is already on the library.
+NOTE: Format L_EPTDUR has been output.
+NOTE: Format L_EPTREGDOSE is already on the library.
+NOTE: Format L_EPTREGDOSE has been output.
+NOTE: Format L_EPTREGYRS is already on the library.
+NOTE: Format L_EPTREGYRS has been output.
+NOTE: Format L_EPTTYPE is already on the library.
+NOTE: Format L_EPTTYPE has been output.
+NOTE: Format L_ESTVSPRG is already on the library.
+NOTE: Format L_ESTVSPRG has been output.
+NOTE: Format L_EPTREG is already on the library.
+NOTE: Format L_EPTREG has been output.
+NOTE: Format L_ET_EPT_ET is already on the library.
+NOTE: Format L_ET_EPT_ET has been output.
+NOTE: Format L_ETCURDUR is already on the library.
+NOTE: Format L_ETCURDUR has been output.
+NOTE: Format L_ETCURRENT is already on the library.
+NOTE: Format L_ETCURRENT has been output.
+NOTE: Format L_ETCURRENTVR is already on the library.
+NOTE: Format L_ETCURRENTVR has been output.
+NOTE: Format L_ETDOSE is already on the library.
+NOTE: Format L_ETDOSE has been output.
+NOTE: Format L_ESTDOSE is already on the library.
+NOTE: Format L_ESTDOSE has been output.
+NOTE: Format L_ETDUR is already on the library.
+NOTE: Format L_ETDUR has been output.
+NOTE: Format L_ETFREQ is already on the library.
+NOTE: Format L_ETFREQ has been output.
+NOTE: Format L_ETTYPE is already on the library.
+NOTE: Format L_ETTYPE has been output.
+NOTE: Format L_FLDOSEREG is already on the library.
+NOTE: Format L_FLDOSEREG has been output.
+NOTE: Format L_HTFORMULATION is already on the library.
+NOTE: Format L_HTFORMULATION has been output.
+NOTE: Format L_HTTYPE is already on the library.
+NOTE: Format L_HTTYPE has been output.
+NOTE: Format L_HTTYPEVR is already on the library.
+NOTE: Format L_HTTYPEVR has been output.
+NOTE: Format L_SAMEDURATION is already on the library.
+NOTE: Format L_SAMEDURATION has been output.
+NOTE: Format L_SAMESTART is already on the library.
+NOTE: Format L_SAMESTART has been output.
+NOTE: Format COLOSIGFMT is already on the library.
+NOTE: Format COLOSIGFMT has been output.
+NOTE: Format RF_EST_CUR is already on the library.
+NOTE: Format RF_EST_CUR has been output.
+NOTE: Format $RFQ15AFMT is already on the library.
+NOTE: Format $RFQ15AFMT has been output.
+NOTE: Format $RFQ15BFMT is already on the library.
+NOTE: Format $RFQ15BFMT has been output.
+NOTE: Format $RFQ15CFMT is already on the library.
+NOTE: Format $RFQ15CFMT has been output.
+NOTE: Format $RFQ15DFMT is already on the library.
+NOTE: Format $RFQ15DFMT has been output.
+NOTE: Format $RFQ15EFMT is already on the library.
+NOTE: Format $RFQ15EFMT has been output.
+
+NOTE: PROCEDURE FORMAT used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+
+
+52388  data melan_r; ** name the output of the first primary analysis include to melan_r;
+52389      set conv.ranalysis;
+52390
+52391      ****  Create exit date, exit age, and person years for First Primary Cancer;
+52392      ** with first primary cancer as skin cancer;
+52393      * Chooses the earliest of 4 possible exit dates for skin cancer;
+52394      exit_dt = min(mdy(12,31,2011), skin_dxdt, dod, raadate);
+52395      exit_age = round(((exit_dt-f_dob)/365.25),.001);
+52396      personyrs = round(((exit_dt-entry_dt)/365.25),.001);
+52397      rf_personyrs = round(((exit_dt-rf_entry_dt)/365.25),.001);
+52398
+52399      format exit_dt Date9.;
+52400
+52401      label   exit_dt="Exit Date"
+52402              exit_age="Exit Age"
+52403              personyrs="Person Years from Baseline"
+52404              rf_personyrs="Person Years from Riskfactor";
+52405
+52406      ****** Define melanoma - pulled from allcancer-coffee analysis ******;
+52407      ** create the melanoma case variable from the cancer ICD-O-3 and SEER coding of 25010;
+52408      ** contains both melanoma subtypes;
+52409      melanoma_c = .;
+52410      * in situ melanoma =1;
+52411      if cancer_behv='2' and cancer_seergroup = 18 and cancer_siterec3=25010
+52412          then melanoma_c = 1;
+52413      * malignant melanoma =2;
+52414      else if cancer_behv='3' and cancer_seergroup = 18 and cancer_siterec3=25010
+52415          then melanoma_c = 2;
+52416      else melanoma_c = 0;
+52417
+52418      ** create melanoma indicator Y/N;
+52419      melanoma_agg = .;
+52420      * melanoma including in situ and malignant;
+52421      if (cancer_behv='2' or cancer_behv='3') and cancer_seergroup=18 and cancer_siterec3=25010
+52422          then melanoma_agg = 1;
+52423      else melanoma_agg = 0;
+52424
+52425      melanoma_ins=.;
+52426      ** melanoma in situ;
+52427      if   melanoma_c=1   then melanoma_ins=1;
+52428      else melanoma_ins=0;
+52429
+52430      melanoma_mal=.;
+52431      ** melanoma malignant;
+52432      if   melanoma_c=2   then melanoma_mal=1;
+52433      else melanoma_mal=0;
+52434
+52435  run;
+
+NOTE: There were 334905 observations read from the data set CONV.RANALYSIS.
+NOTE: The data set WORK.MELAN_R has 334905 observations and 120 variables.
+NOTE: DATA statement used (Total process time):
+      real time           5.38 seconds
+      cpu time            0.73 seconds
+
+
+52436
+52437  ods html close; ods html;
+NOTE: Writing HTML Body file: sashtml169.htm
+52438
+52439  ** merge the melan_r dataset with the UV data;
+52440  data melan_r;
+52441      merge melan_r (in=frodo) conv.uv_pub1 ;
+52442      by westatid;
+52443      if frodo;
+52444  run;
+
+NOTE: There were 334905 observations read from the data set WORK.MELAN_R.
+NOTE: There were 566398 observations read from the data set CONV.UV_PUB1.
+NOTE: The data set WORK.MELAN_R has 334905 observations and 121 variables.
+NOTE: DATA statement used (Total process time):
+      real time           1.79 seconds
+      cpu time            0.70 seconds
+
+
+52445
+52446  ** copy and save the melan dataset to the converted folder;
+52447  proc copy noclone in=Work out=conv;
+52448      select melan_r;
+52449  run;
+
+NOTE: Copying WORK.MELAN_R to CONV.MELAN_R (memtype=DATA).
+NOTE: System Options for BUFSIZE and REUSE were used at user's request.
+NOTE: Libname and/or system options for compress, pointobs, data representation and encoding attributes
+      were used at user's request.
+NOTE: There were 334905 observations read from the data set WORK.MELAN_R.
+NOTE: The data set CONV.MELAN_R has 334905 observations and 121 variables.
+NOTE: PROCEDURE COPY used (Total process time):
+      real time           0.45 seconds
+      cpu time            0.45 seconds
+
+
+52450  title;
+52451  **** Exclusions risk macro;
+52452  %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\exclusions.first.primary.risk.macro.sas';
+52673
+52674  **** Use the exclusion macro to make "standard" exclusions and get counts of excluded subjects;
+52675
+52676  %exclude(data               = conv.melan_r,
+52677           ex_proxy           = 1,
+52678           ex_rf_proxy        = 1,
+52679           ex_sex             = 0,
+52680           ex_rf_selfbreast   = 1,
+52681           ex_rf_selfovary    = 1,
+52682           ex_selfother       = 1,
+52683           ex_health          = ,
+52684           ex_prevcan         = 1,
+52685           ex_deathcan        = 1);
+NOTE: Format EXFLAGF is already on the library.
+NOTE: Format EXFLAGF has been output.
+
+NOTE: PROCEDURE FORMAT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+
+
+
+NOTE: There were 334905 observations read from the data set CONV.MELAN_R.
+NOTE: The data set CONV.MELAN_R has 126489 observations and 122 variables.
+NOTE: The data set WORK.EXCLUSIONS has 208416 observations and 122 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.74 seconds
+      cpu time            0.74 seconds
+
+
+
+NOTE: There were 208416 observations read from the data set WORK.EXCLUSIONS.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.35 seconds
+      cpu time            0.09 seconds
+
+
+
+NOTE: There were 208416 observations read from the data set WORK.EXCLUSIONS.
+NOTE: The data set WORK.EXCLUSIONS has 208416 observations and 122 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.32 seconds
+      cpu time            0.42 seconds
+
+
+
+NOTE: No observations were selected from data set WORK.EXCLUSIONS.
+NOTE: There were 0 observations read from the data set WORK.EXCLUSIONS.
+      WHERE ex_flag=14;
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+
+
+52686
+52687  /***************************************************************************************/
+52688  /*   Exclude if non-whites, racem = 1
+52689  **   Edit: 20150901TUE WTL;
+52690  /*   excl_1_nonwhite
+52691  /*   Extract year from DOB
+52692  /***************************************************************************************/
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+
+
+52693  data conv.melan_r;
+52694      title 'Ex 1. exclude non whites, excl_1_nonwhite';
+52695      set conv.melan_r;
+52696      dob_year = YEAR(F_DOB);
+52697      excl_1_nonwhite=0;
+52698      if racem NE 1 then excl_1_nonwhite=1;
+52699  run;
+
+NOTE: There were 126489 observations read from the data set CONV.MELAN_R.
+NOTE: The data set CONV.MELAN_R has 126489 observations and 124 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.21 seconds
+      cpu time            0.21 seconds
+
+
+52700  proc freq data=conv.melan_r;
+52701      tables excl_1_nonwhite
+52702              excl_1_nonwhite*melanoma_c /missing;
+52703  run;
+
+NOTE: There were 126489 observations read from the data set CONV.MELAN_R.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.53 seconds
+      cpu time            0.07 seconds
+
+
+52704
+52705  /***************************************************************************************/
+52706  /*   Exclude if pre-menopausal, perstop_nostop = 1
+52707  /*   Exclusions Edit: 20150901TUE WTL
+52708  /*   excl_2_premeno
+52709  /*   should account for menop_age = 6 as well? Yes, use OR - Lisa
+52710  /***************************************************************************************/
+52711  data conv.melan_r;
+52712      title 'Ex 2. exclude premenopausal women, excl_2_premeno';
+52713      set conv.melan_r;
+52714      excl_2_premeno=0;
+52715      if perstop_nostop=1 | menop_age=6 then excl_2_premeno=1;
+52716      where excl_1_nonwhite=0;
+52717  run;
+
+NOTE: There were 114894 observations read from the data set CONV.MELAN_R.
+      WHERE excl_1_nonwhite=0;
+NOTE: The data set CONV.MELAN_R has 114894 observations and 125 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.20 seconds
+      cpu time            0.20 seconds
+
+
+52718  proc freq data=conv.melan_r;
+52719      tables excl_1_nonwhite*excl_2_premeno
+52720              excl_2_premeno*melanoma_c /missing;
+52721  run;
+
+NOTE: There were 114894 observations read from the data set CONV.MELAN_R.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.22 seconds
+      cpu time            0.09 seconds
+
+
+52722
+52723      ** need to change the exposure percentiles after exclusions;
+52724      ** uvr exposure;
+52725      ** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+52726      ** 185.266 186.255 186.255 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
+52727      ** birth cohort;
+52728      ** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+52729      ** -11897  -11330  -11040  -10760  -10194  -9583   -8920   -8203   -7834   -7431   -6408;
+52730      ** year of birth;
+52731      ** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+52732      ** 1927    1928    1929    1930    1932    1933    1935    1937    1938    1939    1942;
+52733
+52734  /***************************************************************************************/
+52735  /*   Exclude if self-reported periods stopped due to radchem                           */
+52736  **   exclude: excl_3_radchem;
+52737  **   edit: 20150929TUE WTL;
+52738  /***************************************************************************************/
+52739  data conv.melan_r;
+52740      title 'Ex 3. exclude women whose periods stopped due to rad/chem, excl_3_radchem';
+52741      set conv.melan_r;
+52742      excl_3_radchem=0;
+52743      if perstop_radchem=1 then excl_3_radchem=1;
+52744      where excl_2_premeno=0;
+52745  run;
+
+NOTE: There were 108913 observations read from the data set CONV.MELAN_R.
+      WHERE excl_2_premeno=0;
+NOTE: The data set CONV.MELAN_R has 108913 observations and 126 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.62 seconds
+      cpu time            0.17 seconds
+
+
+52746  proc freq data=conv.melan_r;
+52747      tables excl_2_premeno*excl_3_radchem
+52748              excl_3_radchem*melanoma_c /missing;
+52749  run;
+
+NOTE: There were 108913 observations read from the data set CONV.MELAN_R.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.41 seconds
+      cpu time            0.07 seconds
+
+
+52750
+52751  /***************************************************************************************/
+52752  /*   Exclude if younger than 60 and with no menopause reason                           */
+52753  /*   exclude: excl_4_npostmeno;
+52754  **   edit 20151002FRI WTL;
+52755  /***************************************************************************************/
+52756  data conv.melan_r;
+52757      title 'Ex 4. exclude those younger than 60 and with no menopause reason, excl_4_npostmeno';
+52758      set conv.melan_r;
+52759      excl_4_npostmeno=0;
+52760      if entry_age < 60 & (perstop_menop NE 1 & perstop_surg NE 1 & ovarystat NE 1 & hyststat NE 1)
+52760! then excl_4_npostmeno=1;
+52761      where excl_3_radchem=0;
+52762  run;
+
+NOTE: There were 108849 observations read from the data set CONV.MELAN_R.
+      WHERE excl_3_radchem=0;
+NOTE: The data set CONV.MELAN_R has 108849 observations and 127 variables.
+NOTE: DATA statement used (Total process time):
+      real time           1.04 seconds
+      cpu time            0.21 seconds
+
+
+52763  proc freq data=conv.melan_r;
+52764      tables excl_3_radchem*excl_4_npostmeno
+52765              excl_4_npostmeno*melanoma_c /missing;
+52766  run;
+
+NOTE: There were 108849 observations read from the data set CONV.MELAN_R.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.07 seconds
+
+
+52767
+52768  /***************************************************************************************/
+52769  /*   Exclude if person-years <= 0                                                      */
+52770  **   exclude: excl_5_pyzero;
+52771  **   edit: 20150901TUE WTL;
+52772  /***************************************************************************************/
+52773  data conv.melan_r;
+52774      title 'Ex 5. exclude women with zero or less person years, excl_5_pyzero';
+52775      set conv.melan_r;
+52776      excl_5_pyzero=0;
+52777      if personyrs <= 0 then excl_5_pyzero=1; *does not exclude anyone with new excl macro 20160513FRI;
+52778      where excl_4_npostmeno=0;
+52779  run;
+
+NOTE: There were 108442 observations read from the data set CONV.MELAN_R.
+      WHERE excl_4_npostmeno=0;
+NOTE: The data set CONV.MELAN_R has 108442 observations and 128 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.21 seconds
+      cpu time            0.20 seconds
+
+
+52780  proc freq data=conv.melan_r;
+52781      tables excl_4_npostmeno*excl_5_pyzero
+52782              excl_5_pyzero*melanoma_c /missing;
+52783  run;
+
+NOTE: There were 108442 observations read from the data set CONV.MELAN_R.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.07 seconds
+
+
+52784
+52785  /***************************************************************************************/
+52786  /*   Exclude if UVR is missing                                                         */
+52787  **   exclude: excl_6_exposure;
+52788  **   edit: 20160517TUE WTL;
+52789  /***************************************************************************************/
+52790  data conv.melan_r;
+52791      title 'Ex 6. exclude women with missing UVR, excl_6_exposure';
+52792      set conv.melan_r;
+52793      excl_6_exposure=0;
+52794      if exposure_jul_78_05 <= 0 then excl_6_exposure=1;
+52795      where excl_5_pyzero=0;
+52796  run;
+
+NOTE: There were 108442 observations read from the data set CONV.MELAN_R.
+      WHERE excl_5_pyzero=0;
+NOTE: The data set CONV.MELAN_R has 108442 observations and 129 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.17 seconds
+      cpu time            0.17 seconds
+
+
+52797  proc freq data=conv.melan_r;
+52798      tables excl_5_pyzero*excl_6_exposure
+52799              excl_6_exposure*melanoma_c /missing;
+52800  run;
+
+NOTE: There were 108442 observations read from the data set CONV.MELAN_R.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.06 seconds
+
+
+52801  data conv.melan_r;
+52802      title;
+52803      set conv.melan_r;
+52804      where excl_6_exposure=0;
+52805  run;
+
+NOTE: There were 108295 observations read from the data set CONV.MELAN_R.
+      WHERE excl_6_exposure=0;
+NOTE: The data set CONV.MELAN_R has 108295 observations and 129 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.16 seconds
+      cpu time            0.15 seconds
+
+
+52806  proc freq data=conv.melan_r;
+52807      title 'riskfactor counts';
+52808      table melanoma_c*sex;
+52809  run;
+
+NOTE: There were 108295 observations read from the data set CONV.MELAN_R.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+
+
+52810
+52811  /******************************************************************************************/
+52812  ** create the UVR, and confounder variables by quintile/categories;
+52813  ** for both baseline and riskfactor questionnaire variables;
+52814  /* cat=categorical ************************************************************************/
+52815  data conv.melan_r;
+52816      set conv.melan_r;
+52817
+52818  /* for baseline */
+52819
+52820  /* for baseline */
+52821      ** education cat;
+52822      educ_c=.;
+52823      if      educm=1         then educ_c=0; /* less highschool */
+52824      else if educm=2         then educ_c=1; /* highschool grad */
+52825      else if educm in (3,4)  then educ_c=2; /* some college */
+52826      else if educm=5         then educ_c=3; /* college and grad */
+52827      else if educm=9         then educ_c=-9; /* missing */
+52828
+52829      ** bmi three categories;
+52830      bmi_c=-9;
+52831      if      18.5<bmi_cur<25                 then bmi_c=1; /* 18.5 up to 25 */
+52832      else if 25<=bmi_cur<30                  then bmi_c=2; /* 25 up to 30 */
+52833      else if 30<=bmi_cur<60                  then bmi_c=3; /* 30 up to 60 */
+52834      else                                         bmi_c=-9; /* missing or extreme */
+52835
+52836      ** physical exercise cat;
+52837      physic_c=.;
+52838      if      physic in (0,1) then physic_c=0; /* rarely */
+52839      else if physic=2        then physic_c=1; /* 1-3 per month */
+52840      else if physic=3        then physic_c=2; /* 1-2 per week */
+52841      else if physic=4        then physic_c=3; /* 3-4 per week */
+52842      else if physic=5        then physic_c=4; /* 5+ per week */
+52843      else if physic=9        then physic_c=-9; /* missing */
+52844
+52845      ** age at menarche cat;
+52846      fmenstr_c=.;
+52847      if      fmenstr=1   then fmenstr_c=0; /* <=10 years old */
+52848      else if fmenstr=2   then fmenstr_c=1; /* 11-12 years old */
+52849      else if fmenstr=3   then fmenstr_c=2; /* 13-14 years old */
+52850      else if fmenstr=4   then fmenstr_c=3; /* 15+ years old */
+52851      else if fmenstr>4   then fmenstr_c=-9; /* missing */
+52852
+52853      ** menopause reason, 20150901 edit;
+52854      ** 1 natural, 2 surgical;
+52855      menostat_c=.;
+52856      if      perstop_surg=1 | hyststat=1 | ovarystat=1       then menostat_c=2; /* surgical */
+52857      else if perstop_menop=1                                 then menostat_c=1; /* natural */
+52858      else menostat_c =-9;
+52859
+52860      ** ovary status among surgical menopause;
+52861      ovarystat_c=.;
+52862      if      ovarystat=1 & menostat_c=2              then ovarystat_c=1; /* both removed */
+52863      else if ovarystat=2 & menostat_c=2              then ovarystat_c=2; /* both intact */
+52864      else if ovarystat in (3,9) & menostat_c=2       then ovarystat_c=-9; /* invalids are missing */
+52865
+52866      ** menopausal age recoded;
+52867      menop_age_c=.;
+52868      if      menop_age in (6,9)                      then menop_age_c=-9; /* missing */
+52869      else if menop_age in (1,2)                      then menop_age_c=1; /* <45 */
+52870      else if menop_age=3                             then menop_age_c=2; /* 45-49 */
+52871      else if menop_age in (4,5)                      then menop_age_c=3; /* 50+ */
+52872
+52873      ** live child parity cat;
+52874      parity_c=.;
+52875      if      livechild=0                     then parity_c=0; /* no live children (nulliparous) */
+52876      else if livechild in (1,2)              then parity_c=1; /* 1 to 2 live children */
+52877      else if livechild in (3,4,5)            then parity_c=2; /* >=3 live children */
+52878      else if livechild in (8,9)              then parity_c=-9; /* missing */
+52879
+52880      parity_ever=parity_c;
+52881      if parity_ever in (1,2)                 then parity_ever=1;
+52882
+52883      ** age at first live birth cat;
+52884      flb_age_c=9;
+52885      if      age_flb in (1,2)    then flb_age_c=1; /* < 20 years old */
+52886      else if age_flb in (3,4)    then flb_age_c=2; /* 20s */
+52887      else if age_flb in (5,6,7)  then flb_age_c=3; /* 30s */
+52888      else if age_flb in (0,8,9)  then flb_age_c=-9; /* missing */
+52889
+52890      ** oral contraceptive yes/no;
+52891      oralbc_yn_c=.;
+52892      if      oralbc_yrs=0    then oralbc_yn_c=0; /* no oc */
+52893      else if 0<oralbc_yrs<8  then oralbc_yn_c=1; /* yes oc */
+52894      else if oralbc_yrs>7    then oralbc_yn_c=-9; /* missing */
+52895
+52896      ** oral contraceptive duration cat;
+52897      oralbc_dur_c=.;
+52898      if      oralbc_yrs=0        then oralbc_dur_c=0; /* none */
+52899      else if oralbc_yrs=1        then oralbc_dur_c=1; /* 1-4 years */
+52900      else if oralbc_yrs=2        then oralbc_dur_c=2; /* 5-9 years */
+52901      else if oralbc_yrs=3        then oralbc_dur_c=3; /* 10+ years */
+52902      else if oralbc_yrs in (8,9) then oralbc_dur_c=-9; /* missing */
+52903
+52904      ** MHT ever variable;
+52905      mht_ever_c=hormstat;
+52906      if      mht_ever_c=2                        then mht_ever_c=1;
+52907      else if mht_ever_c=9                        then mht_ever_c=-9;
+52908
+52909      ** hormone former or current user;
+52910      hormstat_c=.;
+52911      if      hormstat=0                      then hormstat_c=0;   /* never horm */
+52912      else if hormstat=1                      then hormstat_c=1;   /* current horm */
+52913      else if hormstat=2                      then hormstat_c=2;   /* former horm */
+52914      else if hormstat=9                      then hormstat_c=-9; /* missing horm */
+52915      else hormstat_c=.;
+52916
+52917      ** hormone duration;
+52918      horm_yrs_c = horm_yrs;
+52919      if      horm_yrs in (8,9)               then horm_yrs_c=-9; /* missing */
+52920
+52921      ** hormone duration split meno/surg reasons;
+52922      horm_yrs_nat_c=.;
+52923      if menostat_c=1                         then horm_yrs_nat_c=horm_yrs_c;
+52924      else if menostat_c NE 1                 then horm_yrs_nat_c=.;
+52925      horm_yrs_surg_c=.;
+52926      if menostat_c=2                         then horm_yrs_surg_c=horm_yrs_c;
+52927      else if menostat_c NE 2                 then horm_yrs_surg_c=.;
+52928
+52929      ** UVR TOMS quantiles;
+52930      uvrq_c=.;
+52931      if      0       < exposure_jul_78_05 <= 186.918 then uvrq_c=1;
+52932      else if 186.918 < exposure_jul_78_05 <= 239.642 then uvrq_c=2;
+52933      else if 239.642 < exposure_jul_78_05 <= 253.731 then uvrq_c=3;
+52934      else if 253.731 < exposure_jul_78_05            then uvrq_c=4;
+52935      else uvrq_c=-9;
+52936
+52937      ** marriage;
+52938      marriage_c = marriage;
+52939      if      marriage in (3,4)                   then marriage_c=3; /* divorced and separated together
+52939!  */
+52940      else if marriage=9                          then marriage_c=-9; /* */
+52941
+52942      ** smoking missings recode;
+52943      smoke_former_c=smoke_former;
+52944      if smoke_former_c=9                     then smoke_former_c=-9;
+52945      smoke_quit_c=smoke_quit;
+52946      if smoke_quit_c=9                       then smoke_quit_c=-9;
+52947      smoke_dose_c=smoke_dose;
+52948      if smoke_dose_c=9                       then smoke_dose_c=-9;
+52949
+52950      ** coffee drinking;
+52951      coffee_c=.;
+52952      if      qp12b='0'                           then coffee_c=0;    /* none */
+52953      else if qp12b in ('1','2','3','4','5','6')  then coffee_c=1;    /* <=1/day */
+52954      else if qp12b='7'                           then coffee_c=2;    /* 2-3/day */
+52955      else if qp12b in ('8','9')                  then coffee_c=3;    /* >=4/day */
+52956      else if qp12b in ('E','M')                  then coffee_c=-9;   /* missing */
+52957      else    coffee_c=-9;                                            /* missing */
+52958
+52959      ** total alcohol per day;
+52960      etoh_c=.;
+52961      if      mped_a_bev=0                    then etoh_c=0;      /* none */
+52962      else if 0<mped_a_bev<=1                 then etoh_c=1;      /* <=1 */
+52963      else if 1<mped_a_bev<=3                 then etoh_c=2;      /* >1 and =<3 */
+52964      else if 3<mped_a_bev                    then etoh_c=3;      /* >3 */
+52965      else    etoh_c=-9;                                          /* missing */
+52966
+52967      ** relatives with cancer;
+52968      rel_1d_cancer_c=rel_1d_cancer;
+52969      if rel_1d_cancer_c=9                    then rel_1d_cancer_c=-9;
+52970
+52971      ** total;
+52972      total=1;
+52973
+52974  /* for riskfactor */
+52975
+52976      ** (rf) physical exercise how often participate mod-vig activites in past 10 years;
+52977      ** use this one;
+52978      rf_physic_c=.;
+52979      if      rf_phys_modvig_curr in (0,1)    then rf_physic_c=0; /* none-rarely */
+52980      else if rf_phys_modvig_curr=2           then rf_physic_c=1; /* <1 hr/week */
+52981      else if rf_phys_modvig_curr=3           then rf_physic_c=2; /* 1-3 hr/week */
+52982      else if rf_phys_modvig_curr=4           then rf_physic_c=3; /* 4-7 hr/week */
+52983      else if rf_phys_modvig_curr=5           then rf_physic_c=4; /* >7 hr/week */
+52984      else if rf_phys_modvig_curr=9           then rf_physic_c=-9; /* missing */
+52985      else rf_physic_c=-9;
+52986
+52987      ** lacey hormone type ;
+52988      ** edited 20150708WED WTL;
+52989      ht_type_c=lacey_ht_type;
+52990      if lacey_ht_type = 9                    then ht_type_c=-9; /* unknown */
+52991
+52992      ht_type_me = ht_type_c;
+52993      if ht_type_me in (9, -9)                then ht_type_me=.;
+52994
+52995      ht_type_ever_c=ht_type_c;
+52996      if ht_type_ever_c in (1,2,3)            then ht_type_ever_c=1; /* ever HT */
+52997
+52998      ht_type_ever_me = ht_type_ever_c;
+52999      if ht_type_ever_me in (9,-9)            then ht_type_ever_me=.;
+53000
+53001      *******************************************************************************************;
+53002      *************** HRT variables *************************************************************;
+53003      *******************************************************************************************;
+53004      ** use Jim Lacey's coding of the variables *********;
+53005      ** recode for main effects *************************;
+53006      ** updated 20151008THU WTL **;
+53007      ****************************************************;
+53008      ** EPT current ***************;
+53009      l_eptcurrent_ever_c = lacey_eptcurrent;
+53010      if l_eptcurrent_ever_c in (1,2,3)       then l_eptcurrent_ever_c=1; /* ever EPT */
+53011      else if l_eptcurrent_ever_c = 4         then l_eptcurrent_ever_c=-9;
+53012      l_eptcurrent_ever_me = l_eptcurrent_ever_c;
+53013      if l_eptcurrent_ever_me=-9              then l_eptcurrent_ever_me=.;
+53014      l_eptcurrent_c = lacey_eptcurrent;
+53015      if l_eptcurrent_c=4                     then l_eptcurrent_c=-9;
+53016      l_eptcurrent_me = l_eptcurrent_c;
+53017      if l_eptcurrent_me = -9                 then l_eptcurrent_me=.;
+53018
+53019      ** EPT dose ***************;
+53020      l_eptdose_c=.;
+53021      if l_eptcurrent_ever_c=1 & lacey_eptdose in (1,2,3,4) then l_eptdose_c=lacey_eptdose;
+53022      else l_eptdose_c=-9;
+53023      l_eptdose_me = l_eptdose_c;
+53024      if l_eptdose_me=-9                      then l_eptdose_me=.;
+53025
+53026      ** EPT duration ***************;
+53027      l_eptdur_c = .;
+53028      if l_eptcurrent_ever_c=1 & lacey_eptdur in (1,2,3) then l_eptdur_c=lacey_eptdur;
+53029      else l_eptdur_c=-9;
+53030      l_eptdur_me = l_eptdur_c;
+53031      if l_eptdur_me=-9                       then l_eptdur_me=.;
+53032
+53033      ** EPT regimen ***************;
+53034      l_eptreg_c = .;
+53035      if lacey_eptreg in (0,1,2,3,4,8)        then l_eptreg_c=lacey_eptreg;
+53036      else l_eptreg_c=-9;
+53037      l_eptreg_me = l_eptreg_c;
+53038      if l_eptreg_me=-9                       then l_eptreg_me=.;
+53039
+53040      ** ET current ***************;
+53041      l_etcurrent_ever_c = lacey_etcurrent;
+53042      if l_etcurrent_ever_c in (1,2,3)        then l_etcurrent_ever_c=1; /* ever ET */
+53043      else if l_etcurrent_ever_c=4            then l_etcurrent_ever_c=-9;
+53044      l_etcurrent_ever_me = l_etcurrent_ever_c;
+53045      if l_etcurrent_ever_me=-9               then l_etcurrent_ever_me=.;
+53046      l_etcurrent_c = lacey_etcurrent;
+53047      if l_etcurrent_c=4                      then l_etcurrent_c=-9;
+53048      l_etcurrent_me = l_etcurrent_c;
+53049      if l_etcurrent_me=-9                    then l_etcurrent_me=.;
+53050
+53051      ** ET dose ***************;
+53052      l_etdose_c=.;
+53053      if l_etcurrent_ever_c=1 & RF_EST_DOSE in (1,2,3,4) then l_etdose_c=RF_EST_DOSE;
+53054      else l_etdose_c=-9;
+53055      l_etdose_me = l_etdose_c;
+53056      if l_etdose_me=-9                                   then l_etdose_me=.;
+53057
+53058      ** ET duration ***************;
+53059      l_etdur_c=.;
+53060      if l_etcurrent_ever_c=1 & lacey_etdur in (1,2)  then l_etdur_c=lacey_etdur;
+53061      else l_etdur_c=-9;
+53062      l_etdur_me = l_etdur_c;
+53063      if l_etdur_me=-9                                then l_etdur_me=.;
+53064
+53065      ** ET freq ***************;
+53066      l_etfreq_c=.;
+53067      if l_etcurrent_ever_c=1 & lacey_etfreq in (1,2) then l_etfreq_c=lacey_etfreq;
+53068      else l_etfreq_c=-9;
+53069      l_etfreq_me = l_etfreq_c;
+53070      if l_etfreq_me=-9                       then l_etfreq_me=.;
+53071
+53072      ** finished HRT variables;
+53073      *******************************************************************************************;
+53074
+53075      /** colonoscopy and sigmoidoscopy rf_Q15 **/
+53076      colo_sig_any=-9;
+53077      if rf_Q15E=1            then colo_sig_any=0;
+53078      else if rf_Q15A=1       then colo_sig_any=1;
+53079      else if rf_Q15B=1       then colo_sig_any=1;
+53080      else if rf_Q15C=1       then colo_sig_any=1;
+53081      else if rf_Q15D=1       then colo_sig_any=1;
+53082
+53083      ** recode parity and flb_age_c to consolidate contradicting missings in each;
+53084      ** if nulliparous or missing number of births, then age at birth should be missing;
+53085      *** -9 in flb_age means missing to begin with;
+53086      *** whereas 9 in flb_age means they were coerced to be missing due to missing parity;
+53087      if      parity_c in (1,2) & flb_age_c=9     then flb_age_c=-9;
+53088      else if parity_c=2 & flb_age_c=9            then flb_age_c=-9;
+53089      if      parity_c in (0,-9)                  then flb_age_c=9;
+53090  run;
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      53077:8    53078:13   53079:13   53080:13   53081:13
+NOTE: There were 108295 observations read from the data set CONV.MELAN_R.
+NOTE: The data set CONV.MELAN_R has 108295 observations and 181 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.40 seconds
+      cpu time            0.39 seconds
+
+
+53091
+53092  /* recode the variables for main effect */
+53093  /* such that missings (9, -9) are coded as missing (.), so they are not counted */
+53094  data conv.melan_r;
+53095      set conv.melan_r;
+53096
+53097      fmenstr_me = fmenstr_c;
+53098      if  fmenstr_me in (9,-9)            then fmenstr_me=.;
+53099      menostat_me = menostat_c;
+53100      if  menostat_me in (9,-9)           then menostat_me=.;
+53101      menop_age_me = menop_age_c;
+53102      if  menop_age_me in (9,-9)          then menop_age_me=.;
+53103      parity_me=parity_c;
+53104      if  parity_me in (9,-9)             then parity_me=.;
+53105      flb_age_me = flb_age_c;
+53106      if  flb_age_me  in (9,-9)           then flb_age_me=.;
+53107      oralbc_dur_me = oralbc_dur_c;
+53108      if  oralbc_dur_me in (9,-9)         then oralbc_dur_me=.;
+53109      oralbc_yn_me = oralbc_yn_c;
+53110      if oralbc_yn_me in (9,-9)           then oralbc_yn_me=.;
+53111      mht_ever_me = mht_ever_c;
+53112      if mht_ever_me in (9,-9)            then mht_ever_me=.;
+53113      hormstat_me = hormstat_c;
+53114      if hormstat_me in (9,-9)            then hormstat_me=.;
+53115
+53116      uvrq_me = uvrq_c;
+53117      if  uvrq_me in (9,-9)               then uvrq_me=.;
+53118
+53119      horm_yrs_me = horm_yrs_c;
+53120      if  horm_yrs_me in (9,-9)           then horm_yrs_me=.;
+53121      horm_yrs_nat_me = horm_yrs_nat_c;
+53122      if horm_yrs_nat_me in (9,-9)        then horm_yrs_nat_me=.;
+53123      horm_yrs_surg_me = horm_yrs_surg_c;
+53124      if horm_yrs_surg_me in (9,-9)       then horm_yrs_surg_me=.;
+53125
+53126      ovarystat_me = ovarystat_c;
+53127      if ovarystat_me in (9,-9)           then ovarystat_me=.;
+53128  run;
+
+NOTE: There were 108295 observations read from the data set CONV.MELAN_R.
+NOTE: The data set CONV.MELAN_R has 108295 observations and 195 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.28 seconds
+      cpu time            0.28 seconds
+
+
+53129
+53130  ** add labels;
+53131  proc datasets library=conv;
+53132      modify melan_r;
+53133
+53134      ** set variable labels;
+53135      label   /* melanoma outcomes */
+53136              melanoma_agg = "Melanoma indicator"
+53137              melanoma_c = "Melanoma indicator by type"
+53138              melanoma_ins = "Melanoma in situ"
+53139              melanoma_mal = "malignant Melanoma"
+53140
+53141              /* for baseline */
+53142              uvrq_c = "TOMS AVGLO-UVR measures in quartiles"
+53143              oralbc_dur_c = "birth control duration"
+53144              oralbc_yn_c = "birth control yes/no"
+53145              fmenstr_c = "menarche age"
+53146              educ_c = "education level"
+53147              flb_age_c = "Age at first live birth among parous women"
+53148              menostat_c = "menopause status"
+53149              menop_age_c ="age at natural menopause"
+53150              physic_c = "level of physical activity"
+53151              parity_c = "total number of live births"
+53152              bmi_c = "bmi, rough"
+53153
+53154              smoke_former_c ="Smoking Status"
+53155              smoke_quit_c = 'Quit smoking status'
+53156              smoke_dose_c = 'Smoking dose'
+53157              rel_1d_cancer_c = 'Family History of Cancer'
+53158              coffee_c = 'Coffee drinking'
+53159              etoh_c = 'Total alchohol per day including food sources'
+53160              colo_sig_any = "Colonoscopy or Sigmoidoscopy in past 3 years?"
+53161
+53162              horm_cur = 'Current Hormone Use'
+53163              horm_yrs_c = 'Hormone Use Duration'
+53164              horm_yrs_nat_c = 'Hormone Use Duration, only nat meno'
+53165              horm_yrs_surg_c = 'Hormone Use Duration, only surg meno'
+53166              mht_ever_c = " Menopausal Hormone Therapy, ever"
+53167
+53168
+53169              /* for riskfactor */
+53170              rf_physic_c = "Times engaged in moderate-vigorous physical activity"
+53171              rf_1d_cancer = "Family History of Cancer"
+53172              rf_Q15A = "Sigmoidoscopy in past three years?"
+53173              rf_Q15B = "Colonoscopy in past three years?"
+53174              rf_Q15C = "Proctoscopy in past three years?"
+53175              rf_Q15D = "Unknown colorectal procedure in past three years?"
+53176              rf_Q15E = "No colorectal procedure in past three years?"
+53177
+53178                  /* for the MHT variables */
+53179              l_eptcurrent_c = "Current/former EPT user"
+53180              l_eptdose_c = "Estrogen/progestin therapy dose"
+53181              l_eptdur_c = "Estrogen/progestin therapy duration (1st definition)"
+53182
+53183              l_etcurrent_c = "Current/former estrogen therapy user"
+53184              l_etdose_c = "Estrogen therapy dose"
+53185              l_etdur_c = "Estrogen therapy only duration (1st definition)"
+53186              l_etfreq_c = "Estrogen therapy frequency"
+53187
+53188              lacey_sameduration = "EPT-only users - same reported dates EP?"
+53189              lacey_samestart44 = "Classifies estrogen and progestin therapy in terms of when each was
+53189! started relative to the other"
+53190              lacey_sameyears = "EPT-only users - same reported duration EP?"
+53191
+53192              ht_type_c="lacey Hormone therapy type"
+53193
+53194
+53195      ;
+53196      ** set variable value labels;
+53197      format  skin_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.
+53198              /* for outcomes */
+53199              melanoma_c melanfmt. melanoma_agg melanomafmt.
+53200              melanoma_ins melanomainsfmt. melanoma_mal melanomamalfmt.
+53201
+53202              fmenstr_me fmenstrcfmt.
+53203              menostat_me menostatfmt.
+53204              ovarystat_me ovarystatfmt.
+53205              menop_age_me menopiagefmt.
+53206              parity_me parityfmt.
+53207              flb_age_me flbagefmt.
+53208              oralbc_yn_me oralbcynfmt.
+53209              oralbc_dur_me oralbcdurfmt.
+53210              mht_ever_me mhteverfmt.
+53211              hormstat_me  hormstatfmt.
+53212              horm_yrs_me hormyrsfmt.
+53213              horm_yrs_nat_me horm_yrs_surg_me hormyrsfmt.
+53214              uvrq_me uvrqfmt.
+53215
+53216              /* baseline regular variables*/
+53217              educ_c educfmt. educm educmfmt.
+53218              bmi_c bmifmt.
+53219              physic physicfmt. physic_c physiccfmt.
+53220              fmenstr  fmenstrfmt. fmenstr_c fmenstrcfmt.
+53221              perstop_menop perstopmenopfmt. perstop_surg perstopsurgfmt. hyststat hyststatfmt.
+53222              menostat_c menostatfmt.
+53223              ovarystat_c ovarystat ovarystatfmt.
+53224              menop_age_c menopiagefmt. menop_age agemenofmt.
+53225              parity_c parityfmt.
+53226              livechild livechildfmt.
+53227              flb_age_c flbagefmt.
+53228              age_flb ageflbfmt.
+53229              oralbc_yn_c oralbcynfmt.
+53230              oralbc_dur_c oralbc_yrs oralbcdurfmt.
+53231              mht_ever_c  parity_ever mhteverfmt.
+53232              hormstat_c hormstat hormstatfmt.
+53233              horm_yrs_c horm_yrs_me horm_yrs_nat_c horm_yrs_surg_c  horm_yrs hormyrsfmt.
+53234              uvrq_c uvrqfmt.
+53235              marriage  marriagefmt. marriage_c marriagecfmt.
+53236              smoke_former_c smoke_former smokeformerfmt.
+53237              smoke_quit smoke_quit_c smokequitfmt.
+53238              smoke_dose smoke_dose_c smokedosefmt.
+53239              coffee_c coffeefmt. qp12b $qp12bfmt. etoh_c etohfmt.
+53240              rel_1d_cancer rel_1d_cancer_c relativefmt.
+53241
+53242              /* for MHT & riskfactors */
+53243              rf_phys_modvig_curr rfphysfmt.
+53244              rf_physic_c rfphysicfmt.
+53245              lacey_ht_type l_httype.
+53246              ht_type_c ht_type_me l_httype.
+53247              ht_type_ever_c ht_type_ever_me l_httypevr.
+53248
+53249              l_eptcurrent_ever_c l_eptcurrent_ever_me l_eptcurrentvr.
+53250              l_eptcurrent_c l_eptcurrent_me lacey_eptcurrent l_eptcurrent.
+53251
+53252              l_eptdose_c l_eptdose_me lacey_eptdose l_eptdose.
+53253              l_eptdur_c l_eptdur_me lacey_eptdur l_eptdur.
+53254              lacey_eptreg l_eptreg_c l_eptreg_me l_eptreg.
+53255
+53256              l_etcurrent_ever_c l_etcurrent_ever_me  l_etcurrentvr.
+53257              l_etcurrent_c l_etcurrent_me lacey_etcurrent l_eptcurrent.
+53258
+53259              l_etdose_c l_etdose_me lacey_etdose RF_EST_DOSE l_estdose.
+53260              l_etdur_c l_etdur_me lacey_etdur l_etdur.
+53261              l_etfreq_c l_etfreq_me lacey_etfreq l_etfreq.
+53262
+53263              colo_sig_any colosigfmt.
+53264              rf_Q15A $rfq15afmt.
+53265              rf_Q15B $rfq15bfmt.
+53266              rf_Q15C $rfq15cfmt.
+53267              rf_Q15D $rfq15dfmt.
+53268              rf_Q15E $rfq15efmt.
+53269      ;
+53270  run;
+
+NOTE: MODIFY was successful for CONV.MELAN_R.DATA.
+53271  /******************************************************************************************/
+53272  ods html close;
+53273  ods html;
+NOTE: Writing HTML Body file: sashtml170.htm
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           1.00 seconds
+      cpu time            0.40 seconds
+
+
+53274  data use_r;
+53275      set conv.melan_r;
+53276  run;
+
+NOTE: There were 108295 observations read from the data set CONV.MELAN_R.
+NOTE: The data set WORK.USE_R has 108295 observations and 195 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.29 seconds
+      cpu time            0.29 seconds
+
+
+53277  data conv.melan_hosp;
+53278      set conv.melan_r;
+53279      keep westatid colo_sig_any;
+53280  run;
+
+NOTE: There were 108295 observations read from the data set CONV.MELAN_R.
+NOTE: The data set CONV.MELAN_HOSP has 108295 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.12 seconds
+
+
