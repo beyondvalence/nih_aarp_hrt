@@ -7,7 +7,7 @@
 # for v6, riskfactor to FUP
 # 
 # Created: April 1 2015
-# Updated: v20160513FRI WTL
+# Updated: v20160516TUE WTL
 # removed rf_physic
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
@@ -60,7 +60,7 @@ ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v21.xls' st
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
-	title3 '20160513FRI WTL';
+	title3 '20160516TUE WTL';
 	title4 'v21';
 	class melanoma_c 
 		educ_c bmi_c physic_c  

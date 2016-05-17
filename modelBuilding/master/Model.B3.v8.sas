@@ -903,7 +903,7 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\modelB\base_mo
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Baseline:';
 	title2 'Model B3v8';
-	title3 '20160506FRI WTL';
+	title3 '20160517TUE WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
@@ -2420,7 +2420,7 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\modelB\risk_model_B
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Riskfactor:';
 	title2 'Model B3v8';
-	title3 '20160509MON WTL';
+	title3 '20160517TUE WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
