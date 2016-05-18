@@ -857,16 +857,17 @@ ods _all_ close; ods html;
 
 
 ********************************************************************************;
-** baseline, melanoma, exp: MHTever, in situ, educ_c, bmic_, 3 conf **;
+** baseline, melanoma, exp: MHTever, in situ, educ_c, bmic_, 3 conf ************;
+** updated: 20160518WED WTL ****************************************************;
 ********************************************************************************;
 ** crude **;
 proc phreg data = use multipass;
 	title1 underlin=1 'AARP Baseline: melanoma, in situ';
 	title2 'Exposure: MHTever';
 	title3 'interactions';
-	title4 '20150804TUE WTL';
+	title4 '20160518WED WTL';
 	class mht_ever_me  (ref='never') menostat_c (ref='natural menopause') 
-			uvrq (ref='0 to 186.918') educ_c (ref='less than highschool') bmi_c (ref='< 25') 
+			/*uvrq (ref='0 to 186.918')*/ educ_c (ref='less than highschool') bmi_c (ref='< 25') 
 			smoke_former (ref='never smoked') rel_1d_cancer (ref='No') marriage (ref='married') 
 			colo_sig_any (ref='No');
 	model exit_age*melanoma_ins(0)= 
@@ -1161,7 +1162,7 @@ data base_int_testing_ins;
 	set base_int_testing_ins
 	(Keep= variable ProbChiSq); 
 run;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\interaction.base.ins.v2.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\interaction.base.ins.v3.xls' style=minimal;
 proc print data= base_int_testing_ins; run;
 ods _all_ close; ods html;
 
