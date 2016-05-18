@@ -232,7 +232,7 @@ proc phreg data = use_r multipass;
 	model exit_age*melanoma_mal(0)=oralbc_dur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
 run;
 
-******************************************************************************;
+/******************************************************************************;
 ********************************************************************************;
 ** R06_ins_mal
 ** ME: horm_yrs_me (ref="Never used")  
@@ -240,14 +240,15 @@ run;
 ********************************************************************************;
 title2 'horm_yrs_me ';
 proc phreg data = use_r multipass;
-	class /*uvrq_c (ref="176.095 to 186.918")*/ educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
+	class educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
 	model exit_age*melanoma_ins(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
 run;
 
 proc phreg data = use_r multipass;
-	class /*uvrq_c (ref="176.095 to 186.918")*/ educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
+	class educ_c (ref="Less than high school") bmi_c (ref=">18.5 to < 25") smoke_former_c (ref="Never smoked") rel_1d_cancer_c (ref="No") marriage_c (ref="Married") colo_sig_any (ref="No");
 	model exit_age*melanoma_mal(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any / entry = entry_age RL;
 run;
+*/
 ******************************************************************************;
 ********************************************************************************;
 ** R07_ins_mal
