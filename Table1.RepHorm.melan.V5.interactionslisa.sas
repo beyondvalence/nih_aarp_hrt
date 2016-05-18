@@ -188,7 +188,7 @@ run;
 
 ods _all_ close; ods html;
 *Combine and output to Excel;
-data base_fmenstr_uvrq (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
+/*data base_fmenstr_uvrq (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
 	set bin_fmenstr_uvrq1
 		bma_fmenstr_uvrq1
 		bin_fmenstr_uvrq2
@@ -198,7 +198,7 @@ data base_fmenstr_uvrq (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL))
 		bin_fmenstr_uvrq4
 		bma_fmenstr_uvrq4
 	; 
-run;
+run;*/
 ** use this one, without in situ;
 data base_fmenstr_uvrq_mal (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
 	set bma_fmenstr_uvrq1
@@ -211,11 +211,11 @@ data base_fmenstr_uvrqt (keep=Parameter ClassVal0 A_HR A_LL A_UL uvr);
 	title1 'AARP Melanoma Baseline';
 	title2 'Hazard Ratios for Age at Menarche <=10 vs 15+';
 	title3 'By UVQR quartile';
-	title4 '20160517TUE WTL';
+	title4 '20160518WED WTL';
 	set base_fmenstr_uvrq_mal; 
 	where ClassVal0='1. 10>=';
 run;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.fmenstr.uvrq.v3.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.fmenstr.uvrq.v5.xls' style=minimal;
 proc print data= base_fmenstr_uvrqt; run;
 ods _all_ close; ods html;
 
@@ -408,6 +408,8 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\b
 proc print data= base_fmenstri_uvrqt; run;
 ods _all_ close; ods html;
 
+
+
 *******************************************************************************;
 ** fmenstri Analysis by UVRQ  base  trend               ***********************;
 *******************************************************************************;
@@ -562,14 +564,14 @@ data base_fmenstri_uvrqt;
 	title1 'AARP Melanoma Baseline';
 	title2 'P Trends for Age at Menarche <=10 vs 15+, only';
 	title3 'By UVQR quartile';
-	title4 '20150806THU WTL';
+	title4 '20160518WED WTL';
 	set base_fmenstri_uvrq_mal; 
 run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.fmenstri.uvrq.ptrend.v1.xls' style=minimal;
 proc print data= base_fmenstri_uvrqt; run;
 ods _all_ close; ods html;
 
-
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.risk.sas';
 data use_r;
 	set conv.melan_r;
 run;
@@ -581,14 +583,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_ins(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=1;
+	where uvrq_c=1;
 	ods output ParameterEstimates=fmenstr_uvrq1;
 run;
 data rin_fmenstr_uvrq1; set fmenstr_uvrq1;
@@ -599,14 +601,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_mal(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=1;
+	where uvrq_c=1;
 	ods output ParameterEstimates=fmenstr_uvrq1;
 run;
 data rma_fmenstr_uvrq1; set fmenstr_uvrq1;
@@ -619,14 +621,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_ins(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=2;
+	where uvrq_c=2;
 	ods output ParameterEstimates=fmenstr_uvrq2;
 run;
 data rin_fmenstr_uvrq2; set fmenstr_uvrq2;
@@ -637,14 +639,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_mal(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=2;
+	where uvrq_c=2;
 	ods output ParameterEstimates=fmenstr_uvrq2;
 run;
 data rma_fmenstr_uvrq2; set fmenstr_uvrq2;
@@ -657,14 +659,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_ins(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=3;
+	where uvrq_c=3;
 	ods output ParameterEstimates=fmenstr_uvrq3;
 run;
 data rin_fmenstr_uvrq3; set fmenstr_uvrq3;
@@ -675,14 +677,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_mal(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=3;
+	where uvrq_c=3;
 	ods output ParameterEstimates=fmenstr_uvrq3;
 run;
 data rma_fmenstr_uvrq3; set fmenstr_uvrq3;
@@ -695,14 +697,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_ins(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=4;
+	where uvrq_c=4;
 	ods output ParameterEstimates=fmenstr_uvrq4;
 run;
 data rin_fmenstr_uvrq4; set fmenstr_uvrq4;
@@ -713,14 +715,14 @@ run;
 ** uvrq_me * fmenstr;
 proc phreg data = use_r multipass;
 	class fmenstr_me (ref='15+')
-			educ_c (ref='Less than high school') bmi_c (ref='18.5 to <25') 
-			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
-			colo_sig_any (ref='No') mht_ever (ref='Never') menop_age (ref='<45');
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='<45');
 	model exit_age*melanoma_mal(0)= 
 			fmenstr_me
-			educ_c bmi_c smoke_former rel_1d_cancer marriage colo_sig_any mht_ever menop_age
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
 			/ entry = entry_age RL; 
-	where uvrq=4;
+	where uvrq_c=4;
 	ods output ParameterEstimates=fmenstr_uvrq4;
 run;
 data rma_fmenstr_uvrq4; set fmenstr_uvrq4;
@@ -731,7 +733,7 @@ run;
 
 ods _all_ close; ods html;
 *Comrine and output to excel;
-data risk_fmenstr_uvrq (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
+/*data risk_fmenstr_uvrq (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
 	set rin_fmenstr_uvrq1
 		rma_fmenstr_uvrq1
 		rin_fmenstr_uvrq2
@@ -741,7 +743,7 @@ data risk_fmenstr_uvrq (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL))
 		rin_fmenstr_uvrq4
 		rma_fmenstr_uvrq4
 	; 
-run;
+run;*/
 ** use this one, without in situ;
 data risk_fmenstr_uvrq_mal (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
 	set rma_fmenstr_uvrq1
@@ -754,11 +756,11 @@ data risk_fmenstr_uvrqt (keep=Parameter ClassVal0 A_HR A_LL A_UL uvr);
 	title1 'AARP Melanoma risk';
 	title2 'Hazard Ratios for Age at Menarche <=10 vs 15+';
 	title3 'By UVQR quartile';
-	title4 '20150806THU WTL';
+	title4 '20160518WED WTL';
 	set risk_fmenstr_uvrq_mal; 
-	where ClassVal0='<=10';
+	where ClassVal0='1. 10>=';
 run;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\interactions\risk.fmenstr.uvrq.v1.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\interactions\risk.fmenstr.uvrq.v5.xls' style=minimal;
 proc print data= risk_fmenstr_uvrqt; run;
 ods _all_ close; ods html;
 
