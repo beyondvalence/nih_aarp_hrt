@@ -336,15 +336,14 @@ run;
 
 /** find the cutoffs for the percentiles of UVR- exposure_jul_78_05 mped_a_bev;
 proc univariate data=conv.melan;
-	var F_DOB;  dob_year; dob_year;exposure_jul_78_05;
+	var exposure_jul_78_05;
 	output 	out=uvout
 			pctlpts= 10 20 25 30 40 50 60 70 75 80 90 
 			pctlpre=p;
-run;*/
-*proc print data=uvout; 
-	*title 'uvr exposure percentiles';
-	*title 'DOB exposure percentiles';
-*run; 
+run;
+proc print data=uvout; 
+	title 'uvr exposure percentiles';
+run; */
 
 ** need to change the exposure percentiles after exclusions;
 ** uvr exposure;
