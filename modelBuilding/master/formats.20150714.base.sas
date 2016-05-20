@@ -59,15 +59,15 @@ proc format;
 	value oralbcynfmt -9='Missing' 0='Never/<1yr' 1='Ever';
 	value oralbcyrsfmt 9='Unknown' 0='1. Never/<1yr' 1='2. 1-4 years' 2='3. 5-9 years' 3='4. 10+ years';
 	value uvrqfmt -9='Missing' 
-					1='176.095 up to 186.918' 
-					2='186.918 up to 239.642' 
-					3='239.642 up to 253.731' 
-					4='253.731 up to 289.463';
-	value uvrq5cfmt 1='176.095 up to 186.255'
-					2='186.255 up to 215.622'
-					3='215.622 up to 245.151'
-					4='245.151 up to 257.140'
-					5='257.140 up to 289.463';
+					1='176.095 to 186.918' 
+					2='186.918 to 239.642' 
+					3='239.642 to 253.731' 
+					4='253.731 to 289.463';
+	value uvrq5cfmt 1='176.095 to 186.255'
+					2='186.255 to 215.622'
+					3='215.622 to 245.151'
+					4='245.151 to 257.140'
+					5='257.140 to 289.463';
 	value rphysicfmt -9='Missing' 1='Rarely' 2='<1 hour/week' 3='1-3 hours/week' 4='4-7 hours/week' 5='>7 hours/week';
 	value relativefmt 9='Missing' 0='No' 1='Yes' -9='Missing';
 
