@@ -7,7 +7,7 @@
 #
 #
 # Created: June 29 2015
-# Updated: v20150908TUE WTL
+# Updated: v20160520FRI WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
@@ -36,12 +36,14 @@ proc format;
 	value marriagecfmt 1='Married' 2='Widowed' 3='Divorced/separated' 5='Never married' -9='Missing';
 
 	** fmenstr, menopause status recoded 20150721WTL;
+	** added 2 cat fmenstr_2c for interactions, 20160520 WTL;
+	value fmenstr2cfmt 0='1. 10>=' 1='2. 11+';
 	value fmenstrcfmt -9='Missing' 0='1. 10>=' 1='2. 11-12' 2='3. 13-14' 3='4. 15+';
 	value fmenstrfmt -9='Missing' 1='1. 10>=' 2='2. 11-12' 3='3. 13-14' 4='4. 15+' 9='Unknown';
 	value menostatfmt -9='Missing' 9='Pre-menopausal' 1='Natural menopause' 2='Surgical/hyst menopause'
 						3='Radiation or chemotherapy' 4='Other reason';
 	value agemenofmt 1='<40' 2='40-44' 3='45-49' 4='50-54' 5='>55' 6='Still menstruating' 9='Unknown';
-	value menopagefmt -9='Missing' 1='<45' 2='45-49' 3='50-54' 4='>=55' 5='Still menstruating';
+	value menopagefmt -9='Missing' 1='1. <45' 2='2. 45-49' 3='3. 50-54' 4='4. >=55' 5='Still menstruating';
 	value menopiagefmt -9='Missing' 1='1. <45' 2='2. 45-49' 3='3. 50+' 5='Still menstruating';
 	value menoagefmt -9='Missing' 1='<50' 2='50-54' 3='55+' 4='Periods did not stop';
 	value surgagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 4='Periods did not stop';
