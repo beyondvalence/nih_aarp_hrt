@@ -309,12 +309,28 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\b
 proc print data= base_uvrq_c_menopageall; run;
 ods _all_ close; ods html;
 
+** P-interaction for UVR * menop_age_c;
+proc phreg data = use multipass;
+	class menop_age_c (ref='1. <45')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') ;
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c menop_age_c menop_age_c*uvrq_c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c 
+			/ entry = entry_age RL; 
+	ods output ParameterEstimates=uvrq_c_menopage3;
+run;
+
 *******************************************************************;
 ** menopage4 1 MAL **;
 ** updated 20160520FRI WTL;
 ** with menop_age_4c with <45, 45-49, 50-54, 55+;
 title1 'HRT interaction menopage4-1'; 
 title2 'uvrq continuous ';
+proc freq data=use;
+ table menop_age_4c*melanoma_c;
+run;
 proc phreg data = use multipass;
 	class 
 			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
@@ -498,3 +514,16 @@ run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.menopage4.v20160520.xls' style=minimal;
 proc print data= base_uvrq_c_menopage4all; run;
 ods _all_ close; ods html;
+
+** P-interaction for UVR * menop_age_4c;
+proc phreg data = use multipass;
+	class menop_age_4c (ref='1. <45')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') ;
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c menop_age_4c menop_age_4c*uvrq_c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c 
+			/ entry = entry_age RL; 
+	ods output ParameterEstimates=uvrq_c_menopage4;
+run;
