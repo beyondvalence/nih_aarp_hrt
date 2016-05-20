@@ -393,3 +393,106 @@ run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.fmenstr.v20160519.xls' style=minimal;
 proc print data= base_uvrq_c_fmenstrall; run;
 ods _all_ close; ods html;
+
+*********************************************************************************;
+** age at menarche 2 categories, <=10 and 11+;
+** fmenstr2 1 MAL **;
+title1 'HRT interaction fmenstr1'; 
+title2 'uvrq continuous ';
+proc phreg data = use multipass;
+	class 
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='1. <45');
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
+			/ entry = entry_age RL; 
+	where fmenstr_2c=0;
+	ods output ParameterEstimates=uvrq_fmenstr1;
+run;
+
+data bma_uvrq_fmenstr1; set uvrq_fmenstr1;
+	where Parameter='uvrq_c';
+	variable="bma_uvrq_fmenstr1    ";
+run;
+
+title1 'HRT interaction fmenstr1'; 
+title2 'uvrq_c cat';
+proc phreg data = use multipass;
+	class uvrq_c (ref='176.095 to 186.918')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='1. <45');
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
+			/ entry = entry_age RL; 
+	where fmenstr_2c=0;
+	ods output ParameterEstimates=uvrq_c_fmenstr1;
+run;
+
+data bma_uvrq_c_fmenstr1; set uvrq_c_fmenstr1;
+	where Parameter='uvrq_c';
+	variable="bma_uvrq_c_fmenstr1    ";
+run;
+
+** fmenstr2 2 MAL **;
+title1 'HRT interaction fmenstr2'; 
+title2 'uvrq continuous ';
+proc phreg data = use multipass;
+	class 
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='1. <45');
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
+			/ entry = entry_age RL; 
+	where fmenstr_2c=1;
+	ods output ParameterEstimates=uvrq_fmenstr2;
+run;
+
+data bma_uvrq_fmenstr2; set uvrq_fmenstr2;
+	where Parameter='uvrq_c';
+	variable="bma_uvrq_fmenstr2    ";
+run;
+
+title1 'HRT interaction fmenstr2'; 
+title2 'uvrq_c cat';
+proc phreg data = use multipass;
+	class uvrq_c (ref='176.095 to 186.918')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='1. <45');
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
+			/ entry = entry_age RL; 
+	where fmenstr_2c=1;
+	ods output ParameterEstimates=uvrq_c_fmenstr2;
+run;
+
+data bma_uvrq_c_fmenstr2; set uvrq_c_fmenstr2;
+	where Parameter='uvrq_c';
+	variable="bma_uvrq_c_fmenstr2    ";
+run;
+
+** fmenstr2 2 MAL **;
+data bma_uvrq_c_fmenstr2all;
+	set bma_uvrq_fmenstr1
+		bma_uvrq_c_fmenstr1
+		bma_uvrq_fmenstr2
+		bma_uvrq_c_fmenstr2;
+run;
+
+data base_uvrq_c_fmenstr2all (keep=Parameter ClassVal0 variable HazardRatio HRLowerCL HRUpperCL); 
+	title1 'AARP Melanoma Baseline';
+	title2 'Hazard Ratios for UVRQ';
+	title3 'By Age at Menarche 2CAT and UVQR quartile';
+	title4 '20160520FRI WTL';
+	set bma_uvrq_c_fmenstr2all; 
+run;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.fmenstr2.v20160520.xls' style=minimal;
+proc print data= base_uvrq_c_fmenstr2all; run;
+ods _all_ close; ods html;
