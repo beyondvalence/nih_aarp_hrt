@@ -54,14 +54,6 @@ run;
 proc copy noclone in=Work out=conv;
 	select melan;
 run;
-** quick checks on the conv.melan file;
-** especially for the seer ICD-O-3 codes;
-** melanoma code is 25010;
-** check to see if the melanoma was coded correctly;
-proc freq data=conv.melan;
-	table cancer_siterec3*sex;
-	table cancer_siterec3*cancer_seergroup /nopercent norow nocol;
-run;
 
 **** Exclusions macro;
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\exclusions.first.primary.macro.sas';
@@ -194,6 +186,10 @@ proc freq data=conv.melan;
 	title 'baseline counts';
 	table melanoma_c*sex;
 run;
+
+** uvr exposure percentiles;
+** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+** 185.266 186.255 186.918 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
 
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
@@ -333,6 +329,15 @@ data conv.melan;
 	else if 253.731 < exposure_jul_78_05            then uvrq_c=4;
 	else uvrq_c=-9;
 
+	** UVR TOMS quintiles;
+	** added for interactions 20160520FRI WTL;
+	uvrq_c=.;
+	if      0       < exposure_jul_78_05 <= 186.255 then uvrq_5c=1; /* lower bound: 176.095 */
+	else if 186.255 < exposure_jul_78_05 <= 215.622 then uvrq_5c=2;
+	else if 215.622 < exposure_jul_78_05 <= 245.151 then uvrq_5c=3;
+	else if 245.151 < exposure_jul_78_05 <= 257.140 then uvrq_5c=4;
+	else if 257.140 < exposure_jul_78_05            then uvrq_5c=5; /* upper bound: 289.463 */
+
 	** marriage;
 	marriage_c = marriage;
 	if 		marriage in (3,4)						then marriage_c=3; /* divorced and separated together */
@@ -447,7 +452,8 @@ proc datasets library=conv;
 
 			/* for baseline */
 			agecat = "Entry age category"
-			uvrq_c = "TOMS AVGLO-UVR measures in quartiles"
+			uvrq_c = "TOMS UVR measures in quartiles"
+			uvrq_5c = "TOMS UVR measures in quintiles"
 			oralbc_dur_c = "birth control duration"
 			oralbc_yn_c = "birth control yes/no"
 			educ_c = "education level"
@@ -524,7 +530,7 @@ proc datasets library=conv;
 			mht_ever_c  parity_ever mhteverfmt.
 			hormstat_c hormstat hormstatfmt. 
 			horm_yrs_c horm_yrs_me horm_yrs hormyrsfmt.
-			uvrq_c uvrqfmt.
+			uvrq_c uvrqfmt. uvrq_5c uvrq5cfmt.
 			marriage  marriagefmt. marriage_c marriagecfmt.
 			smoke_former_c smoke_former smokeformerfmt.
 			smoke_quit smoke_quit_c smokequitfmt.
