@@ -30,7 +30,7 @@ run; /** 185.01, 212.36, 245.63, 265.17 **/
 *******************************************************************************;
 
 ** menopage 1 INSITU **;
-title1 'HRT interaction menopage1'; 
+title1 'HRT interaction menopage3-1'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -50,7 +50,7 @@ data bin_uvrq_menopage1; set uvrq_menopage1;
 	variable="bin_uvrq_menopage1    ";
 run;
 
-title1 'HRT interaction menopage1'; 
+title1 'HRT interaction menopage3-1'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -71,7 +71,7 @@ data bin_uvrq_c_menopage1; set uvrq_c_menopage1;
 run;
 
 ** menopage 2 INSITU **;
-title1 'HRT interaction menopage2'; 
+title1 'HRT interaction menopage3-2'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -91,7 +91,7 @@ data bin_uvrq_menopage2; set uvrq_menopage2;
 	variable="bin_uvrq_menopage2    ";
 run;
 
-title1 'HRT interaction menopage2'; 
+title1 'HRT interaction menopage3-2'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -112,7 +112,7 @@ data bin_uvrq_c_menopage2; set uvrq_c_menopage2;
 run;
 
 ** menopage 3 INSITU **;
-title1 'HRT interaction menopage3'; 
+title1 'HRT interaction menopage3-3'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -132,7 +132,7 @@ data bin_uvrq_menopage3; set uvrq_menopage3;
 	variable="bin_uvrq_menopage3    ";
 run;
 
-title1 'HRT interaction menopage3'; 
+title1 'HRT interaction menopage3-3'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -165,7 +165,7 @@ run;
 
 
 ** menopage 1 MAL **;
-title1 'HRT interaction menopage1'; 
+title1 'HRT interaction menopage3-1'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -185,7 +185,7 @@ data bma_uvrq_menopage1; set uvrq_menopage1;
 	variable="bma_uvrq_menopage1    ";
 run;
 
-title1 'HRT interaction menopage1'; 
+title1 'HRT interaction menopage3-1'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -206,7 +206,7 @@ data bma_uvrq_c_menopage1; set uvrq_c_menopage1;
 run;
 
 ** menopage 2 MAL **;
-title1 'HRT interaction menopage2'; 
+title1 'HRT interaction menopage3-2'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -226,7 +226,7 @@ data bma_uvrq_menopage2; set uvrq_menopage2;
 	variable="bma_uvrq_menopage2    ";
 run;
 
-title1 'HRT interaction menopage2'; 
+title1 'HRT interaction menopage3-2'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -247,7 +247,7 @@ data bma_uvrq_c_menopage2; set uvrq_c_menopage2;
 run;
 
 ** menopage 3 MAL **;
-title1 'HRT interaction menopage3'; 
+title1 'HRT interaction menopage3-3'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -267,7 +267,7 @@ data bma_uvrq_menopage3; set uvrq_menopage3;
 	variable="bma_uvrq_menopage3    ";
 run;
 
-title1 'HRT interaction menopage3'; 
+title1 'HRT interaction menopage3-3'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -307,9 +307,10 @@ data base_uvrq_c_menopageall (keep=Parameter ClassVal0 variable HazardRatio HRLo
 run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.menopage.v20160519.xls' style=minimal;
 proc print data= base_uvrq_c_menopageall; run;
-ods _all_ close; ods html;
+ods _all_ close; ods html; title;
 
 ** P-interaction for UVR * menop_age_c;
+title1 'HRT interaction menopage3-Pint';
 proc phreg data = use multipass;
 	class menop_age_c (ref='1. <45')
 			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
@@ -513,9 +514,10 @@ data base_uvrq_c_menopage4all (keep=Parameter ClassVal0 variable HazardRatio HRL
 run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.menopage4.v20160520.xls' style=minimal;
 proc print data= base_uvrq_c_menopage4all; run;
-ods _all_ close; ods html;
+ods _all_ close; ods html; title;
 
 ** P-interaction for UVR * menop_age_4c;
+title1 'HRT interaction menopage4-Pint';
 proc phreg data = use multipass;
 	class menop_age_4c (ref='1. <45')
 			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 

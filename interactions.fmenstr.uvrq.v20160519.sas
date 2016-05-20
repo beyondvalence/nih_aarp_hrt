@@ -30,7 +30,7 @@ run; /** 185.01, 212.36, 245.63, 265.17 **/
 *******************************************************************************;
 
 ** fmenstr 1 INSITU **;
-title1 'HRT interaction fmenstr1'; 
+title1 'HRT interaction fmenstr4-1'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -50,7 +50,7 @@ data bin_uvrq_fmenstr1; set uvrq_fmenstr1;
 	variable="bin_uvrq_fmenstr1    ";
 run;
 
-title1 'HRT interaction fmenstr1'; 
+title1 'HRT interaction fmenstr4-1'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -71,7 +71,7 @@ data bin_uvrq_c_fmenstr1; set uvrq_c_fmenstr1;
 run;
 
 ** fmenstr 2 INSITU **;
-title1 'HRT interaction fmenstr2'; 
+title1 'HRT interaction fmenstr4-2'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -91,7 +91,7 @@ data bin_uvrq_fmenstr2; set uvrq_fmenstr2;
 	variable="bin_uvrq_fmenstr2    ";
 run;
 
-title1 'HRT interaction fmenstr2'; 
+title1 'HRT interaction fmenstr4-2'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -112,7 +112,7 @@ data bin_uvrq_c_fmenstr2; set uvrq_c_fmenstr2;
 run;
 
 ** fmenstr 3 INSITU **;
-title1 'HRT interaction fmenstr3'; 
+title1 'HRT interaction fmenstr4-3'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -132,7 +132,7 @@ data bin_uvrq_fmenstr3; set uvrq_fmenstr3;
 	variable="bin_uvrq_fmenstr3    ";
 run;
 
-title1 'HRT interaction fmenstr3'; 
+title1 'HRT interaction fmenstr4-3'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -153,7 +153,7 @@ data bin_uvrq_c_fmenstr3; set uvrq_c_fmenstr3;
 run;
 
 ** fmenstr 4 INSITU **;
-title1 'HRT interaction fmenstr4'; 
+title1 'HRT interaction fmenstr4-4'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -173,7 +173,7 @@ data bin_uvrq_fmenstr4; set uvrq_fmenstr4;
 	variable="bin_uvrq_fmenstr4    ";
 run;
 
-title1 'HRT interaction fmenstr4'; 
+title1 'HRT interaction fmenstr4-4'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -207,7 +207,7 @@ run;
 
 
 ** fmenstr 1 MAL **;
-title1 'HRT interaction fmenstr1'; 
+title1 'HRT interaction fmenstr4-1'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -227,7 +227,7 @@ data bma_uvrq_fmenstr1; set uvrq_fmenstr1;
 	variable="bma_uvrq_fmenstr1    ";
 run;
 
-title1 'HRT interaction fmenstr1'; 
+title1 'HRT interaction fmenstr4-1'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -248,7 +248,7 @@ data bma_uvrq_c_fmenstr1; set uvrq_c_fmenstr1;
 run;
 
 ** fmenstr 2 MAL **;
-title1 'HRT interaction fmenstr2'; 
+title1 'HRT interaction fmenstr4-2'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -268,7 +268,7 @@ data bma_uvrq_fmenstr2; set uvrq_fmenstr2;
 	variable="bma_uvrq_fmenstr2    ";
 run;
 
-title1 'HRT interaction fmenstr2'; 
+title1 'HRT interaction fmenstr4-2'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -289,7 +289,7 @@ data bma_uvrq_c_fmenstr2; set uvrq_c_fmenstr2;
 run;
 
 ** fmenstr 3 MAL **;
-title1 'HRT interaction fmenstr3'; 
+title1 'HRT interaction fmenstr4-3'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -309,7 +309,7 @@ data bma_uvrq_fmenstr3; set uvrq_fmenstr3;
 	variable="bma_uvrq_fmenstr3    ";
 run;
 
-title1 'HRT interaction fmenstr3'; 
+title1 'HRT interaction fmenstr4-3'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -330,7 +330,7 @@ data bma_uvrq_c_fmenstr3; set uvrq_c_fmenstr3;
 run;
 
 ** fmenstr 4 MAL **;
-title1 'HRT interaction fmenstr4'; 
+title1 'HRT interaction fmenstr4-4'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -350,7 +350,7 @@ data bma_uvrq_fmenstr4; set uvrq_fmenstr4;
 	variable="bma_uvrq_fmenstr4    ";
 run;
 
-title1 'HRT interaction fmenstr4'; 
+title1 'HRT interaction fmenstr4-4'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -397,7 +397,7 @@ ods _all_ close; ods html;
 *********************************************************************************;
 ** age at menarche 2 categories, <=10 and 11+;
 ** fmenstr2 1 MAL **;
-title1 'HRT interaction fmenstr1'; 
+title1 'HRT interaction fmenstr2-1'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -417,7 +417,7 @@ data bma_uvrq_fmenstr1; set uvrq_fmenstr1;
 	variable="bma_uvrq_fmenstr1    ";
 run;
 
-title1 'HRT interaction fmenstr1'; 
+title1 'HRT interaction fmenstr2-1'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -438,7 +438,7 @@ data bma_uvrq_c_fmenstr1; set uvrq_c_fmenstr1;
 run;
 
 ** fmenstr2 2 MAL **;
-title1 'HRT interaction fmenstr2'; 
+title1 'HRT interaction fmenstr2-2'; 
 title2 'uvrq continuous ';
 proc phreg data = use multipass;
 	class 
@@ -458,7 +458,7 @@ data bma_uvrq_fmenstr2; set uvrq_fmenstr2;
 	variable="bma_uvrq_fmenstr2    ";
 run;
 
-title1 'HRT interaction fmenstr2'; 
+title1 'HRT interaction fmenstr2-2'; 
 title2 'uvrq_c cat';
 proc phreg data = use multipass;
 	class uvrq_c (ref='176.095 to 186.918')
@@ -495,8 +495,10 @@ data base_uvrq_c_fmenstr2all (keep=Parameter ClassVal0 variable HazardRatio HRLo
 run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.fmenstr2.v20160520.xls' style=minimal;
 proc print data= base_uvrq_c_fmenstr2all; run;
-ods _all_ close; ods html;
+ods _all_ close; ods html; title;
 
+** P-interaction for UVR * fmenstr_2c;
+title1 'HRT interaction fmenstr2-Pint';
 proc phreg data = use multipass;
 	class fmenstr_2c (ref='2. 11+')
 			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
