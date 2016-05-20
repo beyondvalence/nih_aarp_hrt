@@ -496,3 +496,15 @@ run;
 ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.fmenstr2.v20160520.xls' style=minimal;
 proc print data= base_uvrq_c_fmenstr2all; run;
 ods _all_ close; ods html;
+
+proc phreg data = use multipass;
+	class fmenstr_2c (ref='2. 11+')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='1. <45');
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c fmenstr_2c uvrq_c*fmenstr_2c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
+			/ entry = entry_age RL; 
+	ods output ParameterEstimates=uvrq_c_fmenstr2;
+run;
