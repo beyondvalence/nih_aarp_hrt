@@ -8,7 +8,7 @@
 # uses the conv.melan datasets
 #
 # Created: May 19 2016
-# Updated: v20160519THU WTL
+# Updated: v20160520FRI WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
