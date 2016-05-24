@@ -258,12 +258,12 @@ data conv.melan;
 	else if menop_age in (4,5)						then menop_age_c=3; /* 50+ */
 
 	** menopausal age recoded for interaction 20160520FRI WTL;
-	menop_age_4c=.;
-	if 		menop_age in (6,9)						then menop_age_4c=-9; /* missing */
-	else if menop_age in (1,2)						then menop_age_4c=1; /* <45 */
-	else if menop_age=3								then menop_age_4c=2; /* 45-49 */
-	else if menop_age=4								then menop_age_4c=3; /* 50-54 */
-	else if menop_age=5								then menop_age_4c=4; /* 55+ */
+	** recoded missings and 45-54 categories 20160524TUE WTL;
+	menop_age_3c=.;
+	if 		menop_age in (6,9)						then menop_age_3c=.; /* missing */
+	else if menop_age in (1,2)						then menop_age_3c=1; /* <45 */
+	else if menop_age in (3,4)						then menop_age_3c=2; /* 45-54 */
+	else if menop_age=5								then menop_age_3c=3; /* 55+ */
 
 	** live child parity cat;
 	parity_c=.;
@@ -520,7 +520,7 @@ proc datasets library=conv;
 			perstop_menop perstopmenopfmt. perstop_surg perstopsurgfmt. hyststat hyststatfmt.
 			menostat_c menostatfmt.
 			ovarystat_c ovarystat ovarystatfmt.
-			menop_age_c menopiagefmt. menop_age agemenofmt. menop_age_4c menopagefmt.
+			menop_age_c menopiagefmt. menop_age agemenofmt. menop_age_3c menopage3fmt.
 			parity_c parityfmt.
 			livechild livechildfmt.
 			flb_age_c flbagefmt. 
