@@ -8,7 +8,7 @@
 # uses the conv.melan datasets
 #
 # Created: May 19 2016
-# Updated: v20160520FRI WTL
+# Updated: v20160524TUE WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
@@ -386,13 +386,39 @@ data base_uvrq_c_fmenstrall (keep=Parameter ClassVal0 variable HazardRatio HRLow
 	title1 'AARP Melanoma Baseline';
 	title2 'Hazard Ratios for UVRQ';
 	title3 'By Age at Menarche and UVQR quartile';
-	title4 '20160519THU WTL';
+	title4 '20160524TUE WTL';
 	set bin_uvrq_c_fmenstrall
 		bma_uvrq_c_fmenstrall; 
 run;
-ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.fmenstr.v20160519.xls' style=minimal;
+ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\interactions\base.uvrq.fmenstr.v20160524.xls' style=minimal;
 proc print data= base_uvrq_c_fmenstrall; run;
 ods _all_ close; ods html;
+
+********************************************************************************;
+** Pint for fmenstr;
+proc phreg data = use multipass;
+	class fmenstr_me (ref='4. 15+')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='1. <45');
+	model exit_age*melanoma_ins(0)= 
+			uvrq_c fmenstr_me uvrq_c*fmenstr_me
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
+			/ entry = entry_age RL; 
+	ods output ParameterEstimates=uvrq_fmenstr4_pint_ins;
+run;
+proc phreg data = use multipass;
+	class fmenstr_me (ref='4. 15+')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') menop_age_c (ref='1. <45');
+	model exit_age*melanoma_mal(0)= 
+			uvrq_c fmenstr_me uvrq_c*fmenstr_me
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menop_age_c
+			/ entry = entry_age RL; 
+	ods output ParameterEstimates=uvrq_fmenstr4_pint_mal;
+run;
+
 
 *********************************************************************************;
 ** age at menarche 2 categories, <=10 and 11+;
