@@ -298,15 +298,13 @@ data bma_uvrq_c_menopage3all;
 		bma_uvrq_menopage2
 		bma_uvrq_c_menopage2
 		bma_uvrq_menopage3
-		bma_uvrq_c_menopage3
-		bma_uvrq_menopage3
 		bma_uvrq_c_menopage3;
 run;
 
 data base_uvrq_c_menopage3all (keep=Parameter ClassVal0 variable HazardRatio HRLowerCL HRUpperCL); 
 	title1 'AARP Melanoma Baseline';
 	title2 'Hazard Ratios for UVRQ';
-	title3 'By Age at Menopause4 and UVQR quartile';
+	title3 'By Age at Menopause3 and UVQR quartile';
 	title4 '20160524TUE WTL';
 	set bin_uvrq_c_menopage3all 
 		bma_uvrq_c_menopage3all; 
