@@ -331,7 +331,7 @@ data conv.melan;
 
 	** UVR TOMS quintiles;
 	** added for interactions 20160520FRI WTL;
-	uvrq_c=.;
+	uvrq_5c=.;
 	if      0       < exposure_jul_78_05 <= 186.255 then uvrq_5c=1; /* lower bound: 176.095 */
 	else if 186.255 < exposure_jul_78_05 <= 215.622 then uvrq_5c=2;
 	else if 215.622 < exposure_jul_78_05 <= 245.151 then uvrq_5c=3;
