@@ -44,6 +44,7 @@ proc format;
 						3='Radiation or chemotherapy' 4='Other reason';
 	value agemenofmt 1='<40' 2='40-44' 3='45-49' 4='50-54' 5='>55' 6='Still menstruating' 9='Unknown';
 	value menopagefmt -9='Missing' 1='1. <45' 2='2. 45-49' 3='3. 50-54' 4='4. >=55' 5='Still menstruating';
+	value menopage3fmt 1='1. <45' 2='2. 45-54' 3='3. 55+' ;
 	value menopiagefmt -9='Missing' 1='1. <45' 2='2. 45-49' 3='3. 50+' 5='Still menstruating';
 	value menoagefmt -9='Missing' 1='<50' 2='50-54' 3='55+' 4='Periods did not stop';
 	value surgagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 4='Periods did not stop';
