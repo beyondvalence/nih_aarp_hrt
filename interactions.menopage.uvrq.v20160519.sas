@@ -528,7 +528,7 @@ proc print data= base_uvrq_c_menopage4all; run;
 ods _all_ close; ods html; title;
 
 ** P-interaction for UVR * menop_age_4c;
-title1 'HRT interaction menopage4-Pint';
+title1 'HRT interaction uvrq-menopage4-Pint';
 proc phreg data = use multipass;
 	class menop_age_4c (ref='1. <45')
 			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 

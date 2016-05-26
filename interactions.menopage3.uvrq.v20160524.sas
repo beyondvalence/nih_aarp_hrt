@@ -337,4 +337,31 @@ proc phreg data = use multipass;
 			/ entry = entry_age RL; 
 	ods output ParameterEstimates=uvrq_menopage3_pint_mal;
 run;
+
+ods _all_ close; ods html; title;
+
+** P-interaction for UVR * menop_age_3c;
+title1 'HRT interaction uvrq5~menopage3-Pint';
+proc phreg data = use multipass;
+	class menop_age_3c (ref='1. <45')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') ;
+	model exit_age*melanoma_ins(0)= 
+			uvrq_5c menop_age_3c menop_age_3c*uvrq_5c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c 
+			/ entry = entry_age RL; 
+	ods output ParameterEstimates=uvrq5_menopage3_pint_ins;
+run;
+proc phreg data = use multipass;
+	class menop_age_3c (ref='1. <45')
+			educ_c (ref='Less than high school') bmi_c (ref='>18.5 to < 25') 
+			smoke_former (ref='Never smoked') rel_1d_cancer (ref='No') marriage (ref='Married') 
+			colo_sig_any (ref='No') mht_ever_c (ref='Never') ;
+	model exit_age*melanoma_mal(0)= 
+			uvrq_5c menop_age_3c menop_age_3c*uvrq_5c
+			educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c 
+			/ entry = entry_age RL; 
+	ods output ParameterEstimates=uvrq5_menopage3_pint_mal;
+run;
 title;
