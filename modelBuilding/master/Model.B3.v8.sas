@@ -10,7 +10,7 @@
 #
 # Created: July 02 2015 WTL
 # Updated: v20150813THU WTL
-# Updatedv8: v20160518WED WTL
+# Updatedv8: v20160531TUE WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 ******************************************************************************/
@@ -92,6 +92,7 @@ ods html;
 data use;
 	set conv.melan;
 run;
+title 'HRT Baseline PHREG Model B3v8';
 
 ******************************************************************************;
 ********************************************************************************;
@@ -903,7 +904,7 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\baseline\master\modelB\base_mo
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Baseline:';
 	title2 'Model B3v8';
-	title3 '20160518WED WTL';
+	title3 '20160531TUE WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
@@ -983,6 +984,7 @@ ods html;
 data use_r;
 	set conv.melan_r;
 run;
+title 'HRT Riskfactor PHREG Model B3v8';
 
 ******************************************************************************;
 ********************************************************************************;
@@ -2420,7 +2422,7 @@ ods html file='C:\REB\AARP_HRTandMelanoma\Results\rfq\master\modelB\risk_model_B
 proc print data=A_All_fmenstr_me_ins;
 	title1 underlin=1 'AARP Riskfactor:';
 	title2 'Model B3v8';
-	title3 '20160518WED WTL';
+	title3 '20160531TUE WTL';
 	title4 'Age at Menarche';
 run;
 proc print data=A_All_fmenstr_me_mal;
