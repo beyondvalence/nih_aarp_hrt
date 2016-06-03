@@ -25,8 +25,17 @@ proc format;
 	value birthcohortfmt 1='1925-1928' 2='1929-1932' 3='1933-1934' 4='1935-1938' 5='1939-1945';
 	value attainedagefmt 9='Missing' 0='>=50 to <55' 1='>=55 to <60' 2='>=60 to <65' 3='>=65 to <70' 4='70+';
 	value racefmt 9='Missing' 0='Non-Hispanic white' 1='Non-Hispanic black' 2='Hispanic, Asian, PI, AIAN';
-	value educfmt 9='Missing' 0='Less than high school' 1='High school graduate' 2='Some college' 3='College or graduate school';
-	value educmfmt 9='Missing' 1='Less than high school' 2='High school graduate' 3='Post high school' 4='Some college' 5='College or post graduate' 9='Unknown';
+	value educfmt 9='Missing' 
+					0='1. Less than high school' 
+					1='2. High school graduate' 
+					2='3. Some college' 
+					3='4. College or graduate school';
+	value educmfmt 9='Missing' 
+					1='1. Less than high school' 
+					2='2. High school graduate' 
+					3='3. Post high school' 
+					4='4. Some college' 
+					5='5. College or post graduate';
 	value bmifmt 9='Missing' 1='>18.5 to < 25' 2='25 to < 30' 3='30 to < 60';
 	value bminewfmt 9='Missing or extreme' 1='18.5 to <25' 2='25 to <30' 3='30 to <60';
 	value physiccfmt 9='Missing' 0='Never/rarely' 1='1-3 per month' 2='1-2 per week' 3='3-4 per week' 4='5+ per week';
