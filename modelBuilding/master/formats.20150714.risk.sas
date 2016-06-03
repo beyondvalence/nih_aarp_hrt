@@ -65,10 +65,10 @@ proc format;
 						4='Separated' 
 						5='Never married' 
 						9='Unknown';
-	value marriagecfmt 1='Married' 
-						2='Widowed' 
-						3='Divorced/separated' 
-						5='Never married' 
+	value marriagecfmt 1='1. Married' 
+						2='2. Widowed' 
+						3='3. Divorced/separated' 
+						5='4. Never married' 
 						9='Missing';
 
 	** fmenstr, menopause status recoded 20150721WTL;
