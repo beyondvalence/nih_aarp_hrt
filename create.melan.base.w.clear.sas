@@ -265,6 +265,16 @@ data conv.melan;
 	else if menop_age in (3,4)						then menop_age_3c=2; /* 45-54 */
 	else if menop_age=5								then menop_age_3c=3; /* 55+ */
 
+	** menopausal age - natural, ref=50-54;
+	** model A 20160603FRI WTL;
+	menop_age5_nat_c=.;
+	if		menostat_c=1							then menop_age5_nat_c=menop_age; 
+
+	** menopausal age - surgical, ref=50-54;
+	** model A 20160603FRI WTL;
+	menop_age5_sur_c=.;
+	if		menostat_c=2							then menop_age5_sur_c=menop_age; 
+
 	** live child parity cat;
 	parity_c=.;
 	if 		livechild=0								then parity_c=0; /* no live children (nulliparous) */
@@ -399,8 +409,14 @@ data conv.melan;
 	if	menostat_me in (9,-9) 						then menostat_me=.;
 	ovarystat_me=ovarystat_c;
 	if ovarystat_me in (9,-9)						then ovarystat_me=.;
+
 	menop_age_me = menop_age_c;
 	if menop_age_me in (9,-9)						then menop_age_me=.;
+	menop_age5_nat_me=menop_age5_nat_c; /* 20160603FRI WTL */
+	if menop_age5_nat_me in (9,-9)					then menop_age5_nat_me=.;
+	menop_age5_sur_me=menop_age5_sur_c; /* 20160603FRI WTL */
+	if menop_age5_sur_me in (9,-9)					then menop_age5_sur_me=.;
+
 	parity_me=parity_c;
 	if	parity_me in (9,-9)							then parity_me=.;
 	flb_age_me = flb_age_c;
@@ -463,6 +479,8 @@ proc datasets library=conv;
 			menostat_c = "menopause status"
 			menop_age_c = "Menopausal age"
 			menop_age_me = "Menopausal age, ME"
+			menop_age5_nat_c = "Menopausal age, natural"
+			menop_age5_sur_c = "Menopausal age, surgical"
 			physic_c = "level of physical activity"	
 			hormstat_c = "hormone current/former use"
 			parity_c = "total number of live births"
@@ -503,6 +521,7 @@ proc datasets library=conv;
 			menostat_me menostatfmt.
 			ovarystat_me ovarystatfmt.
 			menop_age_me menopiagefmt.
+			menop_age5_nat_me menop_age5_sur_me agemenofmt.
 			parity_me parityfmt. 
 			flb_age_me flbagefmt.  
 			oralbc_yn_me oralbcynfmt.
@@ -520,7 +539,8 @@ proc datasets library=conv;
 			perstop_menop perstopmenopfmt. perstop_surg perstopsurgfmt. hyststat hyststatfmt.
 			menostat_c menostatfmt.
 			ovarystat_c ovarystat ovarystatfmt.
-			menop_age_c menopiagefmt. menop_age agemenofmt. menop_age_3c menopage3fmt.
+			menop_age_c menopiagefmt. menop_age_3c menopage3fmt.
+			menop_age menop_age5_nat_c menop_age5_sur_c agemenofmt.
 			parity_c parityfmt.
 			livechild livechildfmt.
 			flb_age_c flbagefmt. 
