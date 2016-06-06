@@ -265,15 +265,17 @@ data conv.melan;
 	else if menop_age in (3,4)						then menop_age_3c=2; /* 45-54 */
 	else if menop_age=5								then menop_age_3c=3; /* 55+ */
 
-	** menopausal age - natural, ref=50-54;
-	** model A 20160603FRI WTL;
-	menop_age5_nat_c=.;
-	if		menostat_c=1							then menop_age5_nat_c=menop_age; 
+	** menopausal age - natural, ref=50+;
+	** model A 20160606MON WTL;
+	menop_age4_nat_c=.;
+	if		menostat_c=1							then menop_age4_nat_c=menop_age; 
+	if		menop_age4_nat_c in (4,5)				then menop_age4_nat_c=4; /* 50+ */
 
-	** menopausal age - surgical, ref=50-54;
-	** model A 20160603FRI WTL;
-	menop_age5_sur_c=.;
-	if		menostat_c=2							then menop_age5_sur_c=menop_age; 
+	** menopausal age - surgical, ref=50+;
+	** model A 20160606MON WTL;
+	menop_age4_sur_c=.;
+	if		menostat_c=2							then menop_age4_sur_c=menop_age; 
+	if		menop_age4_sur_c in (4,5)				then menop_age4_sur_c=4; /* 50+ */
 
 	** live child parity cat;
 	parity_c=.;
@@ -405,10 +407,10 @@ data conv.melan;
 
 	menop_age_me = menop_age_c;
 	if menop_age_me in (9,-9)						then menop_age_me=.;
-	menop_age5_nat_me=menop_age5_nat_c; /* 20160603FRI WTL */
-	if menop_age5_nat_me in (9,-9)					then menop_age5_nat_me=.;
-	menop_age5_sur_me=menop_age5_sur_c; /* 20160603FRI WTL */
-	if menop_age5_sur_me in (9,-9)					then menop_age5_sur_me=.;
+	menop_age4_nat_me=menop_age4_nat_c; /* 20160606MON WTL */
+	if menop_age4_nat_me in (9,-9)					then menop_age4_nat_me=.;
+	menop_age4_sur_me=menop_age4_sur_c; /* 20160606MON WTL */
+	if menop_age4_sur_me in (9,-9)					then menop_age4_sur_me=.;
 
 	parity_me=parity_c;
 	if	parity_me in (9,-9)							then parity_me=.;
@@ -472,8 +474,8 @@ proc datasets library=conv;
 			menostat_c = "menopause status"
 			menop_age_c = "Menopausal age"
 			menop_age_me = "Menopausal age, ME"
-			menop_age5_nat_me = "Menopausal age, natural"
-			menop_age5_sur_me = "Menopausal age, surgical"
+			menop_age4_nat_me = "Menopausal age, natural"
+			menop_age4_sur_me = "Menopausal age, surgical"
 			physic_c = "level of physical activity"	
 			hormstat_c = "hormone current/former use"
 			parity_c = "total number of live births"
@@ -514,7 +516,7 @@ proc datasets library=conv;
 			menostat_me menostatfmt.
 			ovarystat_me ovarystatfmt.
 			menop_age_me menopiagefmt.
-			menop_age5_nat_me menop_age5_sur_me agemenofmt.
+			menop_age4_nat_me menop_age4_sur_me menopage4fmt.
 			parity_me parityfmt. 
 			flb_age_me flbagefmt.  
 			oralbc_yn_me oralbcynfmt.
@@ -533,7 +535,8 @@ proc datasets library=conv;
 			menostat_c menostatfmt.
 			ovarystat_c ovarystat ovarystatfmt.
 			menop_age_c menopiagefmt. menop_age_3c menopage3fmt.
-			menop_age menop_age5_nat_c menop_age5_sur_c agemenofmt.
+			menop_age agemenofmt.
+			menop_age4_nat_c menop_age4_sur_c menopage4fmt.
 			parity_c parityfmt.
 			livechild livechildfmt.
 			flb_age_c flbagefmt. 
