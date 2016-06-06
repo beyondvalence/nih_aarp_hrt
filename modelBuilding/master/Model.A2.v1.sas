@@ -39,8 +39,8 @@ libname results 'C:\REB\AARP_HRTandMelanoma\Results';
 ****11 horm_yrs_c					horm_yrs_me (ref='Never used')
 ****12 horm_yrs_nat_c				horm_yrs_nat_me (ref='Never')
 ****13 horm_yrs_surg_c				horm_yrs_surg_me (ref='Never') 
-****07a menop_age5_nat_me			menop_age5_nat_me (ref='4. 50-54')
-****07b menop_age5_sur_me			menop_age5_sur_me (ref='4. 50-54')
+****07a menop_age4_nat_me			menop_age4_nat_me (ref='4. 50+')
+****07b menop_age4_sur_me			menop_age4_sur_me (ref='4. 50+')
 
 
 ****** ME riskfactor:				ME coded variable (ref= value) 
@@ -624,26 +624,26 @@ run;
 ******************************************************************************;
 ********************************************************************************;
 ** B07a_ins
-** ME: menop_age5_nat_me (ref='4. 50-54')
+** ME: menop_age4_nat_me (ref='4. 50+')
 ** melanoma: _ins, 
 ** variables: ME;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_nat_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
-	model exit_age*melanoma_ins(0)=menop_age5_nat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
-	ods output ParameterEstimates=A_menopage5_nat NObs = obs;
+	class  menop_age4_nat_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	model exit_age*melanoma_ins(0)=menop_age4_nat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
+	ods output ParameterEstimates=A_menopage4_nat NObs = obs;
 run;
 
-data A_menopage5_nat; 
-	set A_menopage5_nat ; 
-	where Parameter='menop_age5_nat_me';
+data A_menopage4_nat; 
+	set A_menopage4_nat ; 
+	where Parameter='menop_age4_nat_me';
 	Sortvar=1; 
 run;
 
 data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
-	set A_menopage5_nat obs;
+	set A_menopage4_nat obs;
 run;
 data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
 	set A_TOT; 
@@ -653,33 +653,33 @@ data A_TOT ;
 	type='_ins'; model='Total'; 
 run;
 
-data A_All_menop_age5_nat_me_ins ; 
+data A_All_menop_age4_nat_me_ins ; 
 	set A_TOT; 
 run;
 
 ******************************************************************************;
 ********************************************************************************;
 ** B07a_nat
-** ME: menop_age5_nat_me (ref='4. 50-54')  
+** ME: menop_age4_nat_me (ref='4. 50+')  
 ** melanoma: _mal, 
 ** variables: ME;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_nat_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
-	model exit_age*melanoma_mal(0)=menop_age5_nat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
-	ods output ParameterEstimates=A_menopage5_nat NObs = obs;
+	class  menop_age4_nat_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	model exit_age*melanoma_mal(0)=menop_age4_nat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
+	ods output ParameterEstimates=A_menopage4_nat NObs = obs;
 run;
 
-data A_menopage5_nat; 
-	set A_menopage5_nat ; 
-	where Parameter='menop_age5_nat_me';
+data A_menopage4_nat; 
+	set A_menopage4_nat ; 
+	where Parameter='menop_age4_nat_me';
 	Sortvar=1; 
 run;
 
 data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
-	set A_menopage5_nat obs;
+	set A_menopage4_nat obs;
 run;
 data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
 	set A_TOT; 
@@ -689,33 +689,33 @@ data A_TOT ;
 	type='_mal'; model='Total'; 
 run;
 
-data A_All_menop_age5_nat_me_mal ; 
+data A_All_menop_age4_nat_me_mal ; 
 	set A_TOT; 
 run;
 
 ******************************************************************************;
 ********************************************************************************;
 ** B07b_ins
-** ME: menop_age5_sur_me (ref='4. 50-54')
+** ME: menop_age4_sur_me (ref='4. 50+')
 ** melanoma: _ins, 
 ** variables: ME;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_sur_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
-	model exit_age*melanoma_ins(0)=menop_age5_sur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
-	ods output ParameterEstimates=A_menopage5_sur NObs = obs;
+	class  menop_age4_sur_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	model exit_age*melanoma_ins(0)=menop_age4_sur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
+	ods output ParameterEstimates=A_menopage4_sur NObs = obs;
 run;
 
-data A_menopage5_sur; 
-	set A_menopage5_sur ; 
-	where Parameter='menop_age5_sur_me';
+data A_menopage4_sur; 
+	set A_menopage4_sur ; 
+	where Parameter='menop_age4_sur_me';
 	Sortvar=1; 
 run;
 
 data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
-	set A_menopage5_sur obs;
+	set A_menopage4_sur obs;
 run;
 data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
 	set A_TOT; 
@@ -725,33 +725,33 @@ data A_TOT ;
 	type='_ins'; model='Total'; 
 run;
 
-data A_All_menop_age5_sur_me_ins ; 
+data A_All_menop_age4_sur_me_ins ; 
 	set A_TOT; 
 run;
 
 ******************************************************************************;
 ********************************************************************************;
 ** B07b_sur
-** ME: menop_age5_sur_me (ref='4. 50-54')  
+** ME: menop_age4_sur_me (ref='4. 50+')  
 ** melanoma: _mal, 
 ** variables: ME;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_sur_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
-	model exit_age*melanoma_mal(0)=menop_age5_sur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
-	ods output ParameterEstimates=A_menopage5_sur NObs = obs;
+	class  menop_age4_sur_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	model exit_age*melanoma_mal(0)=menop_age4_sur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
+	ods output ParameterEstimates=A_menopage4_sur NObs = obs;
 run;
 
-data A_menopage5_sur; 
-	set A_menopage5_sur ; 
-	where Parameter='menop_age5_sur_me';
+data A_menopage4_sur; 
+	set A_menopage4_sur ; 
+	where Parameter='menop_age4_sur_me';
 	Sortvar=1; 
 run;
 
 data A_TOT (rename=(HazardRatio=A_HR HRLowerCL=A_LL HRUpperCL=A_UL)); 
-	set A_menopage5_sur obs;
+	set A_menopage4_sur obs;
 run;
 data A_TOT (keep=Parameter ClassVal0 Sortvar A_HR A_LL A_UL NObsUsed NObsRead); 
 	set A_TOT; 
@@ -761,7 +761,7 @@ data A_TOT ;
 	type='_mal'; model='Total'; 
 run;
 
-data A_All_menop_age5_sur_me_mal ; 
+data A_All_menop_age4_sur_me_mal ; 
 	set A_TOT; 
 run;
 
@@ -1074,16 +1074,16 @@ run;
 proc print data=A_All_menop_age_me_mal;
 	title;
 run;
-proc print data=A_All_menop_age5_nat_me_ins;
+proc print data=A_All_menop_age4_nat_me_ins;
 	title1 'Age at Menopause for natural, raw 20160603FRI';
 run;
-proc print data=A_All_menop_age5_nat_me_mal;
+proc print data=A_All_menop_age4_nat_me_mal;
 	title1;
 run;
-proc print data=A_All_menop_age5_sur_me_ins;
+proc print data=A_All_menop_age4_sur_me_ins;
 	title1 'Age at Menopause for surgical, raw 20160603FRI';
 run;
-proc print data=A_All_menop_age5_sur_me_mal;
+proc print data=A_All_menop_age4_sur_me_mal;
 	title1;
 run;
 proc print data=A_All_parity_me_ins;
