@@ -286,15 +286,15 @@ data conv.melan;
 	if parity_ever in (1,2)							then parity_ever=1;
 
 	** age at first live birth cat;
-	flb_age_c=9;
+	flb_age_c=-9;
 	if 		age_flb in (1,2)						then flb_age_c=1; /* < 20 years old */
 	else if age_flb in (3,4)						then flb_age_c=2; /* 20s */
 	else if age_flb in (5,6,7)						then flb_age_c=3; /* 30s */
-	else if age_flb in (0,8,9)						then flb_age_c=4; /* missing */
+	else if age_flb in (0,8,9)						then flb_age_c=9; /* missing */
 
 		** recode parity and flb_age_c to consolidate contradicting missings in each;
 		*** coerced flb_age to be missing due to missing parity;
-	if 		parity_c in (0,-9)						then flb_age_c=4;
+	if 		parity_c in (0,-9)						then flb_age_c=9;
 
 	** oral contraceptive yes/no;
 	oralbc_yn_c=.;

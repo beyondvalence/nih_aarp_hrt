@@ -148,7 +148,7 @@ proc format;
 					1='1. < 20 years old' 
 					2='2. 20-29' 
 					3='3. 30+' 
-					4='4. Nulliparous/missing parity';
+					9='4. Nulliparous/missing parity';
 	value ageflbfmt -9='Unknown' 
 					0='Never gave birth' 
 					1='<16' 
