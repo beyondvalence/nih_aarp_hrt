@@ -630,8 +630,8 @@ run;
 title 'Model B3v8, menopage5_nat';
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_nat_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never') menostat_c (ref='Natural menopause');
-	model exit_age*melanoma_ins(0)=menop_age5_nat_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menostat_c / entry = entry_age RL; 
+	class  menop_age5_nat_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never');
+	model exit_age*melanoma_ins(0)=menop_age5_nat_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
 	ods output ParameterEstimates=B_menopage5_nat NObs = obs;
 run;
 
@@ -666,8 +666,8 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_nat_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never') menostat_c (ref='Natural menopause');
-	model exit_age*melanoma_mal(0)=menop_age5_nat_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menostat_c / entry = entry_age RL; 
+	class  menop_age5_nat_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never');
+	model exit_age*melanoma_mal(0)=menop_age5_nat_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
 	ods output ParameterEstimates=B_menopage5_nat NObs = obs;
 run;
 
@@ -703,8 +703,8 @@ run;
 title 'Model B3v8, menopage5_sur';
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_sur_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never') menostat_c (ref='Natural menopause');
-	model exit_age*melanoma_ins(0)=menop_age5_sur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menostat_c / entry = entry_age RL; 
+	class  menop_age5_sur_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never');
+	model exit_age*melanoma_ins(0)=menop_age5_sur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
 	ods output ParameterEstimates=B_menopage5_sur NObs = obs;
 run;
 
@@ -739,8 +739,8 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age5_sur_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never') menostat_c (ref='Natural menopause');
-	model exit_age*melanoma_mal(0)=menop_age5_sur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c menostat_c / entry = entry_age RL; 
+	class  menop_age5_sur_me (ref='4. 50-54') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked') rel_1d_cancer_c (ref='No') marriage_c (ref='1. Married') colo_sig_any (ref='No') mht_ever_c (ref='Never');
+	model exit_age*melanoma_mal(0)=menop_age5_sur_me uvrq_c educ_c bmi_c smoke_former_c rel_1d_cancer_c marriage_c colo_sig_any mht_ever_c / entry = entry_age RL; 
 	ods output ParameterEstimates=B_menopage5_sur NObs = obs;
 run;
 
