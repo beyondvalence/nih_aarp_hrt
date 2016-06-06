@@ -139,11 +139,11 @@ proc format;
 					2='50-54' 
 					3='55+' 
 					4='Periods did not stop';
-	value surgagefmt -9='Missing' 
-					1='<45' 
-					2='45-49' 
-					3='50+' 
-					4='Periods did not stop';
+	value menopage4fmt 9='Missing' 
+					1='1. <40' 
+					2='2. 40-44' 
+					3='3. 45-49'
+					4='4. 50+' ;
 	value flbagefmt -9='Missing' 
 					1='1. < 20 years old' 
 					2='2. 20-29' 
