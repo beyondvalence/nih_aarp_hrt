@@ -7,13 +7,13 @@
 # for v6, baseline to FUP
 # 
 # Created: April 1 2015
-# Updated: v20160516 WTL
+# Updated: v20160606MON WTL
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
 #
 *******************************************************************/
 
-%include 'C:\REB\AARP_HRTandMelanoma\Analysis\format.base.w.sas';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.base.sas';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 
 data use;
@@ -63,11 +63,12 @@ ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\Table1.v21.xls' sty
 proc tabulate data=use missing;
 	title1 'AARP-Baseline, Table 1';
 	title2 'melanoma in situ and malignant';
-	title3 '20160516TUE WTL v21';
+	title3 '20160606MON WTL v21';
 	class melanoma_c
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
-		menop_age_c parity_c flb_age_c 
+		menop_age_c menop_age5_nat_c menop_age5_sur_c
+		parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
 		mht_ever_c hormstat_c
 		horm_yrs_c 
@@ -78,7 +79,8 @@ proc tabulate data=use missing;
 	table
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
-		menop_age_c parity_c flb_age_c 
+		menop_age_c menop_age5_nat_c menop_age5_sur_c
+		parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c 
 		mht_ever_c hormstat_c
 		horm_yrs_c 
