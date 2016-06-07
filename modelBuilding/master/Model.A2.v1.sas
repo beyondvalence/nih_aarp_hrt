@@ -198,8 +198,15 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  hormstat_me (ref='Never') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_ins(0)=hormstat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any / entry = entry_age RL; 
+	class  hormstat_me (ref='Never') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No')
+			physic_c (ref='Never/rarely');
+	model exit_age*melanoma_ins(0)=hormstat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_horm NObs = obs;
 run;
 
@@ -234,8 +241,15 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  hormstat_me (ref='Never') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No');
-	model exit_age*melanoma_mal(0)=hormstat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any / entry = entry_age RL; 
+	class  hormstat_me (ref='Never') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No')
+			physic_c (ref='Never/rarely');
+	model exit_age*melanoma_mal(0)=hormstat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_horm NObs = obs;
 run;
 
@@ -270,7 +284,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  parity_me (ref='1-2 live children') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  parity_me (ref='1-2 live children') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=parity_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_parity NObs = obs;
 run;
@@ -306,7 +327,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  parity_me (ref='1-2 live children') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  parity_me (ref='1-2 live children') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=parity_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_parity NObs = obs;
 run;
@@ -342,7 +370,15 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  fmenstr_me (ref='4. 15+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menop_age_c (ref='1. <45');
+	class  fmenstr_me (ref='4. 15+') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely') 
+			menop_age_c (ref='1. <45');
 	model exit_age*melanoma_ins(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c menop_age_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_fmenstr NObs = obs;
 run;
@@ -378,7 +414,15 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  fmenstr_me (ref='4. 15+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menop_age_c (ref='1. <45');
+	class  fmenstr_me (ref='4. 15+') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely') 
+			menop_age_c (ref='1. <45');
 	model exit_age*melanoma_mal(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c menop_age_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_fmenstr NObs = obs;
 run;
@@ -414,7 +458,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  oralbc_dur_me (ref='1. Never/<1yr') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  oralbc_dur_me (ref='1. Never/<1yr') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=oralbc_dur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_oralbc NObs = obs;
 run;
@@ -450,7 +501,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  oralbc_dur_me (ref='1. Never/<1yr') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  oralbc_dur_me (ref='1. Never/<1yr') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=oralbc_dur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_oralbc NObs = obs;
 run;
@@ -487,7 +545,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menostat_me (ref='Natural menopause') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  menostat_me (ref='Natural menopause') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=menostat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL;
 	ods output ParameterEstimates=A_menostat NObs = obs;
 run;
@@ -523,7 +588,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menostat_me (ref='Natural menopause') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  menostat_me (ref='Natural menopause') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=menostat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_menostat NObs = obs;
 run;
@@ -559,7 +631,15 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age_me (ref='1. <45') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menostat_c (ref='Natural menopause');
+	class  menop_age_me (ref='1. <45') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely') 
+			menostat_c (ref='Natural menopause');
 	model exit_age*melanoma_ins(0)=menop_age_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c menostat_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_menopage NObs = obs;
 run;
@@ -595,7 +675,15 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age_me (ref='1. <45') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menostat_c (ref='Natural menopause');
+	class  menop_age_me (ref='1. <45') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely') 
+			menostat_c (ref='Natural menopause');
 	model exit_age*melanoma_mal(0)=menop_age_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c menostat_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_menopage NObs = obs;
 run;
@@ -631,7 +719,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age4_nat_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  menop_age4_nat_me (ref='4. 50+') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=menop_age4_nat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_menopage4_nat NObs = obs;
 run;
@@ -667,7 +762,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age4_nat_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  menop_age4_nat_me (ref='4. 50+') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=menop_age4_nat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_menopage4_nat NObs = obs;
 run;
@@ -703,7 +805,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age4_sur_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  menop_age4_sur_me (ref='4. 50+') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=menop_age4_sur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_menopage4_sur NObs = obs;
 run;
@@ -739,7 +848,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age4_sur_me (ref='4. 50+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  menop_age4_sur_me (ref='4. 50+') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=menop_age4_sur_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_menopage4_sur NObs = obs;
 run;
@@ -776,7 +892,14 @@ run;
 
 ** overall (surgural + surgical menopause);
 proc phreg data = use multipass;
-	class  oralbc_yn_me (ref='Never/<1yr') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  oralbc_yn_me (ref='Never/<1yr') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=oralbc_yn_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_oralbcyn NObs = obs;
 run;
@@ -812,7 +935,14 @@ run;
 
 ** overall (surgural + surgical menopause);
 proc phreg data = use multipass;
-	class  oralbc_yn_me (ref='Never/<1yr') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  oralbc_yn_me (ref='Never/<1yr') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=oralbc_yn_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_oralbcyn NObs = obs;
 run;
@@ -847,7 +977,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  ovarystat_me (ref='Both removed') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  ovarystat_me (ref='Both removed') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=ovarystat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_ovaryst NObs = obs;
 run;
@@ -883,7 +1020,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  ovarystat_me (ref='Both removed') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  ovarystat_me (ref='Both removed') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=ovarystat_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_ovaryst NObs = obs;
 run;
@@ -918,7 +1062,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  mht_ever_me (ref='Never') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  mht_ever_me (ref='Never') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0)=mht_ever_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_mht NObs = obs;
 run;
@@ -950,7 +1101,14 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  mht_ever_me (ref='Never') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class  mht_ever_me (ref='Never') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0)=mht_ever_me uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_mht NObs = obs;
 run;
@@ -981,7 +1139,14 @@ run;
 ********************************************************************************;
 
 proc phreg data = use multipass;
-	class horm_yrs_me (ref='1. Never used') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class horm_yrs_me (ref='1. Never used') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_ins(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL;
 	ods output ParameterEstimates=A_horm_yrs3 NObs=obs;
 run;
@@ -1016,7 +1181,14 @@ run;
 ********************************************************************************;
 
 proc phreg data = use multipass;
-	class horm_yrs_me (ref='1. Never used') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely');
+	class horm_yrs_me (ref='1. Never used') 
+			/*uvrq_c (ref='176.095 to 186.918')*/ 
+			educ_c (ref='1. Less than high school') 
+			bmi_c (ref='>18.5 to < 25') 
+			smoke_former_c (ref='Never smoked')  
+			marriage_c (ref='1. Married') 
+			colo_sig_any (ref='No') 
+			physic_c (ref='Never/rarely');
 	model exit_age*melanoma_mal(0) = horm_yrs_me fmenstr uvrq_c educ_c bmi_c smoke_former_c marriage_c colo_sig_any physic_c / entry = entry_age RL;
 	ods output ParameterEstimates=A_horm_yrs4 NObs=obs;
 run;
