@@ -119,17 +119,6 @@ proc freq data=conv.melan_r;
 			excl_2_premeno*melanoma_c /missing;
 run;
 
-	** need to change the exposure percentiles after exclusions;
-	** uvr exposure;
-	** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-	** 185.266 186.255 186.255 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
-	** birth cohort;
-	** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-	** -11897  -11330  -11040  -10760  -10194  -9583   -8920   -8203   -7834   -7431   -6408;
-	** year of birth;
-	** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
-	** 1927	   1928    1929    1930    1932    1933    1935    1937    1938    1939    1942;
-
 /***************************************************************************************/ 
 /*   Exclude if self-reported periods stopped due to radchem                           */ 
 **	 exclude: excl_3_radchem;
@@ -207,6 +196,11 @@ proc freq data=conv.melan_r;
 	table melanoma_c*sex;
 run;
 
+	** need to change the exposure percentiles after exclusions;
+	** uvr exposure;
+	** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
+	** 185.266 186.255 186.255 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
+
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
 ** for both baseline and riskfactor questionnaire variables;
@@ -219,41 +213,41 @@ data conv.melan_r;
 /* for baseline */
 	** education cat;
 	educ_c=.;
-	if 		educm=1 		then educ_c=0; /* less highschool */
-	else if educm=2			then educ_c=1; /* highschool grad */
-	else if educm in (3,4)	then educ_c=2; /* some college */
-	else if educm=5			then educ_c=3; /* college and grad */
-	else if educm=9			then educ_c=-9; /* missing */
+	if 		educm=1 								then educ_c=0; /* less highschool */
+	else if educm=2									then educ_c=1; /* highschool grad */
+	else if educm in (3,4)							then educ_c=2; /* some college */
+	else if educm=5									then educ_c=3; /* college and grad */
+	else if educm=9									then educ_c=-9; /* missing */
 
 	** bmi three categories;
 	bmi_c=-9;
-	if      18.5<bmi_cur<25 				then bmi_c=1; /* 18.5 up to 25 */
-   	else if 25<=bmi_cur<30 					then bmi_c=2; /* 25 up to 30 */
-   	else if 30<=bmi_cur<60 					then bmi_c=3; /* 30 up to 60 */
-	else 										 bmi_c=-9; /* missing or extreme */
+	if      18.5<bmi_cur<25 						then bmi_c=1; /* 18.5 up to 25 */
+   	else if 25<=bmi_cur<30 							then bmi_c=2; /* 25 up to 30 */
+   	else if 30<=bmi_cur<60 							then bmi_c=3; /* 30 up to 60 */
+	else 	bmi_c=-9; /* missing or extreme */
 
 	** physical exercise cat;
 	physic_c=.;
-	if      physic in (0,1)	then physic_c=0; /* rarely */
-	else if physic=2 	 	then physic_c=1; /* 1-3 per month */
-	else if physic=3 	 	then physic_c=2; /* 1-2 per week */
-	else if physic=4     	then physic_c=3; /* 3-4 per week */
-	else if physic=5     	then physic_c=4; /* 5+ per week */
-	else if physic=9	 	then physic_c=-9; /* missing */
+	if      physic in (0,1)							then physic_c=0; /* rarely */
+	else if physic=2 	 							then physic_c=1; /* 1-3 per month */
+	else if physic=3 	 							then physic_c=2; /* 1-2 per week */
+	else if physic=4     							then physic_c=3; /* 3-4 per week */
+	else if physic=5     							then physic_c=4; /* 5+ per week */
+	else if physic=9	 							then physic_c=-9; /* missing */
 
 	** age at menarche cat;
 	fmenstr_c=.;
-	if      fmenstr=1	then fmenstr_c=0; /* <=10 years old */
-	else if fmenstr=2	then fmenstr_c=1; /* 11-12 years old */
-	else if fmenstr=3	then fmenstr_c=2; /* 13-14 years old */
-	else if fmenstr=4	then fmenstr_c=3; /* 15+ years old */
-	else if fmenstr>4	then fmenstr_c=-9; /* missing */
+	if      fmenstr=1								then fmenstr_c=0; /* <=10 years old */
+	else if fmenstr=2								then fmenstr_c=1; /* 11-12 years old */
+	else if fmenstr=3								then fmenstr_c=2; /* 13-14 years old */
+	else if fmenstr=4								then fmenstr_c=3; /* 15+ years old */
+	else if fmenstr>4								then fmenstr_c=-9; /* missing */
 
 	** menopause reason, 20150901 edit;
 	** 1 natural, 2 surgical;
 	menostat_c=.;
-	if		perstop_surg=1 | hyststat=1 | ovarystat=1		then menostat_c=2; /* surgical */
-	else if	perstop_menop=1									then menostat_c=1; /* natural */
+	if		perstop_surg=1 | hyststat=1 | ovarystat=1	then menostat_c=2; /* surgical */
+	else if	perstop_menop=1							then menostat_c=1; /* natural */
 	else menostat_c =-9;
 
 	** ovary status among surgical menopause;
@@ -269,61 +263,77 @@ data conv.melan_r;
 	else if menop_age=3								then menop_age_c=2; /* 45-49 */
 	else if menop_age in (4,5)						then menop_age_c=3; /* 50+ */
 
+	** menopausal age - natural, ref=50+;
+	** model [AB] 20160606MON WTL;
+	menop_age4_nat_c=.;
+	if		menostat_c=1							then menop_age4_nat_c=menop_age; 
+	if		menop_age4_nat_c in (4,5)				then menop_age4_nat_c=4; /* 50+ */
+
+	** menopausal age - surgical, ref=50+;
+	** model [AB] 20160606MON WTL;
+	menop_age4_sur_c=.;
+	if		menostat_c=2							then menop_age4_sur_c=menop_age; 
+	if		menop_age4_sur_c in (4,5)				then menop_age4_sur_c=4; /* 50+ */
+
 	** live child parity cat;
 	parity_c=.;
-	if 		livechild=0						then parity_c=0; /* no live children (nulliparous) */
-	else if livechild in (1,2) 				then parity_c=1; /* 1 to 2 live children */
-	else if livechild in (3,4,5) 			then parity_c=2; /* >=3 live children */
-	else if livechild in (8,9)				then parity_c=-9; /* missing */
+	if 		livechild=0								then parity_c=0; /* no live children (nulliparous) */
+	else if livechild in (1,2) 						then parity_c=1; /* 1 to 2 live children */
+	else if livechild in (3,4,5) 					then parity_c=2; /* >=3 live children */
+	else if livechild in (8,9)						then parity_c=-9; /* missing */
 
 	parity_ever=parity_c;
-	if parity_ever in (1,2)					then parity_ever=1;
+	if parity_ever in (1,2)							then parity_ever=1;
 
 	** age at first live birth cat;
 	flb_age_c=9;
-	if 		age_flb in (1,2)	then flb_age_c=1; /* < 20 years old */
-	else if age_flb in (3,4)	then flb_age_c=2; /* 20s */
-	else if age_flb in (5,6,7)	then flb_age_c=3; /* 30s */
-	else if age_flb in (0,8,9)	then flb_age_c=-9; /* missing */
+	if 		age_flb in (1,2)						then flb_age_c=1; /* < 20 years old */
+	else if age_flb in (3,4)						then flb_age_c=2; /* 20s */
+	else if age_flb in (5,6,7)						then flb_age_c=3; /* 30s */
+	else if age_flb in (0,8,9)						then flb_age_c=-9; /* missing */
+
+		** recode parity and flb_age_c to consolidate contradicting missings in each;
+		*** coerced flb_age to be missing due to missing parity;
+	if 		parity_c in (0,-9)						then flb_age_c=9;
 
 	** oral contraceptive yes/no;
 	oralbc_yn_c=.;
-	if      oralbc_yrs=0 	then oralbc_yn_c=0; /* no oc */
-	else if 0<oralbc_yrs<8	then oralbc_yn_c=1; /* yes oc */
-	else if oralbc_yrs>7	then oralbc_yn_c=-9; /* missing */
+	if      oralbc_yrs=0 							then oralbc_yn_c=0; /* no oc */
+	else if 0<oralbc_yrs<8							then oralbc_yn_c=1; /* yes oc */
+	else if oralbc_yrs>7							then oralbc_yn_c=-9; /* missing */
 
 	** oral contraceptive duration cat;
 	oralbc_dur_c=.;
-	if      oralbc_yrs=0		then oralbc_dur_c=0; /* none */
-	else if oralbc_yrs=1		then oralbc_dur_c=1; /* 1-4 years */ 
-	else if oralbc_yrs=2		then oralbc_dur_c=2; /* 5-9 years */
-	else if oralbc_yrs=3 		then oralbc_dur_c=3; /* 10+ years */
-	else if oralbc_yrs in (8,9)	then oralbc_dur_c=-9; /* missing */
+	if      oralbc_yrs=0							then oralbc_dur_c=0; /* none */
+	else if oralbc_yrs=1							then oralbc_dur_c=1; /* 1-4 years */ 
+	else if oralbc_yrs=2							then oralbc_dur_c=2; /* 5-9 years */
+	else if oralbc_yrs=3 							then oralbc_dur_c=3; /* 10+ years */
+	else if oralbc_yrs in (8,9)						then oralbc_dur_c=-9; /* missing */
 
 	** MHT ever variable;
 	mht_ever_c=hormstat;
-	if		mht_ever_c=2						then mht_ever_c=1;
-	else if mht_ever_c=9						then mht_ever_c=-9;
+	if		mht_ever_c=2							then mht_ever_c=1;
+	else if mht_ever_c=9							then mht_ever_c=-9;
 
 	** hormone former or current user;
 	hormstat_c=.;
-	if		hormstat=0						then hormstat_c=0;   /* never horm */
-	else if hormstat=1						then hormstat_c=1;   /* current horm */
-	else if hormstat=2						then hormstat_c=2;   /* former horm */
-	else if hormstat=9						then hormstat_c=-9;	/* missing horm */
+	if		hormstat=0								then hormstat_c=0;   /* never horm */
+	else if hormstat=1								then hormstat_c=1;   /* current horm */
+	else if hormstat=2								then hormstat_c=2;   /* former horm */
+	else if hormstat=9								then hormstat_c=-9;	/* missing horm */
 	else hormstat_c=.;
 
 	** hormone duration;
 	horm_yrs_c = horm_yrs;
-	if		horm_yrs in (8,9)				then horm_yrs_c=-9; /* missing */
+	if		horm_yrs in (8,9)						then horm_yrs_c=-9; /* missing */
 
 	** hormone duration split meno/surg reasons;
 	horm_yrs_nat_c=.;
-	if menostat_c=1 						then horm_yrs_nat_c=horm_yrs_c;
-	else if menostat_c NE 1					then horm_yrs_nat_c=.;
+	if menostat_c=1 								then horm_yrs_nat_c=horm_yrs_c;
+	else if menostat_c NE 1							then horm_yrs_nat_c=.;
 	horm_yrs_surg_c=.;
-	if menostat_c=2							then horm_yrs_surg_c=horm_yrs_c;
-	else if menostat_c NE 2					then horm_yrs_surg_c=.;
+	if menostat_c=2									then horm_yrs_surg_c=horm_yrs_c;
+	else if menostat_c NE 2							then horm_yrs_surg_c=.;
 
 	** UVR TOMS quantiles;
 	uvrq_c=.;
@@ -335,37 +345,37 @@ data conv.melan_r;
 
 	** marriage;
 	marriage_c = marriage;
-	if 		marriage in (3,4)					then marriage_c=3; /* divorced and separated together */
-	else if marriage=9							then marriage_c=-9; /* */
+	if 		marriage in (3,4)						then marriage_c=3; /* divorced and separated together */
+	else if marriage=9								then marriage_c=-9; /* missing */
 
 	** smoking missings recode;
 	smoke_former_c=smoke_former;
-	if smoke_former_c=9 					then smoke_former_c=-9;
+	if smoke_former_c=9 							then smoke_former_c=-9;
 	smoke_quit_c=smoke_quit;
-	if smoke_quit_c=9 						then smoke_quit_c=-9;
+	if smoke_quit_c=9 								then smoke_quit_c=-9;
 	smoke_dose_c=smoke_dose;
-	if smoke_dose_c=9						then smoke_dose_c=-9;
+	if smoke_dose_c=9								then smoke_dose_c=-9;
 
 	** coffee drinking;
 	coffee_c=.;
-	if		qp12b='0'							then coffee_c=0; 	/* none */
-	else if qp12b in ('1','2','3','4','5','6')	then coffee_c=1; 	/* <=1/day */
-	else if qp12b='7'							then coffee_c=2; 	/* 2-3/day */
-	else if qp12b in ('8','9')					then coffee_c=3; 	/* >=4/day */
-	else if qp12b in ('E','M')					then coffee_c=-9;	/* missing */
-	else	coffee_c=-9; 											/* missing */
+	if		qp12b='0'								then coffee_c=0; 	/* none */
+	else if qp12b in ('1','2','3','4','5','6')		then coffee_c=1; 	/* <=1/day */
+	else if qp12b='7'								then coffee_c=2; 	/* 2-3/day */
+	else if qp12b in ('8','9')						then coffee_c=3; 	/* >=4/day */
+	else if qp12b in ('E','M')						then coffee_c=-9;	/* missing */
+	else	coffee_c=-9; 												/* missing */
 
 	** total alcohol per day;
 	etoh_c=.;
-	if 		mped_a_bev=0					then etoh_c=0;		/* none */
-	else if 0<mped_a_bev<=1					then etoh_c=1;		/* <=1 */
-	else if 1<mped_a_bev<=3 				then etoh_c=2;		/* >1 and =<3 */
-	else if 3<mped_a_bev					then etoh_c=3;		/* >3 */
-	else 	etoh_c=-9;											/* missing */
+	if 		mped_a_bev=0							then etoh_c=0;		/* none */
+	else if 0<mped_a_bev<=1							then etoh_c=1;		/* <=1 */
+	else if 1<mped_a_bev<=3 						then etoh_c=2;		/* >1 and =<3 */
+	else if 3<mped_a_bev							then etoh_c=3;		/* >3 */
+	else 	etoh_c=-9;													/* missing */
 
 	** relatives with cancer;
 	rel_1d_cancer_c=rel_1d_cancer;
-	if rel_1d_cancer_c=9					then rel_1d_cancer_c=-9;
+	if rel_1d_cancer_c=9							then rel_1d_cancer_c=-9;
 
 	** total;
 	total=1;
@@ -375,27 +385,27 @@ data conv.melan_r;
 	** (rf) physical exercise how often participate mod-vig activites in past 10 years;
 	** use this one;
 	rf_physic_c=.;
-	if		rf_phys_modvig_curr in (0,1)	then rf_physic_c=0;	/* none-rarely */
-	else if rf_phys_modvig_curr=2			then rf_physic_c=1; /* <1 hr/week */
-	else if rf_phys_modvig_curr=3			then rf_physic_c=2; /* 1-3 hr/week */
-	else if rf_phys_modvig_curr=4			then rf_physic_c=3; /* 4-7 hr/week */
-	else if rf_phys_modvig_curr=5			then rf_physic_c=4; /* >7 hr/week */
-	else if rf_phys_modvig_curr=9			then rf_physic_c=-9; /* missing */
+	if		rf_phys_modvig_curr in (0,1)			then rf_physic_c=0;	/* none-rarely */
+	else if rf_phys_modvig_curr=2					then rf_physic_c=1; /* <1 hr/week */
+	else if rf_phys_modvig_curr=3					then rf_physic_c=2; /* 1-3 hr/week */
+	else if rf_phys_modvig_curr=4					then rf_physic_c=3; /* 4-7 hr/week */
+	else if rf_phys_modvig_curr=5					then rf_physic_c=4; /* >7 hr/week */
+	else if rf_phys_modvig_curr=9					then rf_physic_c=-9; /* missing */
 	else rf_physic_c=-9;
 
 	** lacey hormone type ;
 	** edited 20150708WED WTL;
 	ht_type_c=lacey_ht_type;
-	if lacey_ht_type = 9 					then ht_type_c=-9; /* unknown */
+	if lacey_ht_type = 9 							then ht_type_c=-9; /* unknown */
 
 	ht_type_me = ht_type_c;
-	if ht_type_me in (9, -9)				then ht_type_me=.;
+	if ht_type_me in (9, -9)						then ht_type_me=.;
 
 	ht_type_ever_c=ht_type_c;
-	if ht_type_ever_c in (1,2,3)			then ht_type_ever_c=1; /* ever HT */
+	if ht_type_ever_c in (1,2,3)					then ht_type_ever_c=1; /* ever HT */
 
 	ht_type_ever_me = ht_type_ever_c;
-	if ht_type_ever_me in (9,-9)			then ht_type_ever_me=.;
+	if ht_type_ever_me in (9,-9)					then ht_type_ever_me=.;
 
 	*******************************************************************************************;
 	*************** HRT variables *************************************************************;
@@ -406,53 +416,53 @@ data conv.melan_r;
 	****************************************************;
 	** EPT current ***************;
 	l_eptcurrent_ever_c = lacey_eptcurrent;
-	if l_eptcurrent_ever_c in (1,2,3)		then l_eptcurrent_ever_c=1; /* ever EPT */
-	else if l_eptcurrent_ever_c = 4			then l_eptcurrent_ever_c=-9;
+	if l_eptcurrent_ever_c in (1,2,3)				then l_eptcurrent_ever_c=1; /* ever EPT */
+	else if l_eptcurrent_ever_c = 4					then l_eptcurrent_ever_c=-9;
 	l_eptcurrent_ever_me = l_eptcurrent_ever_c;
-	if l_eptcurrent_ever_me=-9				then l_eptcurrent_ever_me=.;
+	if l_eptcurrent_ever_me=-9						then l_eptcurrent_ever_me=.;
 	l_eptcurrent_c = lacey_eptcurrent;
-	if l_eptcurrent_c=4						then l_eptcurrent_c=-9;
+	if l_eptcurrent_c=4								then l_eptcurrent_c=-9;
 	l_eptcurrent_me = l_eptcurrent_c;
-	if l_eptcurrent_me = -9					then l_eptcurrent_me=.;
+	if l_eptcurrent_me = -9							then l_eptcurrent_me=.;
 
 	** EPT dose ***************;
 	l_eptdose_c=.;
 	if l_eptcurrent_ever_c=1 & lacey_eptdose in (1,2,3,4) then l_eptdose_c=lacey_eptdose;
 	else l_eptdose_c=-9;
 	l_eptdose_me = l_eptdose_c;
-	if l_eptdose_me=-9						then l_eptdose_me=.;
+	if l_eptdose_me=-9								then l_eptdose_me=.;
 
 	** EPT duration ***************;
 	l_eptdur_c = .;
 	if l_eptcurrent_ever_c=1 & lacey_eptdur in (1,2,3) then l_eptdur_c=lacey_eptdur;
 	else l_eptdur_c=-9;
 	l_eptdur_me = l_eptdur_c;
-	if l_eptdur_me=-9						then l_eptdur_me=.;
+	if l_eptdur_me=-9								then l_eptdur_me=.;
 
 	** EPT regimen ***************;
 	l_eptreg_c = .;
-	if lacey_eptreg in (0,1,2,3,4,8)		then l_eptreg_c=lacey_eptreg;
+	if lacey_eptreg in (0,1,2,3,4,8)				then l_eptreg_c=lacey_eptreg;
 	else l_eptreg_c=-9;
 	l_eptreg_me = l_eptreg_c;
-	if l_eptreg_me=-9						then l_eptreg_me=.;
+	if l_eptreg_me=-9								then l_eptreg_me=.;
 
 	** ET current ***************;
 	l_etcurrent_ever_c = lacey_etcurrent;
-	if l_etcurrent_ever_c in (1,2,3)		then l_etcurrent_ever_c=1; /* ever ET */
-	else if l_etcurrent_ever_c=4			then l_etcurrent_ever_c=-9;
+	if l_etcurrent_ever_c in (1,2,3)				then l_etcurrent_ever_c=1; /* ever ET */
+	else if l_etcurrent_ever_c=4					then l_etcurrent_ever_c=-9;
 	l_etcurrent_ever_me = l_etcurrent_ever_c;
-	if l_etcurrent_ever_me=-9				then l_etcurrent_ever_me=.;
+	if l_etcurrent_ever_me=-9						then l_etcurrent_ever_me=.;
 	l_etcurrent_c = lacey_etcurrent;
-	if l_etcurrent_c=4						then l_etcurrent_c=-9;
+	if l_etcurrent_c=4								then l_etcurrent_c=-9;
 	l_etcurrent_me = l_etcurrent_c;
-	if l_etcurrent_me=-9					then l_etcurrent_me=.;
+	if l_etcurrent_me=-9							then l_etcurrent_me=.;
 
 	** ET dose ***************;
 	l_etdose_c=.;
 	if l_etcurrent_ever_c=1 & RF_EST_DOSE in (1,2,3,4) then l_etdose_c=RF_EST_DOSE;
 	else l_etdose_c=-9;
 	l_etdose_me = l_etdose_c;
-	if l_etdose_me=-9									then l_etdose_me=.;
+	if l_etdose_me=-9								then l_etdose_me=.;
 
 	** ET duration ***************;
 	l_etdur_c=.;
@@ -466,26 +476,19 @@ data conv.melan_r;
 	if l_etcurrent_ever_c=1 & lacey_etfreq in (1,2) then l_etfreq_c=lacey_etfreq;
 	else l_etfreq_c=-9;
 	l_etfreq_me = l_etfreq_c;
-	if l_etfreq_me=-9						then l_etfreq_me=.;
+	if l_etfreq_me=-9								then l_etfreq_me=.;
 
 	** finished HRT variables;
 	*******************************************************************************************;
 
 	/** colonoscopy and sigmoidoscopy rf_Q15 **/
 	colo_sig_any=-9;
-	if rf_Q15E=1			then colo_sig_any=0;
-	else if rf_Q15A=1 		then colo_sig_any=1;
-	else if rf_Q15B=1		then colo_sig_any=1;
-	else if rf_Q15C=1		then colo_sig_any=1;
-	else if rf_Q15D=1		then colo_sig_any=1;
+	if rf_Q15E=1									then colo_sig_any=0;
+	else if rf_Q15A=1 								then colo_sig_any=1;
+	else if rf_Q15B=1								then colo_sig_any=1;
+	else if rf_Q15C=1								then colo_sig_any=1;
+	else if rf_Q15D=1								then colo_sig_any=1;
 	
-	** recode parity and flb_age_c to consolidate contradicting missings in each;
-	** if nulliparous or missing number of births, then age at birth should be missing;
-	*** -9 in flb_age means missing to begin with;
-	*** whereas 9 in flb_age means they were coerced to be missing due to missing parity;
-	if		parity_c in (1,2) & flb_age_c=9		then flb_age_c=-9; 
-	else if parity_c=2 & flb_age_c=9			then flb_age_c=-9;
-	if 		parity_c in (0,-9)					then flb_age_c=9;
 run;
 
 /* recode the variables for main effect */
@@ -494,36 +497,42 @@ data conv.melan_r;
 	set conv.melan_r;
 
 	fmenstr_me = fmenstr_c;
-	if	fmenstr_me in (9,-9)			then fmenstr_me=.;
+	if	fmenstr_me in (9,-9)						then fmenstr_me=.;
 	menostat_me = menostat_c;
-	if	menostat_me in (9,-9) 			then menostat_me=.;
+	if	menostat_me in (9,-9) 						then menostat_me=.;
+
 	menop_age_me = menop_age_c;
-	if	menop_age_me in (9,-9)			then menop_age_me=.;
+	if	menop_age_me in (9,-9)						then menop_age_me=.;
+	menop_age4_nat_me = menop_age4_nat_c;
+	if	menop_age4_nat_me in (9,-9)					then menop_age4_nat_me=.;
+	menop_age4_sur_me = menop_age4_sur_c;
+	if	menop_age4_sur_me in (9,-9)					then menop_age4_sur_me=.;
+
 	parity_me=parity_c;
-	if	parity_me in (9,-9)				then parity_me=.;
+	if	parity_me in (9,-9)							then parity_me=.;
 	flb_age_me = flb_age_c;
-	if	flb_age_me  in (9,-9)			then flb_age_me=.;
+	if	flb_age_me  in (9,-9)						then flb_age_me=.;
 	oralbc_dur_me = oralbc_dur_c;
-	if	oralbc_dur_me in (9,-9)			then oralbc_dur_me=.;
+	if	oralbc_dur_me in (9,-9)						then oralbc_dur_me=.;
 	oralbc_yn_me = oralbc_yn_c;
-	if oralbc_yn_me in (9,-9)			then oralbc_yn_me=.;
+	if oralbc_yn_me in (9,-9)						then oralbc_yn_me=.;
 	mht_ever_me = mht_ever_c;
-	if mht_ever_me in (9,-9)			then mht_ever_me=.;
+	if mht_ever_me in (9,-9)						then mht_ever_me=.;
 	hormstat_me = hormstat_c;
-	if hormstat_me in (9,-9)			then hormstat_me=.;
+	if hormstat_me in (9,-9)						then hormstat_me=.;
 
 	uvrq_me = uvrq_c;
-	if	uvrq_me in (9,-9)				then uvrq_me=.;
+	if	uvrq_me in (9,-9)							then uvrq_me=.;
 
 	horm_yrs_me = horm_yrs_c;
-	if	horm_yrs_me in (9,-9)			then horm_yrs_me=.;
+	if	horm_yrs_me in (9,-9)						then horm_yrs_me=.;
 	horm_yrs_nat_me = horm_yrs_nat_c;
-	if horm_yrs_nat_me in (9,-9)		then horm_yrs_nat_me=.;
+	if horm_yrs_nat_me in (9,-9)					then horm_yrs_nat_me=.;
 	horm_yrs_surg_me = horm_yrs_surg_c;
-	if horm_yrs_surg_me in (9,-9)		then horm_yrs_surg_me=.;
+	if horm_yrs_surg_me in (9,-9)					then horm_yrs_surg_me=.;
 
 	ovarystat_me = ovarystat_c;
-	if ovarystat_me in (9,-9)			then ovarystat_me=.;
+	if ovarystat_me in (9,-9)						then ovarystat_me=.;
 run;
 
 ** add labels;
@@ -545,7 +554,9 @@ proc datasets library=conv;
 			educ_c = "education level"
 			flb_age_c = "Age at first live birth among parous women"
 			menostat_c = "menopause status"
-			menop_age_c ="age at natural menopause"
+			menop_age_c ="age at menopause"
+			menop_age4_nat_me = "Menopause age, natural"
+			menop_age4_sur_me = "Menopause age, surgical"
 			physic_c = "level of physical activity"	
 			parity_c = "total number of live births"
 			bmi_c = "bmi, rough"
