@@ -266,13 +266,13 @@ data conv.melan;
 	else if menop_age=5								then menop_age_3c=3; /* 55+ */
 
 	** menopausal age - natural, ref=50+;
-	** model A 20160606MON WTL;
+	** model [AB] 20160606MON WTL;
 	menop_age4_nat_c=.;
 	if		menostat_c=1							then menop_age4_nat_c=menop_age; 
 	if		menop_age4_nat_c in (4,5)				then menop_age4_nat_c=4; /* 50+ */
 
 	** menopausal age - surgical, ref=50+;
-	** model A 20160606MON WTL;
+	** model [AB] 20160606MON WTL;
 	menop_age4_sur_c=.;
 	if		menostat_c=2							then menop_age4_sur_c=menop_age; 
 	if		menop_age4_sur_c in (4,5)				then menop_age4_sur_c=4; /* 50+ */
@@ -288,11 +288,11 @@ data conv.melan;
 	if parity_ever in (1,2)							then parity_ever=1;
 
 	** age at first live birth cat;
-	flb_age_c=-9;
+	flb_age_c=9;
 	if 		age_flb in (1,2)						then flb_age_c=1; /* < 20 years old */
 	else if age_flb in (3,4)						then flb_age_c=2; /* 20s */
 	else if age_flb in (5,6,7)						then flb_age_c=3; /* 30s */
-	else if age_flb in (0,8,9)						then flb_age_c=9; /* missing */
+	else if age_flb in (0,8,9)						then flb_age_c=-9; /* missing */
 
 		** recode parity and flb_age_c to consolidate contradicting missings in each;
 		*** coerced flb_age to be missing due to missing parity;
@@ -357,7 +357,7 @@ data conv.melan;
 	** marriage;
 	marriage_c = marriage;
 	if 		marriage in (3,4)						then marriage_c=3; /* divorced and separated together */
-	else if marriage=9								then marriage_c=-9; /* */
+	else if marriage=9								then marriage_c=-9; /* missing */
 
 	** smoking missings recode;
 	smoke_former_c=smoke_former;
