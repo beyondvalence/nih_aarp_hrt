@@ -613,6 +613,7 @@ proc datasets library=conv;
 			menostat_me menostatfmt.
 			ovarystat_me ovarystatfmt.
 			menop_age_me menopiagefmt.
+			menop_age4_nat_me menop_age4_sur_me menopage4fmt.
 			parity_me parityfmt. 
 			flb_age_me flbagefmt.  
 			oralbc_yn_me oralbcynfmt.
@@ -632,6 +633,7 @@ proc datasets library=conv;
 			menostat_c menostatfmt.
 			ovarystat_c ovarystat ovarystatfmt.
 			menop_age_c menopiagefmt. menop_age agemenofmt.
+			menop_age4_nat_c menop_age4_sur_c menopage4fmt.
 			parity_c parityfmt.
 			livechild livechildfmt.
 			flb_age_c flbagefmt. 
