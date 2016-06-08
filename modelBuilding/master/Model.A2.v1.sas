@@ -1893,14 +1893,14 @@ run;
 ******************************************************************************;
 ********************************************************************************;
 ** R09_ins
-** ME: fmenstr_me (ref='15+')  
+** ME: fmenstr_me (ref='4. 15+')  
 ** melanoma: _ins, 
 ** variables: ME;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use_r multipass;
-	class  fmenstr_me (ref='15+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menop_age_c (ref='<45');
+	class  fmenstr_me (ref='4. 15+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menop_age_c (ref='1. <45');
 	model exit_age*melanoma_ins(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c  marriage_c colo_sig_any physic_c menop_age_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_fmenstr NObs = obs;
 run;
@@ -1929,14 +1929,14 @@ run;
 ******************************************************************************;
 ********************************************************************************;
 ** R09_mal
-** ME: fmenstr_me (ref='15+')  
+** ME: fmenstr_me (ref='4. 15+')  
 ** melanoma: _mal, 
 ** variables: ME; ** <10 significant with ref as 13-14;
 ********************************************************************************;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use_r multipass;
-	class  fmenstr_me (ref='15+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menop_age_c (ref='<45');
+	class  fmenstr_me (ref='4. 15+') /*uvrq_c (ref='176.095 to 186.918')*/ educ_c (ref='1. Less than high school') bmi_c (ref='>18.5 to < 25') smoke_former_c (ref='Never smoked')  marriage_c (ref='1. Married') colo_sig_any (ref='No') physic_c (ref='Never/rarely') menop_age_c (ref='1. <45');
 	model exit_age*melanoma_mal(0)=fmenstr_me uvrq_c educ_c bmi_c smoke_former_c  marriage_c colo_sig_any physic_c menop_age_c / entry = entry_age RL; 
 	ods output ParameterEstimates=A_fmenstr NObs = obs;
 run;
