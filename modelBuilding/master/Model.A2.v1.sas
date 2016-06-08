@@ -11,7 +11,7 @@
 # Created: July 02 2015 WTL
 # Updated: v20150813THU WTL
 # Updatedv8: v20160531TUE WTL
-# Updated A: v20160603FRI WTL
+# Updated A: v20160608WED WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 ******************************************************************************/
@@ -73,8 +73,7 @@ libname results 'C:\REB\AARP_HRTandMelanoma\Results';
 ****27 menopi_age					menopi_age_me (ref='<45')
 
 
-** menopi_age (ref='<45')
-** rel_1d_cancer_c (ref='No')
+** menopi_age (ref='3. 50+')
 ** marriage_c (ref='1. Married')
 ** colo_sig_any (ref='No')
 
