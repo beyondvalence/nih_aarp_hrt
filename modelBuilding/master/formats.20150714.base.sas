@@ -135,9 +135,9 @@ proc format;
 					3='3. 50+' 
 					5='Still menstruating';
 	value menoagefmt -9='Missing' 
-					1='<50' 
-					2='50-54' 
-					3='55+' 
+					1='1. <50' 
+					2='2. 50-54' 
+					3='3. 55+' 
 					4='Periods did not stop';
 	value menopage4fmt 9='Missing' 
 					1='1. <40' 

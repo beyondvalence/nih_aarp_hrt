@@ -20,9 +20,22 @@ proc format;
 	value melanomainsfmt 0 = 'No melanoma' 1='Melanoma in situ';
 	value melanomamalfmt 0 = 'No melanoma' 1='Malignant melanoma';
 
-	value agecatfmt 1 = '50-55 years' 2 = '55-59 years' 3 = '60-64 years' 4 = '65-69 years' 5 = '>=70 years';
-	value birthcohortfmt 1='1925-1928' 2='1929-1932' 3='1933-1934' 4='1935-1938' 5='1939-1945';
-	value attainedagefmt -9='Missing' 0='>=50 to <55' 1='>=55 to <60' 2='>=60 to <65' 3='>=65 to <70' 4='70+';
+	value agecatfmt 1 = '50-55 years' 
+						2 = '55-59 years' 
+						3 = '60-64 years' 
+						4 = '65-69 years' 
+						5 = '>=70 years';
+	value birthcohortfmt 1='1925-1928' 
+						2='1929-1932' 
+						3='1933-1934' 
+						4='1935-1938' 
+						5='1939-1945';
+	value attainedagefmt -9='Missing' 
+						0='>=50 to <55' 
+						1='>=55 to <60' 
+						2='>=60 to <65' 
+						3='>=65 to <70' 
+						4='70+';
 	value educfmt -9='Missing' 
 						0='1. Less than high school' 
 						1='2. High school graduate' 
@@ -107,8 +120,16 @@ proc format;
 						2='2. 45-49' 
 						3='3. 50+' 
 						5='4. Still menstruating';
-	value menoagefmt -9='Missing' 1='<50' 2='50-54' 3='55+' 4='Periods did not stop';
-	value surgagefmt -9='Missing' 1='<45' 2='45-49' 3='50+' 4='Periods did not stop';
+	value menoagefmt -9='Missing' 
+						1='1. <50' 
+						2='2. 50-54' 
+						3='3. 55+' 
+						4='Periods did not stop';
+	value menopage4fmt 9='Missing' 
+						1='1. <40' 
+						2='2. 40-44' 
+						3='3. 45-49' 
+						4='4. 50+';
 	value flbagefmt -9='Missing' 
 						1='< 20 years old' 
 						2='2. 20-29' 
@@ -127,10 +148,24 @@ proc format;
 						0='1. Nulliparous' 
 						1='1-2 live children' 
 						2='3. >=3 live children';
-	value livechildfmt -9='Unknown' 0='Never had a child' 1='1' 2='2' 3='3-4' 4='5-9' 5='>=10';
-	value hormstatfmt -9='Missing' 0='Never' 1='Current' 2='Former' 9='Unknown';
-	value hormeverfmt -9='Missing' 0='Never' 1='Ever';
-	value hormcurfmt -9='Missing' 0='No' 1='Yes currently';
+	value livechildfmt -9='Unknown' 
+						0='Never had a child' 
+						1='1' 
+						2='2' 
+						3='3-4' 
+						4='5-9' 
+						5='>=10';
+	value hormstatfmt -9='Missing' 
+						0='Never' 
+						1='Current' 
+						2='Former' 
+						9='Unknown';
+	value hormeverfmt -9='Missing' 
+						0='Never' 
+						1='Ever';
+	value hormcurfmt -9='Missing' 
+						0='No' 
+						1='Yes currently';
 	value hormyrsfmt -9='Missing' 
 						0='Never used' 
 						1='1. <5 years' 
@@ -149,59 +184,112 @@ proc format;
 						1='2. 1-4 years' 
 						2='3. 5-9 years' 
 						3='4. 10+ years';
-	value uvrqfmt -9='Missing' 1='176.095 to 186.918' 2='186.918 to 239.642' 3='239.642 to 253.731' 
-					4='253.731 to 289.463';
+	value uvrqfmt -9='Missing' 
+						1='176.095 to 186.918' 
+						2='186.918 to 239.642' 
+						3='239.642 to 253.731' 
+						4='253.731 to 289.463';
 	value rphysicfmt -9='Missing' 
 						1='Rarely' 
 						2='<1 hour/week' 
 						3='1-3 hours/week' 
 						4='4-7 hours/week' 
 						5='>7 hours/week';
-	value relativefmt -9='Missing' 0='No' 1='Yes' 9='Missing';
+	value relativefmt -9='Missing' 
+						0='No' 
+						1='Yes' 
+						9='Missing';
 
 	** menopause reason edit 20150723THU WTL;
-	value menoreasonfmt 3='Rad/chem meno reason' 2='Surgical meno reason' 1='Natural meno reason'
+	value menoreasonfmt 3='Rad/chem meno reason' 
+						2='Surgical meno reason' 
+						1='Natural meno reason'
 						0='Periods did not stop';
-	value natmenofmt -9='Missing' 0='Periods did not stop' 1='Natural meno reason';
-	value surgmenofmt -9='Missing' 0='Periods did not stop' 1='Surgical meno reason';
-	value radchemmenofmt -9='Missing' 0='Periods did not stop' 1='Radchem meno reason';
+	value natmenofmt -9='Missing' 
+						0='Periods did not stop' 
+						1='Natural meno reason';
+	value surgmenofmt -9='Missing' 
+						0='Periods did not stop' 
+						1='Surgical meno reason';
+	value radchemmenofmt -9='Missing' 
+						0='Periods did not stop' 
+						1='Radchem meno reason';
 	value ovarystatfmt -9='Missing' 
 						1='Both removed' 
 						2='Both intact' 
 						3='Other surgery to ovaries' 
 						9='Unknown';
-	value mhteverfmt -9='Missing' 0='Never' 1='Ever';
-	value perstopmenopfmt 0='No' 1='Yes' 9='Unknown';
-	value perstopsurgfmt 0='No' 1='Yes' 9='Unknown';
-	value hyststatfmt 0='No Hyst' 1='Hysterectomy' 9='Unknown';
+	value mhteverfmt -9='Missing' 
+						0='Never' 
+						1='Ever';
+	value perstopmenopfmt 0='No' 
+						1='Yes' 
+						9='Unknown';
+	value perstopsurgfmt 0='No' 			
+						1='Yes' 
+						9='Unknown';
+	value hyststatfmt 0='No Hyst' 
+						1='Hysterectomy' 
+						9='Unknown';
 
 	** smoking;
-	value smokeformerfmt -9='Missing' 0='Never smoked' 1='Former smoker' 2='Current smoker' 9='Unknown';
-	value smokequitfmt -9='Missing' 0='Never smoked' 1='Stopped 10+ years ago' 2='Stopped 5-9 years ago'
-						3='Stopped 1-4 years ago' 4='Stopped within last year' 5='Currently smoking'
+	value smokeformerfmt -9='Missing' 
+						0='Never smoked' 
+						1='Former smoker' 
+						2='Current smoker' 
 						9='Unknown';
-	value smokedosefmt -9='Missing' 0='Never smoked' 1='1-10 cigs a day' 2='11-20 cigs a day' 
-						3='21-30 cigs a day' 4='31-40 cigs a day' 5='41-60 cigs a day' 
-						6='61+ cigs a day' 9='Unknown';
-	value smokequitdosefmt -9='Missing' 0='Never smoked' 1='Quit, <=20 cigs/day' 2='Quit, >20 cigs/day'
-							3='Currently smoking, <=20 cigs/day' 4='Currently smoking, >20 cigs/day'
-							9='Unknown';
-	value coffeefmt -9='Missing' 0='None' 1='<=1 cup/day' 2='2-3 cups/day' 3='>=4 cups/day';
-	value $qp12bfmt '0'='None' 
-					'1'='Less than 1 cup per month' 
-					'2'='1-3 cups per month'
-					'3'='1-2 cups per week'
-					'4'='3-4 cups per week'
-					'5'='5-6 cups per week'
-					'6'='1 cup per day'
-					'7'='2-3 cups per day'
-					'8'='4-5 cups per day'
-					'9'='6+ cups per day'
-					'E'='Error'
-					'M'='Missing';
-	value etohfmt -9='Missing' 0='None' 1='<=1' 2='>1 and <=3' 3='>3';
-	value colosigfmt 1 = 'Yes' 0 = 'No' 9='Missing';
-	value l_sameyear 1 = 'Yes' 0 = 'No' 9='Missing';
+	value smokequitfmt -9='Missing' 
+						0='Never smoked' 
+						1='Stopped 10+ years ago' 
+						2='Stopped 5-9 years ago'
+						3='Stopped 1-4 years ago' 
+						4='Stopped within last year' 
+						5='Currently smoking'
+						9='Unknown';
+	value smokedosefmt -9='Missing' 
+						0='Never smoked' 
+						1='1-10 cigs a day' 
+						2='11-20 cigs a day' 
+						3='21-30 cigs a day' 
+						4='31-40 cigs a day' 
+						5='41-60 cigs a day' 
+						6='61+ cigs a day' 
+						9='Unknown';
+	value smokequitdosefmt -9='Missing' 
+						0='Never smoked' 
+						1='Quit, <=20 cigs/day' 
+						2='Quit, >20 cigs/day'
+						3='Currently smoking, <=20 cigs/day' 
+						4='Currently smoking, >20 cigs/day'
+						9='Unknown';
+	value coffeefmt -9='Missing' 
+						0='None' 
+						1='<=1 cup/day' 
+						2='2-3 cups/day' 
+						3='>=4 cups/day';
+	value $qp12bfmt 	'0'='None' 
+						'1'='Less than 1 cup per month' 
+						'2'='1-3 cups per month'
+						'3'='1-2 cups per week'
+						'4'='3-4 cups per week'
+						'5'='5-6 cups per week'
+						'6'='1 cup per day'
+						'7'='2-3 cups per day'
+						'8'='4-5 cups per day'
+						'9'='6+ cups per day'
+						'E'='Error'
+						'M'='Missing';
+	value etohfmt -9='Missing' 
+						0='None' 
+						1='<=1' 
+						2='>1 and <=3' 
+						3='>3';
+	value colosigfmt 1 = 'Yes' 
+						0 = 'No' 
+						9='Missing';
+	value l_sameyear 1 = 'Yes' 
+						0 = 'No' 
+						9='Missing';
 
 	value rfphysicfmt -9='Missing' 
 						0='Never/rarely' 
@@ -257,8 +345,10 @@ proc format;
 						1 = '2. Former' 
 						0 = 'No HT' 
 						9='Missing';
-	value l_eptcurrentvr 1 = 'Ever EPT' 0 = 'No HT' 9='Missing';
-	value l_eptdose 9='Missing' 
+	value l_eptcurrentvr 1 = 'Ever EPT' 
+						0 = 'No HT' 
+						9='Missing';
+	value l_eptdose -9='Missing' 
 						9 = 'Unknown HT' 
 						8 = 'ET' 
 						5 = 'Unknown dose' 
@@ -267,7 +357,7 @@ proc format;
 						2 = '2. 2.5' 
 						1 = '<1' 
 						0 = 'No HT';
-	value l_eptdur 9='Missing' 
+	value l_eptdur -9='Missing' 
 						99 = 'Unknown HT' 
 						88 = 'ET' 
 						9 = 'DK' 
@@ -319,26 +409,46 @@ proc format;
 						2 = '4. 15-25 d/m' 
 						3 = '5. Continuous' 
 						4 = '6. Unknown regimen' 
-						9='Missing';
+						-9='Missing';
 
-	value l_et_ept_et -9 = 'N/A' 2 = 'Other' 1 = 'Yes' 0 = 'No';
+	value l_et_ept_et -9 = 'N/A' 
+						2 = 'Other' 
+						1 = 'Yes' 
+						0 = 'No';
 	value l_etcurdur;
-	value l_etcurrent 4 = 'Other/Unknown HT' 3 = '4. Unknown' 2 = '3. Current' 1='2. Former' 0 = 'No HT' 9='Missing';
-	value l_etcurrentvr 1 = 'Ever ET' 0 = 'No HT' 9='Missing';
-	value l_etdose 9='Missing' 9 = 'Unk HT' 3 = 'Unknown' 2 = 'Other' 1 = '.625' 0 = 'No HT';
-	value l_estdose 9='Missing' 
+	value l_etcurrent 4 = 'Other/Unknown HT' 
+						3 = '4. Unknown' 
+						2 = '3. Current' 
+						1='2. Former' 
+						0 = 'No HT' 
+						9='Missing';
+	value l_etcurrentvr 1 = 'Ever ET' 
+						0 = 'No HT' 
+						9='Missing';
+	value l_etdose -9='Missing' 
+						9 = 'Unk HT' 
+						3 = 'Unknown' 
+						2 = 'Other' 
+						1 = '.625' 
+						0 = 'No HT';
+	value l_estdose -9='Missing' 
 						1='1. 0.3 mg' 
 						2='2. 0.625 mg' 
 						3='3. 1.250 mg' 
 						4='4. Other';
-	value l_etdur 9='Missing' 
+	value l_etdur -9='Missing' 
 						99 = 'Unknown HT' 
 						88 = 'EPT or Other/Unknown HT type' 
 						9 = 'DK' 
 						2 = '2. 10+' 
 						1 = '<10' 
 						0 = 'No HT';
-	value l_etfreq 9='Missing' 9 = 'Unknown HT' 3 = 'Unknown' 2 = '2. Other' 1 = 'Daily' 0 = 'No HT';
+	value l_etfreq -9='Missing' 
+						9 = 'Unknown HT' 
+						3 = 'Unknown' 
+						2 = '2. Other' 
+						1 = 'Daily' 
+						0 = 'No HT';
 	value l_ettype 9 = 'Unknown HT' 
 						6 = 'Unsure' 
 						5 = 'Other' 
@@ -375,17 +485,39 @@ proc format;
 					2 = '3. EPT' 
 					1 = '2. ET' 
 					0 = 'No HT' 
-					9='Missing';
-	value l_httypevr 9 = 'Unknown' 3 = 'Other/Unknown type' 1 = 'Ever HT' 0 = 'No HT' 9='Missing';
-	value l_sameduration 1 = 'Yes' 0 = 'No';
-	value l_samestart -9 = 'NA' 8 = 'Unknown' 6 = 'EPT-ET' 5 = 'EPT-PT' 4 = 'PT-ET' 3 = 'ET-PT' 
-						2 = 'PT-EPT' 1 = 'EPT-only' 0 = 'ET-EPT';
-	value colosigfmt 1 = 'Yes' 0 = 'No' 9='Missing';
-	value rf_est_cur 9='Unknown' 8='NA' 1='Yes' 0='No';
-	value $rfq15afmt '0'='No' '1'='Sigmoidoscopy';
-	value $rfq15bfmt '0'='No' '1'='Colonoscopy';
-	value $rfq15cfmt '0'='No' '1'='Proctoscopy';
-	value $rfq15dfmt '0'='No' '1'='Unknown type';
-	value $rfq15efmt '0'='NA' '1'='None';
+					-9='Missing';
+	value l_httypevr 9 = 'Unknown' 
+						3 = 'Other/Unknown type' 
+						1 = 'Ever HT' 
+						0 = 'No HT' 
+						-9='Missing';
+	value l_sameduration 1 = 'Yes' 
+						0 = 'No';
+	value l_samestart -9 = 'NA' 
+						8 = 'Unknown' 
+						6 = 'EPT-ET' 
+						5 = 'EPT-PT' 
+						4 = 'PT-ET' 
+						3 = 'ET-PT' 
+						2 = 'PT-EPT' 
+						1 = 'EPT-only' 
+						0 = 'ET-EPT';
+	value colosigfmt 1 = 'Yes' 
+						0 = 'No' 
+						9='Missing';
+	value rf_est_cur 9='Unknown' 
+						8='NA' 
+						1='Yes' 
+						0='No';
+	value $rfq15afmt '0'='No' 
+						'1'='Sigmoidoscopy';
+	value $rfq15bfmt '0'='No' 
+						'1'='Colonoscopy';
+	value $rfq15cfmt '0'='No' 
+						'1'='Proctoscopy';
+	value $rfq15dfmt '0'='No' 
+						'1'='Unknown type';
+	value $rfq15efmt '0'='NA' 
+						'1'='None';
   
 run;
