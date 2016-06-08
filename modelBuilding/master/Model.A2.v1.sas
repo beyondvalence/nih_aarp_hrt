@@ -631,7 +631,7 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age_me (ref='1. <45') 
+	class  menop_age_me (ref='3. 50+')
 			/*uvrq_c (ref='176.095 to 186.918')*/ 
 			educ_c (ref='1. Less than high school') 
 			bmi_c (ref='>18.5 to < 25') 
@@ -675,7 +675,7 @@ run;
 
 ** overall (natural + surgical menopause);
 proc phreg data = use multipass;
-	class  menop_age_me (ref='1. <45') 
+	class  menop_age_me (ref='3. 50+')
 			/*uvrq_c (ref='176.095 to 186.918')*/ 
 			educ_c (ref='1. Less than high school') 
 			bmi_c (ref='>18.5 to < 25') 
