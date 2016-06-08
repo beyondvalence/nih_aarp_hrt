@@ -17,6 +17,7 @@
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\format.risk.w.sas';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 
+%include "C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.risk.sas";
 data use_r;
 	set conv.melan_r;
 run;
@@ -60,12 +61,13 @@ ods htmlcss file='C:\REB\AARP_HRTandMelanoma\Results\misc\T1\rTable1.v21.xls' st
 proc tabulate data=use_r missing;
 	title1 'AARP Riskfactor Melanoma';
 	title2 'Table 1 output';
-	title3 '20160516TUE WTL';
+	title3 '20160608WED WTL';
 	title4 'v21';
 	class melanoma_c 
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
-		menop_age_c parity_c flb_age_c 
+		menop_age_c menop_age4_nat_c menop_age4_sur_c
+		parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
 		horm_yrs_c
 		uvrq_c marriage_c
@@ -85,7 +87,8 @@ proc tabulate data=use_r missing;
 	table
 		educ_c bmi_c physic_c  
 		fmenstr_c menostat_c ovarystat_c 
-		menop_age_c parity_c flb_age_c 
+		menop_age_c menop_age4_nat_c menop_age4_sur_c
+		parity_c flb_age_c 
 		oralbc_yn_c oralbc_dur_c mht_ever_c hormstat_c
 		horm_yrs_c
 		uvrq_c marriage_c
