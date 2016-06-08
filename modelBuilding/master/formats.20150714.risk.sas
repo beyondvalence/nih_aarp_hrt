@@ -116,7 +116,7 @@ proc format;
 						4='>=55' 
 						5='Still menstruating';
 	value menopiagefmt -9='Missing' 
-						1='<45' 
+						1='1. <45' 
 						2='2. 45-49' 
 						3='3. 50+' 
 						5='4. Still menstruating';
