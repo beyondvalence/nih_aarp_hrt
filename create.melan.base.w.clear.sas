@@ -1,3 +1,23 @@
+/******************************************************************
+#      NIH-AARP UVR- Reproductive Factors- Melanoma Study
+*******************************************************************
+#
+# creates the melanoma file with cancer, smoking,
+# reproductive, hormonal, contraceptives, UVR variables
+# !!!! for baseline dataset !!!!
+#
+# new recodes include: new BMI and imputed menopause status
+# and new exclusion coding with indicator variables
+#
+# uses the uv_public, exp23feb16 out25mar16 datasets
+#
+# Created: February 06 2015
+# Updated: v20160615WED WTL
+# <under git version control>
+# Used IMS: anchovy
+# Warning: original IMS datasets are in LINUX latin1 encoding
+*******************************************************************/
+
 **************************;
 ***** Start2 here ********;
 **************************;
