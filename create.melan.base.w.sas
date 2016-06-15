@@ -146,6 +146,11 @@ data analysis_use;
 			physic_1518				/* physical activity >=20 min in past 12 months during ages 15-18 */
 			physic_work				/* physical activity at work */
 			mped_a_bev 				/* total alcohol per day including food sources */
+
+			QP2B1					/* freq: orange juice or grapefruit juice */
+			f_orangjce				/* freq/day [0..7], orange or grapefruit juice */
+			QP2B2					/* size: orange juice or grapefruit juice */
+			g_orangjce				/* grams/day [0..3238.6] orange or grapefruit juice */
 	;
 run;
 
