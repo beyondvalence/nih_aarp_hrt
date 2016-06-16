@@ -7,7 +7,7 @@
 #
 #
 # Created: June 29 2015
-# Updated: v20160603FRI WTL
+# Updated: v20160616THU WTL
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
@@ -310,4 +310,21 @@ proc format;
 	value l_sameyear 1 = 'Yes' 
 					0 = 'No' 
 					9='Missing';
+	value $qp2b1fmt '0'='Never' 
+					'1'='1 time per month or less' 
+					'2'='2-3 times per month'
+					'3'='1-2 times per week'
+					'4'='3-4 times per week'
+					'5'='5-6 times per week'
+					'6'='1 time per day'
+					'7'='2-3 times per day'
+					'8'='4-5 times per day'
+					'9'='6+ times per day'
+					'E'='Error'
+					'M'='Missing';
+	value $qp2b2fmt '0'='Less than 3/4 cup'
+					'1'='3/4 to 1 cup'
+					'2'='More than 1 cup'
+					'M'='Missing'
+					'E'='Error';
 run;
