@@ -1,9 +1,30 @@
+/******************************************************************
+#      NIH-AARP UVR- Reproductive Factors- Melanoma Study
+*******************************************************************
+#
+# creates the melanoma file with cancer, smoking,
+# reproductive, hormonal, contraceptives, UVR variables
+# !!!! for riskfactor dataset !!!!
+#
+# new recodes include: new BMI and imputed menopause status
+# and new exclusion coding with indicator variables
+#
+# uses the uv_public, rexp23feb16 rout25mar16 datasets
+#
+# Created: February 06 2015
+# Updated: v20160616THU WTL
+# <under git version control>
+# Used IMS: anchovy
+# Warning: original IMS datasets are in LINUX latin1 encoding
+*******************************************************************/
+
 **************************;
 ***** Start2 here ********;
 **************************;
 ** uses the pre-created analysis_use from above checkpoint;
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
-%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.risk.sas';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\master\formats.20150714.risk.sas';
+
 data melan_r; ** name the output of the first primary analysis include to melan_r;
 	set conv.ranalysis;
 
@@ -686,6 +707,8 @@ ods html;
 data use_r;
 	set conv.melan_r;
 run;
+
+/* create colo_sig variable for use in baseline dataset */
 data conv.melan_hosp;
 	set conv.melan_r;
 	keep westatid colo_sig_any;
