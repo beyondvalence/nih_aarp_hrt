@@ -457,6 +457,11 @@ data conv.melan;
 	if	uvrq_me in (9,-9)							then uvrq_me=.;
 	rel_1d_cancer_me = rel_1d_cancer_c;
 	if	rel_1d_cancer_me in (9,-9)					then rel_1d_cancer_me=.;
+
+	QP2B1_me =.;
+	if QP2B1 in (0,1,2,3,4,5,6,7,8,9)				then QP2B1_me=QP2B1;
+	QP2B2_me =.;
+	if QP2B2 in (0,1,2,3,4,5,6,7,8,9)				then QP2B2_me=QP2B2;
 run;
 
 ** add in colo_sig_any as hospital indicator from riskfactor dataset;
@@ -501,6 +506,8 @@ proc datasets library=conv;
 			parity_c = "total number of live births"
 			bmi_c = "bmi, three"
 			marriage_c = "marriage status"
+			QP2B1 = "Frequency of orange or grapefruit juice"
+			QP2B2 = "Portion size of orange or grapefruit juice"
 
 			smoke_former_c ="Smoking Status"
 			smoke_quit_c = 'Quit smoking status'
@@ -573,11 +580,12 @@ proc datasets library=conv;
 			smoke_dose smoke_dose_c smokedosefmt. 
 			coffee_c coffeefmt. qp12b $qp12bfmt. etoh_c etohfmt.
 			rel_1d_cancer rel_1d_cancer_c relativefmt. 
+
+			QP2B1  $qp2b1fmt. QP2B1_me qp2b1mefmt.
+			QP2B2  $qp2b2fmt. QP2B2_me qp2b2mefmt.
 	;
 run;
 /******************************************************************************************/
-ods html close;
-ods html;
 data use;
 	set conv.melan;
 run;
