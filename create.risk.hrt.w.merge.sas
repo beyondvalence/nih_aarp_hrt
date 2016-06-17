@@ -2,24 +2,21 @@
 #      NIH-AARP UVR- Reproductive Factors- Melanoma Study
 *******************************************************************
 #
-# creates the melanoma file with cancer, smoking,
-# reproductive, hormonal, contraceptives, UVR variables
+# merges the outcome and exposures datasets
 # !!!! for risk factors dataset !!!!!
 #
 # uses the uv_public, rout25mar16, rexp23feb16 datasets
-# note: using new rexp dataset above
 #
 # Created: April 03 2015
 # Updated: v20160505THU WTL
 # <under git version control>
 # Used IMS: anchovy
-# Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
 
 ods html close;
 ods html;
 options nocenter yearcutoff=1900 errors=1;
-title1 'NIH-AARP UVR Melanoma Study _riskfactor';
+title1 'NIH-AARP UVR Melanoma Study riskfactor';
 
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 libname anchovy 'C:\REB\AARP_HRTandMelanoma\Data\anchovy';
@@ -32,7 +29,7 @@ run;
 /***************************************************/
 ** use baseline census tract for higher resolution;
 proc means data=uv_pub1;
-	title "Comparing UVR exposure means";
+	title2 "Comparing UVR exposure means";
 	var exposure_jul_78_93 exposure_jul_96_05 exposure_jul_78_05;
 	var exposure_net_78_93 exposure_net_96_05 exposure_net_78_05;
 run;
@@ -49,10 +46,11 @@ ods html;
 ** output: ranalysis;
 ** riskfactor dataset;
 * %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\first.primary.analysis.risk.include.sas';
+title2 'merge rout25mar16 and rexp23feb16 to ranalysis';
 data ranalysis;
-  merge anchovy.rout25mar16 (in=ino)
-        anchovy.rexp23feb16 (in=ine);
+  merge anchovy.rout25mar16 (in=ino) anchovy.rexp23feb16 (in=ine);
   by westatid;
+
   keep		westatid
 			rf_entry_dt
 			rf_entry_age
@@ -205,12 +203,12 @@ data ranalysis;
 			RF_PRG_DATEFLAG   				/* prog start and stop date (intact) indicator *
 			RF_PRG_START_DT RF_PRG_STOP_DT 	/* prog start and end dates */
 	;
-	format skin_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.;
+	format cancer_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.;
 run;
 
-
 /* check point for merging the exposure and outcome data */
-** copy and save the analysis_use dataset to the converted folder;
+** copy and save the ranalysis dataset to the converted folder for variable creation;
 proc copy noclone in=Work out=conv;
 	select ranalysis;
 run;
+title;

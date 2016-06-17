@@ -11,7 +11,6 @@
 # Updated: v20160617FRI WTL
 # <under git version control>
 # Used IMS: anchovy
-# Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
 
 ods html close;
@@ -23,7 +22,6 @@ libname anchovy 'C:\REB\AARP_HRTandMelanoma\Data\anchovy';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 
 filename uv_pub 'C:\REB\AARP_HRTandMelanoma\Data\anchovy\uv_public.v9x';
-ods html;
 
 ** import the UVR with file extension v9x from the anchovy folder;
 proc cimport data=uv_pub1 infile=uv_pub; 

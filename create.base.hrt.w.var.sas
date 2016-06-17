@@ -18,7 +18,7 @@
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
 ods html close; ods html;
-
+** uses the pre-created ranalysis from above checkpoint;
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\formats.20150714.base.sas';
 
@@ -588,7 +588,7 @@ proc datasets library=conv;
 			QP2B1 $qp2b1fmt. QP2B1_me qp2b1mefmt.
 			QP2B2 $qp2b2fmt. QP2B2_me qp2b2mefmt.
 	;
-run;
+run; 
 /******************************************************************************************/
 data use;
 	set conv.melan;

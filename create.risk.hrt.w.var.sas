@@ -9,22 +9,21 @@
 # new recodes include: new BMI and imputed menopause status
 # and new exclusion coding with indicator variables
 #
-# uses the uv_public, rexp23feb16 rout25mar16 datasets
+# used the uv_public, rexp23feb16 rout25mar16 datasets
 #
 # Created: February 06 2015
-# Updated: v20160616THU WTL
+# Updated: v20160617FRI WTL
 # <under git version control>
 # Used IMS: anchovy
-# Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
 
-**************************;
-***** Start2 here ********;
-**************************;
+ods html close; ods html;
 ** uses the pre-created analysis_use from above checkpoint;
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
-%include 'C:\REB\AARP_HRTandMelanoma\Analysis\master\formats.20150714.risk.sas';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\formats.20150714.risk.sas';
 
+title1 'AARP Riskfactor variable creation';
+title2 'melanoma outcome creation';
 data melan_r; ** name the output of the first primary analysis include to melan_r;
 	set conv.ranalysis;
 
@@ -71,28 +70,26 @@ data melan_r; ** name the output of the first primary analysis include to melan_
 	** melanoma malignant;
 	if	 melanoma_c=2	then melanoma_mal=1;
 	else melanoma_mal=0;
-
 run;
 
-ods html close; ods html;
-
 ** merge the melan_r dataset with the UV data;
+title2 'merge in UVR data';
 data melan_r;
-	merge melan_r (in=frodo) conv.uv_pub1 ;
+	merge melan_r (in=melan_rin) conv.uv_pub1 ;
 	by westatid;
-	if frodo;
+	if melan_rin;
 run;
 
 ** copy and save the melan dataset to the converted folder;
 proc copy noclone in=Work out=conv;
 	select melan_r;
 run;
-title;
+
 **** Exclusions risk macro;
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\exclusions.first.primary.risk.macro.sas';
 
 **** Use the exclusion macro to make "standard" exclusions and get counts of excluded subjects;
-
+title;
 %exclude(data            	= conv.melan_r,
          ex_proxy        	= 1,
 		 ex_rf_proxy	 	= 1,
@@ -217,7 +214,6 @@ proc freq data=conv.melan_r;
 	table melanoma_c*sex;
 run;
 
-	** need to change the exposure percentiles after exclusions;
 	** uvr exposure;
 	** p10     p20     p25     p30     p40     p50     p60     p70     p75     p80     p90 ;
 	** 185.266 186.255 186.255 192.716 215.622 239.642 245.151 250.621 253.731 257.14  267.431 ;
@@ -225,7 +221,9 @@ run;
 /******************************************************************************************/
 ** create the UVR, and confounder variables by quintile/categories;
 ** for both baseline and riskfactor questionnaire variables;
-/* cat=categorical ************************************************************************/
+/* _c = categorical ************************************************************************/
+title1 'AARP Riskfactor variable creation';
+title2 'covariates';
 data conv.melan_r;
 	set conv.melan_r;
 
@@ -557,6 +555,7 @@ data conv.melan_r;
 run;
 
 ** add labels;
+title2 'add labels, formats, and titles to variables';
 proc datasets library=conv;
 	modify melan_r;
 	
@@ -625,7 +624,7 @@ proc datasets library=conv;
 			
 	;
 	** set variable value labels;
-	format	skin_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.
+	format	cancer_dxdt dod raadate f_dob entry_dt rf_entry_dt Date9.
 			/* for outcomes */
 			melanoma_c melanfmt. melanoma_agg melanomafmt. 
 			melanoma_ins melanomainsfmt. melanoma_mal melanomamalfmt.
@@ -702,13 +701,12 @@ proc datasets library=conv;
 	;
 run;
 /******************************************************************************************/
-ods html close;
-ods html;
 data use_r;
 	set conv.melan_r;
 run;
 
 /* create colo_sig variable for use in baseline dataset */
+title2 'create colo_sig dataset for baselines';
 data conv.melan_hosp;
 	set conv.melan_r;
 	keep westatid colo_sig_any;
