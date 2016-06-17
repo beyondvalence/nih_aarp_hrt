@@ -7,22 +7,23 @@
 # !!!! for baseline dataset !!!!
 #
 # new recodes include: new BMI and imputed menopause status
-# and new exclusion coding with indicator variables
+# new exclusion coding (UVR) and orange juice variables
 #
 # uses the uv_public, exp23feb16 out25mar16 datasets
 #
 # Created: February 06 2015
-# Updated: v20160615WED WTL
+# Updated: v20160617FRI WTL
 # <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
+ods html close; ods html;
 
-**************************;
-***** Start2 here ********;
-**************************;
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 %include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\formats.20150714.base.sas';
+
+title1 'AARP Baseline variable creation';
+title2 'melanoma outcome creation';
 ** uses the pre-created analysis_use from above checkpoint;
 data melan; ** name the output of the first primary analysis include to melan;
 	set conv.analysis_use;
@@ -65,6 +66,7 @@ data melan; ** name the output of the first primary analysis include to melan;
 run;
 
 ** merge the melan dataset with the UV data;
+title2 'merge in UVR data';
 data melan;
 	merge melan conv.uv_pub1;
 	by westatid;
@@ -92,7 +94,6 @@ ods _all_ close; ods html;
          ex_renal        = 0,
          ex_prevcan      = 1,
          ex_deathcan     = 1);
-
 
 /***************************************************************************************/ 
 /*   Exclude if non-whites, racem = 1
@@ -215,6 +216,8 @@ run;
 ** create the UVR, and confounder variables by quintile/categories;
 ** for both baseline and riskfactor questionnaire variables;
 /* cat=categorical */
+title1 'AARP Baseline variable creation';
+title2 'covariates';
 data conv.melan;
 	title;
 	set conv.melan;
@@ -466,7 +469,7 @@ run;
 
 ** add in colo_sig_any as hospital indicator from riskfactor dataset;
 ** 20150721TUE WTL;
-
+title2 'merge in colo_sig from riskfactor set';
 data conv.melan;
 	merge conv.melan (in=colo) conv.melan_hosp;
 	by westatid;
@@ -476,6 +479,7 @@ data conv.melan;
 run;
 
 ** add labels;
+title2 'add labels, formats, and titles to variables';
 proc datasets library=conv;
 	modify melan;
 	
@@ -581,8 +585,8 @@ proc datasets library=conv;
 			coffee_c coffeefmt. qp12b $qp12bfmt. etoh_c etohfmt.
 			rel_1d_cancer rel_1d_cancer_c relativefmt. 
 
-			QP2B1  $qp2b1fmt. QP2B1_me qp2b1mefmt.
-			QP2B2  $qp2b2fmt. QP2B2_me qp2b2mefmt.
+			QP2B1 $qp2b1fmt. QP2B1_me qp2b1mefmt.
+			QP2B2 $qp2b2fmt. QP2B2_me qp2b2mefmt.
 	;
 run;
 /******************************************************************************************/
