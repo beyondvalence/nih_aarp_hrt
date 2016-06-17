@@ -13,7 +13,6 @@ proc freq data=use;
 	table QP2B1_me*melanoma_c;
 run;
 
-ods html close; ods html;
 title 'for raw OJ freq, basic model';
 proc phreg data = use multipass;
 	class  QP2B1_me (ref='Never')
