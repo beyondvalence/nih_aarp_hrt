@@ -2,17 +2,13 @@
 #      NIH-AARP UVR- Reproductive Factors- Melanoma Study
 *******************************************************************
 #
-# creates the melanoma file with cancer, smoking,
-# reproductive, hormonal, contraceptives, UVR variables
+# creates the merged set from outcomes and exposure IMS sets
 # !!!! for baseline dataset !!!!
-#
-# new recodes include: new BMI and imputed menopause status
-# and new exclusion coding with indicator vairables
 #
 # uses the uv_public, exp23feb16 out25mar16 datasets
 #
 # Created: February 06 2015
-# Updated: v20160615WED WTL
+# Updated: v20160617FRI WTL
 # <under git version control>
 # Used IMS: anchovy
 # Warning: original IMS datasets are in LINUX latin1 encoding
@@ -35,7 +31,7 @@ run;
 /***************************************************/
 ** use baseline census tract for higher resolution;
 proc means data=uv_pub1;
-	title "Comparing UVR exposure means";
+	title2 "Comparing UVR exposure means";
 	var exposure_jul_78_93 exposure_jul_96_05 exposure_jul_78_05;
 	var exposure_net_78_93 exposure_net_96_05 exposure_net_78_05;
 run;
@@ -47,11 +43,11 @@ data conv.uv_pub1;
 			exposure_jul_78_05;
 run;
 
-** input: first primary cancer; 
+** input: exp23feb16, out25mar16; 
 ** output: analysis_use;
-** uses exp23feb16, out25mar16, uv_pub1;
 ** baseline dataset;
 * %include 'C:\REB\AARP_HRTandMelanoma\Analysis\anchovy\first.primary.analysis.include.sas';
+title2 'merge exp23feb16 and out25mar16 to analysis_use';
 data analysis_use;
 	merge anchovy.exp23feb16 anchovy.out25mar16;
 	by westatid;
@@ -155,7 +151,8 @@ data analysis_use;
 run;
 
 /* check point for merging the exposure and outcome data */
-** copy and save the analysis_use dataset to the converted folder;
+** copy and save the analysis_use dataset to the converted folder for variable creation;
 proc copy noclone in=Work out=conv;
 	select analysis_use;
 run;
+title;
