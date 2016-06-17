@@ -8,13 +8,12 @@
 # uses the conv.melan datasets
 #
 # Created: May 24, 2016
-# Updated: v20160524TUE WTL
+# Updated: v20160617FRI WTL
 # Used IMS: anchovy
-# Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
 
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
-%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.base.sas';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\formats.20150714.base.sas';
 
 data use;
 	set conv.melan;

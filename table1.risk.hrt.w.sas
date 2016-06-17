@@ -4,20 +4,18 @@
 # creates Table 1 risk descriptives
 # with SAS output to MS Excel
 # use_rs melan_r dataset
-# for v6, riskfactor to FUP
+# for v21, riskfactor
 # 
 # Created: April 1 2015
-# Updated: v20160516TUE WTL
+# Updated: v20160617FRI WTL
 # removed rf_physic
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
-#
 *******************************************************************/
 
-%include 'C:\REB\AARP_HRTandMelanoma\Analysis\format.risk.w.sas';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
+%include "C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\formats.20150714.risk.sas";
 
-%include "C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.risk.sas";
 data use_r;
 	set conv.melan_r;
 run;

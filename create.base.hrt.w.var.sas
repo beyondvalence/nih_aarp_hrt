@@ -68,8 +68,9 @@ run;
 ** merge the melan dataset with the UV data;
 title2 'merge in UVR data';
 data melan;
-	merge melan conv.uv_pub1;
+	merge melan (in=in_melan) conv.uv_pub1;
 	by westatid;
+	if in_melan;
 run;
 
 ** copy and save the melan dataset to the converted folder;

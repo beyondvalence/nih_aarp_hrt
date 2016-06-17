@@ -2,20 +2,19 @@
 #      NIH-AARP UVR- Reproductive Factors- Melanoma Study
 *******************************************************************
 #
-# Model building v1, interactions, ME: age at menarche
+# Model building v1, interactions, ME: age at menarche, UVRQ5
 # with UVR quintiles (1..5)
 # !!!! for baseline dataset !!!!
 #
 # uses the conv.melan datasets
 #
 # Created: May 20 2016
-# Updated: v20160526THU WTL
+# Updated: v201600617FRI WTL
 # Used IMS: anchovy
-# Warning: original IMS datasets are in LINUX latin1 encoding
 *******************************************************************/
 
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
-%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.base.sas';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\formats.20150714.base.sas';
 
 data use;
 	set conv.melan;

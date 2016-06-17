@@ -4,16 +4,15 @@
 # creates Table 1 base descriptives
 # with SAS output to MS Excel
 # uses melan dataset
-# for v6, baseline to FUP
+# for v21, baseline
 # 
 # Created: April 1 2015
-# Updated: v20160606MON WTL
+# Updated: v20160617FRI WTL
 # Used IMS: anchovy
 # Code based off of Lisa's Horm.Rep and BCC study
-#
 *******************************************************************/
 
-%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\master\formats.20150714.base.sas';
+%include 'C:\REB\AARP_HRTandMelanoma\Analysis\modelBuilding\formats.20150714.base.sas';
 libname conv 'C:\REB\AARP_HRTandMelanoma\Data\converted';
 
 data use;
